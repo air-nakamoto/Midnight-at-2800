@@ -651,8 +651,8 @@
             <div class="sidebar-header">
                 <div class="sidebar-actions" style="width: 100%; display: flex; justify-content: space-around;">
                     <button class="sidebar-action-btn" onclick="toggleTheme()" title="テーマ切替">🌓 モード</button>
-                    <button class="sidebar-action-btn" onclick="expandAll()" title="全展開">➕ 展開</button>
-                    <button class="sidebar-action-btn" onclick="collapseAll()" title="全折畳">➖ 折畳</button>
+                    <button class="sidebar-action-btn" id="toggle-expand-btn" onclick="toggleExpandAll()"
+                        title="全展開/全折畳">➕ 全展開</button>
                 </div>
             </div>
             <div class="sidebar-content" id="file-tree">
@@ -12861,17 +12861,23 @@
             setTimeout(() => { contentArea.scrollTop = 0; }, 10);
         }
 
-        // Expand All / Collapse All
-        function expandAll() {
-            document.querySelectorAll('.tree-item.has-children').forEach(el => {
-                el.classList.add('expanded');
-            });
-        }
-
-        function collapseAll() {
-            document.querySelectorAll('.tree-item.has-children').forEach(el => {
-                el.classList.remove('expanded');
-            });
+        // Expand All / Collapse All Toggle
+        let isExpanded = true; // Start expanded
+        function toggleExpandAll() {
+            const btn = document.getElementById('toggle-expand-btn');
+            const items = document.querySelectorAll('.tree-item.has-children');
+            if (isExpanded) {
+                // Collapse all
+                items.forEach(el => el.classList.remove('expanded'));
+                btn.textContent = '➕ 全展開';
+                btn.title = '全展開';
+            } else {
+                // Expand all
+                items.forEach(el => el.classList.add('expanded'));
+                btn.textContent = '➖ 全折畳';
+                btn.title = '全折畳';
+            }
+            isExpanded = !isExpanded;
         }
 
         // --- Theme Logic ---
