@@ -248,7 +248,7 @@
             display: grid;
             grid-template-rows: min-content;
             align-items: start;
-            justify-items: center;
+            /* Horizontal centering via .page margin */
             padding: 0;
             height: 100%;
             overflow-y: auto;
@@ -259,7 +259,8 @@
             width: 100%;
             max-width: 900px;
             padding: 30px 50px;
-            margin: 0;
+            margin: 0 auto;
+            /* Horizontal center */
             box-sizing: border-box;
             animation: fadeIn 0.2s ease;
         }
