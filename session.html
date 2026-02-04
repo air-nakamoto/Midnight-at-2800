@@ -237,6 +237,8 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            /* Ensure top alignment */
         }
 
 
@@ -252,7 +254,8 @@
             display: none;
             padding: 30px 50px;
             max-width: 900px;
-            margin: 0 auto;
+            margin: 0 auto 50px auto;
+            /* Top 0, Bottom 50px */
             animation: fadeIn 0.2s ease;
         }
 
