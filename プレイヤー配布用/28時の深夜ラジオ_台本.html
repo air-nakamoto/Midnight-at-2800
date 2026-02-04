@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>28時の深夜ラジオ 台本</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #ff4444;
+            --accent-dim: #882222;
+            --border-color: #333;
+            --chapter-bg: #222;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ヘッダー */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid var(--accent-dim);
+            margin-bottom: 30px;
+        }
+
+        .on-air {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 10px 0;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* 目次 */
+        nav {
+            background: var(--chapter-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        nav h2 {
+            font-size: 14px;
+            margin: 0 0 15px 0;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            margin: 8px 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            border-left-color: var(--accent-color);
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        /* チャプター */
+        .chapter {
+            background: var(--chapter-bg);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-dim);
+        }
+
+        .chapter-title {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+            color: var(--accent-color);
+        }
+
+        .direction {
+            color: #666;
+            font-size: 13px;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .jingle {
+            display: inline-block;
+            background: #333;
+            color: #888;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin: 5px 0;
+        }
+
+        .line {
+            margin: 8px 0;
+            padding-left: 0;
+        }
+
+        .speaker {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .music {
+            background: linear-gradient(90deg, #333 0%, transparent 100%);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .note {
+            background: rgba(255, 200, 0, 0.1);
+            border-left: 3px solid #ffc800;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 13px;
+            color: #cca;
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #555;
+            font-size: 12px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .chapter {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="on-air">ON AIR</div>
+            <h1>28時の深夜ラジオ</h1>
+            <p class="subtitle">2005年1月31日 28:00〜29:00<br>DJ：ミナト</p>
+        </header>
+
+        <nav>
+            <h2>CHAPTER INDEX</h2>
+            <ul>
+                <li><a href="#ch1">1. オープニング</a></li>
+                <li><a href="#ch2">2. 確証バイアス</a></li>
+                <li><a href="#ch3">3. 曲リクエスト</a></li>
+                <li><a href="#ch4">4. お便り紹介</a></li>
+                <li><a href="#ch5">5. CM</a></li>
+                <li><a href="#ch6">6. 電話コーナー</a></li>
+                <li><a href="#ch7">7. ブートストラップ・パラドクス</a></li>
+                <li><a href="#ch8">8. エンディング</a></li>
+            </ul>
+        </nav>
+
+        <section class="chapter" id="ch1">
+            <h2 class="chapter-title">【チャプター１：オープニング】</h2>
+            <div class="jingle">♪ ジングル：Midnight at 28:00</div>
+            <p class="line"><span class="speaker">ミナト：</span>「皆様、こんばんは」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「パーソナリティーのミナトです」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「丑三つ時をこえて、午前4時となりました」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「そんな時間にお届けする、28時の深夜ラジオ」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「夜明けまでの1時間、ともに味わってまいりましょう」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「よろしくおねがいします」</p>
+        </section>
+
+        <section class="chapter" id="ch2">
+            <h2 class="chapter-title">【チャプター２：確証バイアス】</h2>
+            <div class="jingle">♪ ジングル：Cup</div>
+            <p class="line"><span class="speaker">ミナト：</span>「◯年◯月◯日、28時の深夜ラジオ、はじまりました」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「突然ですが、皆さんは『確証バイアス』って聞いたことありますか？」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「今夜はですね、心理学の話を少ししてみようかなと思います」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「人間は、自分が信じたい情報ばかり集めてしまうそうです」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「たとえば『実は炭水化物は太らない』って信じている人は」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「その証拠ばかり探して、反対の研究結果はスルーしてしまう」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「僕も最近、なんだか不吉な情報ばかり目に入る気がして」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「でも深夜って、妙に考え込んでしまいますよね」</p>
+        </section>
+
+        <section class="chapter" id="ch3">
+            <h2 class="chapter-title">【チャプター３：曲リクエスト】</h2>
+            <div class="jingle">♪ ジングル</div>
+            <p class="direction">（※スタッフが選別したお便りを置きます）</p>
+            <p class="line"><span class="speaker">ミナト：</span>「リクエストいただきました」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「ラジオネーム、〇〇さんからです」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「（アーティスト名）で『曲名』」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「どうぞ」</p>
+            <div class="music">♪ 曲：アーティスト『曲名』</div>
+            <p class="line"><span class="speaker">ミナト：</span>「（アーティスト名）で『曲名』でした」</p>
+            <p class="direction">（ここでミナトの感想を一言）</p>
+        </section>
+
+        <section class="chapter" id="ch4">
+            <h2 class="chapter-title">【チャプター４：お便り紹介】</h2>
+            <div class="jingle">♪ ジングル：Cup</div>
+            <p class="direction">（※スタッフが選別したお便りを置きます）</p>
+            <p class="line"><span class="speaker">ミナト：</span>「ラジオネーム『〇〇』さん」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「『〇〇』さん、お便りありがとうございました」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「一旦CMに入ります」</p>
+        </section>
+
+        <section class="chapter" id="ch5">
+            <h2 class="chapter-title">【チャプター５：CM】</h2>
+            <p class="direction">※ CM２本 流します</p>
+        </section>
+
+        <section class="chapter" id="ch6">
+            <h2 class="chapter-title">【チャプター６：電話コーナー】</h2>
+            <div class="jingle">♪ ジングル：Dead Air at A.M.</div>
+            <p class="note">※補足：突然電話がかかってきて、驚いた感じでお願いします<br>（※急遽、隔週の電話コーナーに変更となった都合です）</p>
+            <p class="line"><span class="speaker">ミナト：</span>「あれ？着信だ。もしもし？」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「『〇〇』さん、ありがとうございました」</p>
+        </section>
+
+        <section class="chapter" id="ch7">
+            <h2 class="chapter-title">【チャプター７：ブートストラップ・パラドクス】</h2>
+            <div class="jingle">♪ ジングル：AM Signal</div>
+            <p class="line"><span class="speaker">ミナト：</span>「さっきの電話、ちょっとびっくりしましたけど」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「最近、同じ夢を見るんです」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「暗闇の向こうから、無数の目に見られてる、みたいな」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「正夢になったりして」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「なんてね」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「また小話ですが、『ブートストラップ・パラドクス』ってご存知ですか？」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「例えば、未来からハムレットの台本を持ってきて、過去のシェイクスピアに渡す」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「それ元に、自分の作品として発表したら……」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「最初に台本を書いたのは誰なのか？」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「因果のループですね」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「このラジオにも台本があるんですけど……」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「もしかしたら、未来から来た台本だったりして」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「……なんてね。」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「僕のラジオ、アドリブだらけですから、成立しないかもしれないですね」</p>
+        </section>
+
+        <section class="chapter" id="ch8">
+            <h2 class="chapter-title">【チャプター８：エンディング】</h2>
+            <div class="jingle">♪ ジングル：また来週の約束</div>
+            <p class="line"><span class="speaker">ミナト：</span>「そろそろ夜が明ける時間となりました」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「今夜の『28時の深夜ラジオ』、いかがでしたか？」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「来週もまた、この時間にお会いしましょう」</p>
+            <p class="line"><span class="speaker">ミナト：</span>「お相手は、ミナトでした」</p>
+            <p class="note">※補足：終わりぎわに意味深な一言をお願いします<br>（ギリギリ放送にのってしまった感じに調整します）</p>
+        </section>
+
+        <footer>
+            <p>28時の深夜ラジオ ─ 承認済 決定稿</p>
+        </footer>
+    </div>
+</body>
+
+</html>

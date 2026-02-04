@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>28時の深夜ラジオ - シナリオフロー</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1e1e1e;
+            --bg-hover: #2a2a2a;
+            --bg-selected: #37373d;
+            --border: #3c3c3c;
+            --text: #cccccc;
+            --text-muted: #888888;
+            --accent: #569cd6;
+            --accent2: #4ec9b0;
+            --warning: #dcdcaa;
+            --danger: #f14c4c;
+            --success: #89d185;
+            --bullet: #6a9955;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ヘッダー */
+        .header {
+            background: #252526;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1em;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .header .badge {
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            font-weight: 700;
+        }
+
+        .toolbar {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .toolbar button {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .toolbar button:hover {
+            background: var(--bg-hover);
+            color: var(--text);
+        }
+
+        /* メインコンテナ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* アウトラインアイテム */
+        .outline-item {
+            margin: 2px 0;
+        }
+
+        .outline-header {
+            display: flex;
+            align-items: flex-start;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .outline-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .outline-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+
+        .outline-item.collapsed>.outline-header .outline-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .outline-item:not(.has-children) .outline-toggle {
+            visibility: hidden;
+        }
+
+        .outline-bullet {
+            width: 6px;
+            height: 6px;
+            background: var(--bullet);
+            border-radius: 50%;
+            margin: 7px 10px 0 0;
+            flex-shrink: 0;
+        }
+
+        .outline-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .outline-title {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .outline-note {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-top: 2px;
+        }
+
+        .outline-children {
+            margin-left: 30px;
+            border-left: 1px solid var(--border);
+            padding-left: 10px;
+        }
+
+        .outline-item.collapsed>.outline-children {
+            display: none;
+        }
+
+        /* タグ・バッジ */
+        .tag {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .tag-phase {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .tag-san {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .tag-dice {
+            background: #9b59b6;
+            color: #fff;
+        }
+
+        .tag-achievement {
+            background: var(--success);
+            color: #000;
+        }
+
+        .tag-warning {
+            background: var(--warning);
+            color: #000;
+        }
+
+        .tag-branch {
+            background: var(--accent2);
+            color: #000;
+        }
+
+        .tag-anomaly {
+            background: #e67e22;
+            color: #fff;
+        }
+
+        /* 特殊スタイル */
+        .highlight {
+            color: var(--accent);
+        }
+
+        .danger {
+            color: var(--danger);
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        .warning {
+            color: var(--warning);
+        }
+
+        .code {
+            background: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: var(--accent2);
+        }
+
+        /* セパレーター */
+        .separator {
+            border-top: 1px solid var(--border);
+            margin: 15px 0;
+        }
+
+        /* 難易度表示 */
+        .difficulty {
+            color: var(--warning);
+            font-size: 0.85em;
+            margin-left: 8px;
+        }
+
+        /* ファイルリンク */
+        .file-link {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .file-link:hover {
+            color: var(--accent2);
+            text-decoration: underline;
+        }
+
+        .file-link::after {
+            content: ' 📄';
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+
+        .file-link.danger {
+            color: var(--danger);
+        }
+
+        .file-link.danger:hover {
+            color: #ff6b6b;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .outline-children {
+                margin-left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>28時の深夜ラジオ</h1>
+        <span class="badge">ON AIR</span>
+        <div class="toolbar">
+            <button onclick="expandAll()">すべて展開</button>
+            <button onclick="collapseAll()">すべて折りたたむ</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 導入 -->
+        <div class="outline-item has-children">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">導入 <span class="tag tag-phase">Phase 0</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">シナリオ概要</div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">2000年代前半、地方FM局の深夜番組パーソナリティが行方不明に</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">最後の言葉：<span
+                                            class="danger">「……これ、冗談じゃない。今、スタジオの外に――」</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">PLは「台本」を手にして、深夜のスタジオにいることに気づく</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ミドル1 -->
+        <div class="outline-item has-children">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">ミドル1：最初の放送 <span class="tag tag-phase">Phase 1</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオにいることに気づく</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">手元の台本通りの放送が流れる（喫茶店で聞いた噂と同じ）</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">放送終了後、意識が途切れる…</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ミドル2 -->
+        <div class="outline-item has-children">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">ミドル2：チュートリアル <span class="tag tag-phase">Phase 2</span> <span
+                            class="tag tag-warning">SANチェックなし</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオ8で通常放送を見る</div>
+                            <div class="outline-note">01_進行台本の通り進行</div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item has-children">
+                            <div class="outline-header" onclick="toggleItem(this)">
+                                <span class="outline-toggle">▼</span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">放送終了後の選択 <span class="tag tag-branch">分岐</span></div>
+                                </div>
+                            </div>
+                            <div class="outline-children">
+                                <div class="outline-item">
+                                    <div class="outline-header">
+                                        <span class="outline-toggle"></span>
+                                        <span class="outline-bullet"></span>
+                                        <div class="outline-content">
+                                            <div class="outline-title"><span class="warning">→
+                                                    スタジオに行く</span>：スタジオ8を繰り返す（ループ）</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="outline-item">
+                                    <div class="outline-header">
+                                        <span class="outline-toggle"></span>
+                                        <span class="outline-bullet"></span>
+                                        <div class="outline-content">
+                                            <div class="outline-title"><span class="success">→ 待機する</span>：スタジオ7へ移動（正解）
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオ7：異変ミナコ（初回固定）</div>
+                            <div class="outline-note">女性口調の「ミナコ」が登場</div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item has-children">
+                            <div class="outline-header" onclick="toggleItem(this)">
+                                <span class="outline-toggle">▼</span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">異変ミナコ発生後の選択 <span class="tag tag-branch">分岐</span></div>
+                                </div>
+                            </div>
+                            <div class="outline-children">
+                                <div class="outline-item">
+                                    <div class="outline-header">
+                                        <span class="outline-toggle"></span>
+                                        <span class="outline-bullet"></span>
+                                        <div class="outline-content">
+                                            <div class="outline-title"><span class="success">→ スタジオに向かう</span>：正解 →
+                                                スタジオ6へ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="outline-item">
+                                    <div class="outline-header">
+                                        <span class="outline-toggle"></span>
+                                        <span class="outline-bullet"></span>
+                                        <div class="outline-content">
+                                            <div class="outline-title"><span class="danger">→ 待機する</span>：不正解 → スタジオ8に戻る
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオ6到達 <span class="tag tag-achievement">実績解放</span></div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">🏆 実績「理解者」解放</div>
+                                    <div class="outline-note">以降、選択肢がテキストで表示される</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ミドル3 -->
+        <div class="outline-item has-children">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">ミドル3：ランダム異変ループ <span class="tag tag-phase">Phase 3</span> <span
+                            class="tag tag-san">SAN 1d3/1d6</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><span class="danger">⚠ 失敗時SANチェック：スタジオ8を見た瞬間に 1d3/1d6</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">共通シーン開始</div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">「……おい、邪魔だぞ」</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">気がつくと、薄暗い廊下に立っている</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">目の前には「第◯スタジオ」が見える</div>
+                                    <div class="outline-note"><span class="success">成功→次の番号</span> / <span
+                                            class="danger">失敗→8番（SANチェック）</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">ダイスロール（KPシークレット） <span class="tag tag-dice">🎲</span></div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">異変発生判定 <span class="code">s1d10<=7< /span>
+                                    </div>
+                                    <div class="outline-note">1-7:異変あり(70%) / 8-10:異変なし(30%)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header">
+                                <span class="outline-toggle"></span>
+                                <span class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title">異変内容判定 <span class="code">s1d20</span></div>
+                                    <div class="outline-note">異変なしの場合もダミーで振る</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">放送開始 → PLが「異変あり/なし」を宣言 → 結果照合</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオ1到達まで繰り返す → クライマックスへ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- 異変リスト -->
+        <div class="outline-item has-children collapsed">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">異変リスト（1d20） <span class="tag tag-anomaly">20種類</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変01_ミナコ.txt" class="file-link">01:
+                                    ミナコ（女性口調）</a><span class="difficulty">★☆☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変02_オタク.txt" class="file-link">02:
+                                    オタク（早口オタク口調）</a><span class="difficulty">★☆☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変03_Youtube.txt" class="file-link">03:
+                                    Youtube（読み上げ内容違い）</a><span class="difficulty">★★☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変04_背景.txt" class="file-link">04:
+                                    背景違い</a><span class="difficulty">★☆☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変05_BGM.txt" class="file-link">05:
+                                    BGM違い</a><span class="difficulty">★☆☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変06_話題違い.txt" class="file-link">06:
+                                    話題違い（シュレーディンガーの猫）</a><span class="difficulty">★★☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変07_リクエスト曲.txt" class="file-link">07:
+                                    リクエスト曲違い</a><span class="difficulty">★★☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変08_Rec.txt" class="file-link">08:
+                                    REC表示</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変09_日付.txt" class="file-link">09:
+                                    日付違い（2050年）</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変10_構成順序.txt" class="file-link">10:
+                                    構成順序違い</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変11_ONAIRランプ.txt" class="file-link">11: ON
+                                    AIRランプ色違い</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変12_悪態.txt" class="file-link">12:
+                                    悪態なし（ずっとニコニコ）</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変13_セリフ欠落.txt" class="file-link">13:
+                                    セリフ欠落（エンディング）</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変14_赤い8.txt" class="file-link">14:
+                                    赤い8（タイトルの8が赤い）</a><span class="difficulty">★★☆</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変15_グリッド線.txt" class="file-link">15:
+                                    グリッド線色違い</a><span class="difficulty">★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変16_お便り送り主.txt" class="file-link">16:
+                                    お便り送り主違い</a><span class="difficulty">★★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変17_電話相手.txt" class="file-link">17:
+                                    電話相手違い（PC自身の声）</a><span class="difficulty">★★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変18_CM.txt" class="file-link">18:
+                                    CM違い</a><span class="difficulty">★★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変19_フレーム.txt" class="file-link">19:
+                                    フレーム違い</a><span class="difficulty">★★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item">
+                    <div class="outline-header"><span class="outline-toggle"></span><span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title"><a href="../003_ミドル3/異変20_罠.txt" class="file-link danger">20:
+                                    罠（即死トラップ）</a><span class="difficulty" style="color:#f14c4c;">★★★★★</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 異変20詳細 -->
+        <div class="outline-item has-children collapsed">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title"><span class="danger">異変20：罠 詳細ルール</span> <span
+                            class="tag tag-san">即死級</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">逃走判定（DEX×5）</div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item">
+                            <div class="outline-header"><span class="outline-toggle"></span><span
+                                    class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title"><span class="success">二人とも成功</span>：逃げ出せる。ダメージなし</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header"><span class="outline-toggle"></span><span
+                                    class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title"><span class="warning">片方成功</span>：失敗した方は1d10ダメージ →
+                                        スタジオ8へ（SAN 1d6/1d10）</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header"><span class="outline-toggle"></span><span
+                                    class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title"><span class="danger">二人とも失敗</span>：両者1d10ダメージ →
+                                        スタジオ8へ（SAN 1d6/1d10）</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="outline-item has-children">
+                    <div class="outline-header" onclick="toggleItem(this)">
+                        <span class="outline-toggle">▼</span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオ突入判定（DEX×4）</div>
+                        </div>
+                    </div>
+                    <div class="outline-children">
+                        <div class="outline-item">
+                            <div class="outline-header"><span class="outline-toggle"></span><span
+                                    class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title"><span class="success">二人とも成功</span>：次のスタジオへ（SAN 1/1d3）
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header"><span class="outline-toggle"></span><span
+                                    class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title"><span class="warning">片方成功</span>：分断される → スタジオ8へ（SAN
+                                        1d6/1d10）</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outline-item">
+                            <div class="outline-header"><span class="outline-toggle"></span><span
+                                    class="outline-bullet"></span>
+                                <div class="outline-content">
+                                    <div class="outline-title"><span class="danger">二人とも失敗</span>：閉じ込められる → スタジオ8へ（SAN
+                                        1d6/1d10）</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- クライマックス -->
+        <div class="outline-item has-children collapsed">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">クライマックス <span class="tag tag-phase">Climax</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">スタジオ1をクリア → クライマックス演出</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- エンディング -->
+        <div class="outline-item has-children collapsed">
+            <div class="outline-header" onclick="toggleItem(this)">
+                <span class="outline-toggle">▼</span>
+                <span class="outline-bullet"></span>
+                <div class="outline-content">
+                    <div class="outline-title">エンディング <span class="tag tag-phase">Ending</span></div>
+                </div>
+            </div>
+            <div class="outline-children">
+                <div class="outline-item">
+                    <div class="outline-header">
+                        <span class="outline-toggle"></span>
+                        <span class="outline-bullet"></span>
+                        <div class="outline-content">
+                            <div class="outline-title">何も変えることなく、不思議な体験だったなあ…で終了</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleItem(header) {
+            const item = header.parentElement;
+            if (item.classList.contains('has-children')) {
+                item.classList.toggle('collapsed');
+            }
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.outline-item.collapsed').forEach(item => {
+                item.classList.remove('collapsed');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.outline-item.has-children').forEach(item => {
+                item.classList.add('collapsed');
+            });
+        }
+    </script>
+</body>
+
+</html>

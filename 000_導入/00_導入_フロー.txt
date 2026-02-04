@@ -1,0 +1,36 @@
+{{{
+<h3 style="margin-top:20px;">導入フロー</h3>
+<div class="flow">
+    <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+            <h4>喫茶店での再会</h4>
+            <p>久しぶりに再会した友人同士として、喫茶店で話している。</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+            <h4>隣席の会話</h4>
+            <p>隣の客が「28時の深夜ラジオ」の失踪事件について話している。「台本が見つかった」という新情報。</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+            <h4>台本を発見</h4>
+            <p>ふと見ると、テーブルに「台本」があった。</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-content">
+            <h4>意識が遠のく</h4>
+            <p>台本を認識した（または手にした）瞬間、意識が遠のいた。</p>
+        </div>
+    </div>
+</div>
+<div class="card card-success">
+    <h4>→ ミドル1へ進む</h4>
+</div>
+}}}

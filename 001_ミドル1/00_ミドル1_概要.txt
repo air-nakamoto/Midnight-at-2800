@@ -1,0 +1,26 @@
+{{{
+<div class="flow">
+    <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+            <h4>スタジオにいることに気づく</h4>
+            <p>深夜のスタジオにいることに気づく。</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+            <h4>最初の放送を聞く</h4>
+            <p>手元の台本通りの放送が流れる。喫茶店で聞いた噂と同じ。</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+            <h4>意識が途切れる</h4>
+            <p>放送終了後、意識が途切れる…</p>
+        </div>
+    </div>
+</div>
+}}}
+ーーーーーーーーーーーーーー

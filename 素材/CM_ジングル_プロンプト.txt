@@ -1,0 +1,77 @@
+【CMジングル音声生成用プロンプト】
+※Suno AI / Udio 等の音楽生成AI用
+※すべて【10秒厳守】
+
+===================================================================
+■ CM1: 安らぎ堂（仏壇店）【通常】
+===================================================================
+Duration: 10 seconds (STRICT)
+
+【日本語イメージ】
+穏やかなピアノ、お線香の煙のように静かで落ち着いた雰囲気。
+和風の癒し系BGM。CMの最後にチャイム音。
+
+【English Prompt】
+Gentle Japanese-style piano melody, peaceful and serene atmosphere, 
+soft wind chimes, traditional Japanese ambient, warm and comforting, 
+funeral parlor commercial music, EXACTLY 10 SECONDS, short jingle,
+fade out ending, instrumental only, no vocals
+
+
+===================================================================
+■ CM2: 交通安全キャンペーン【通常】
+===================================================================
+Duration: 10 seconds (STRICT)
+
+【日本語イメージ】
+真面目で誠実なナレーション調。少しシリアスだが前向き。
+公共広告機構（AC）のようなトーン。最後に「ポーン」と注意喚起音。
+
+【English Prompt】
+Serious public service announcement background music, sincere tone,
+gentle orchestral strings, hopeful but cautious mood, driving safety theme,
+soft timpani, ends with a single notification chime, 
+EXACTLY 10 SECONDS, short jingle, Japanese PSA style, instrumental only
+
+
+===================================================================
+■ CM3: 行方不明者情報センター【異変用】
+===================================================================
+Duration: 10 seconds (STRICT)
+
+【日本語イメージ】
+不気味なピアノ、静かな不安感。誰かを探し続ける切なさ。
+デチューンしたピアノ、リバーブ深め。
+
+【English Prompt】
+Eerie detuned piano, unsettling atmosphere, missing person poster vibes,
+heavy reverb, distant and lonely feeling, creepy late-night radio commercial,
+subtle static noise, melancholic minor key, EXACTLY 10 SECONDS, 
+short jingle, horror ambient, instrumental only
+
+
+===================================================================
+■ CM4: 永眠の杜（葬儀社）【異変用】
+===================================================================
+Duration: 10 seconds (STRICT)
+
+【日本語イメージ】
+重厚なパイプオルガン。荘厳だが異常に暗い。
+葬式のBGMが深夜ラジオで流れる違和感。低音が不気味に響く。
+
+【English Prompt】
+Dark pipe organ, funeral atmosphere, ominously solemn,
+deep bass drones, gothic horror undertones, Japanese funeral music,
+EXACTLY 10 SECONDS, short jingle, unsettling religious hymn, 
+horror ambient, instrumental only
+
+
+===================================================================
+■ 使用例（ココフォリア用）
+===================================================================
+/scene CM1 → 安らぎ堂.mp3 を再生
+/scene CM2 → 交通安全.mp3 を再生
+
+【異変時】
+/scene CM1 → 行方不明者.mp3 を再生
+/scene CM2 → 永眠の杜.mp3 を再生

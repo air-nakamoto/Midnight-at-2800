@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRPGシナリオ - IDEスタイル</title>
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #252526;
+            --bg-tertiary: #2d2d30;
+            --text-primary: #cccccc;
+            --text-secondary: #858585;
+            --accent: #569cd6;
+            --border: #3c3c3c;
+            --folder-color: #dcb67a;
+            --file-color: #9cdcfe;
+            --sidebar-width: 280px;
+            --header-height: 40px;
+
+            /* Specific Colors */
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #e94560;
+            --info: #60a5fa;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f3f3;
+            --bg-tertiary: #e8e8e8;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --accent: #0066cc;
+            --border: #dddddd;
+            --folder-color: #b8860b;
+            --file-color: #0066cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic UI', 'Meiryo', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 100;
+            gap: 16px;
+        }
+
+        .header h1 {
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        /* Header Button (Sidebar Toggle) */
+        .header-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border);
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - var(--header-height));
+            margin-top: var(--header-height);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.closed {
+            margin-left: calc(var(--sidebar-width) * -1);
+        }
+
+        .sidebar-header {
+            padding: 10px 16px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            gap: 2px;
+        }
+
+        .sidebar-action-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px 6px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+
+        .sidebar-action-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .tree-item {
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .tree-label {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            padding-left: calc(8px + var(--depth, 0) * 16px);
+            gap: 6px;
+            font-size: 13px;
+            border-left: 2px solid transparent;
+        }
+
+        .tree-label:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .tree-label.active {
+            background: rgba(86, 156, 214, 0.1);
+            border-left-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .tree-icon {
+            width: 16px;
+            text-align: center;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tree-arrow {
+            font-size: 10px;
+            color: var(--text-secondary);
+            width: 16px;
+            text-align: center;
+            transition: transform 0.2s;
+            visibility: hidden;
+        }
+
+        .has-children>.tree-label .tree-arrow {
+            visibility: visible;
+        }
+
+        .expanded>.tree-label .tree-arrow {
+            transform: rotate(90deg);
+        }
+
+        .tree-children {
+            display: none;
+        }
+
+        .expanded>.tree-children {
+            display: block;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            background: var(--bg-primary);
+            overflow-y: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .breadcrumb-separator {
+            margin: 0 8px;
+            opacity: 0.5;
+        }
+
+        .breadcrumb-current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Page Content Container */
+        .content-area {
+            padding: 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .page {
+            display: none;
+            padding: 30px 50px;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography & Components */
+        h2 {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        h3 {
+            margin: 25px 0 15px;
+            font-weight: 500;
+            color: var(--info);
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        /* Script / Dialogue */
+        .script-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid var(--accent);
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            margin: 15px 0;
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+        }
+
+        .script-line {
+            margin-bottom: 8px;
+            display: flex;
+        }
+
+        .script-name {
+            font-weight: bold;
+            color: var(--info);
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .script-text {
+            flex: 1;
+        }
+
+        /* Flow Chart */
+        .flow {
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 30px;
+            bottom: -20px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .flow-num {
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .flow-content h4 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .flow-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                height: 100%;
+                margin-left: -100%;
+                /* Use diff technique for mobile */
+                z-index: 200;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                margin-left: 0;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .breadcrumbs {
+                padding-left: 20px;
+            }
+
+            /* Reset desktop margin logic for mobile */
+            .sidebar.closed {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+
+    <div class="header">
+        <button class="header-btn" onclick="toggleSidebar()" title="サイドバー切替">☰</button>
+        <h1>
+            <span style="font-size:18px;">💠</span>
+            <span id="scenario-title">シナリオ名（テンプレート）</span>
+        </h1>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span>Explorer</span>
+                <div class="sidebar-actions">
+                    <button class="sidebar-action-btn" onclick="toggleTheme()" title="テーマ切替">🌓</button>
+                    <button class="sidebar-action-btn" onclick="expandAll()" title="全展開">➕</button>
+                    <button class="sidebar-action-btn" onclick="collapseAll()" title="全折畳">➖</button>
+                </div>
+            </div>
+            <div class="sidebar-content" id="file-tree">
+                <!-- Tree content -->
+
+                <!-- Root Files -->
+                <div class="tree-item" onclick="openPage('#00_wp', this)">
+                    <div class="tree-label" style="--depth: 0">
+                        <span class="tree-arrow"></span>
+                        <span class="tree-icon">📄</span>
+                        <span>#00_WP前提.txt</span>
+                    </div>
+                </div>
+
+                <div class="tree-item has-children expanded">
+                    <div class="tree-label" style="--depth: 0" onclick="toggleFolder(this)">
+                        <span class="tree-arrow">▶</span>
+                        <span class="tree-icon">📂</span>
+                        <span>000_導入</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-item" onclick="openPage('000_intro_overview', this)">
+                            <div class="tree-label" style="--depth: 1">
+                                <span class="tree-arrow"></span>
+                                <span class="tree-icon">📄</span>
+                                <span>00_導入概要.txt</span>
+                            </div>
+                        </div>
+                        <div class="tree-item" onclick="openPage('000_intro_scene', this)">
+                            <div class="tree-label" style="--depth: 1">
+                                <span class="tree-arrow"></span>
+                                <span class="tree-icon">📄</span>
+                                <span>01_導入シーン.txt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tree-item has-children">
+                    <div class="tree-label" style="--depth: 0" onclick="toggleFolder(this)">
+                        <span class="tree-arrow">▶</span>
+                        <span class="tree-icon">📂</span>
+                        <span>001_ミドル1</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-item" onclick="openPage('001_middle1_overview', this)">
+                            <div class="tree-label" style="--depth: 1">
+                                <span class="tree-arrow"></span>
+                                <span class="tree-icon">📄</span>
+                                <span>00_ミドル1概要.txt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tree-item has-children">
+                    <div class="tree-label" style="--depth: 0" onclick="toggleFolder(this)">
+                        <span class="tree-arrow">▶</span>
+                        <span class="tree-icon">📂</span>
+                        <span>099_クライマックス</span>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-item" onclick="openPage('099_climax_overview', this)">
+                            <div class="tree-label" style="--depth: 1">
+                                <span class="tree-arrow"></span>
+                                <span class="tree-icon">📄</span>
+                                <span>00_クライマックス概要.txt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <div class="breadcrumb-item" id="bc-root">
+                    <span class="tree-icon">📂</span>
+                    <span>ROOT</span>
+                </div>
+                <div class="breadcrumb-separator">/</div>
+                <div class="breadcrumb-item breadcrumb-current" id="bc-current">
+                    <span class="tree-icon">📄</span>
+                    <span id="breadcrumb-title">#00_WP前提.txt</span>
+                </div>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="content-area">
+
+                <!-- #00_WP前提 -->
+                <div id="#00_wp" class="page active">
+                    <h2>#00_WP前提.txt</h2>
+                    <div class="card">
+                        <h3>Wish Project 前提</h3>
+                        <p>【前提】プレイヤーの感情による所に準ずる</p>
+                        <ul>
+                            <li>プレイヤーの意図した選択の通り、物語が展開する</li>
+                            <li>意図と異なりを感じさせてしまった場合、その選択によって生じた展開に理解（できれば納得）できる</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 000_導入概要 -->
+                <div id="000_intro_overview" class="page">
+                    <h2>00_導入概要.txt</h2>
+                    <div class="card">
+                        <h3>このフェーズの目的</h3>
+                        <p>PCをシナリオに引き込み、日常から非日常への境界を越えさせる。</p>
+                    </div>
+                    <h3>導入フロー</h3>
+                    <div class="flow">
+                        <div class="flow-step">
+                            <div class="flow-num">1</div>
+                            <div class="flow-content">
+                                <h4>日常描写</h4>
+                                <p>PCたちの普段の生活を描写。平和な時間。</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-num">2</div>
+                            <div class="flow-content">
+                                <h4>事件の予兆</h4>
+                                <p>ニュース、またはNPCからの相談。</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <div class="flow-num">3</div>
+                            <div class="flow-content">
+                                <h4>巻き込まれ</h4>
+                                <p>事件が発生し、逃れられない状況になる。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 000_導入シーン -->
+                <div id="000_intro_scene" class="page">
+                    <h2>01_導入シーン.txt</h2>
+                    <p>シーンプレイヤー：PC1</p>
+
+                    <div class="script-box">
+                        <div class="script-line">
+                            <span class="script-name">GM</span>
+                            <span class="script-text">季節は冬。吐く息も白いある日の夜です。あなたは仕事からの帰路についていました。</span>
+                        </div>
+                        <div class="script-line">
+                            <span class="script-name">？？？</span>
+                            <span class="script-text">「……すみません、ちょっといいですか？」</span>
+                        </div>
+                        <div class="script-line">
+                            <span class="script-name">GM</span>
+                            <span class="script-text">後ろから声をかけられます。振り向くと、そこには見知らぬ少女が立っていました。</span>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-left: 3px solid var(--info);">
+                        <h4>判定：〈目星〉</h4>
+                        <p>成功すると、少女の服に血が付着していることに気づく。</p>
+                    </div>
+                </div>
+
+                <!-- ミドル1 -->
+                <div id="001_middle1_overview" class="page">
+                    <h2>001_ミドル1概要.txt</h2>
+                    <p>調査フェーズ。</p>
+                </div>
+
+                <!-- クライマックス -->
+                <div id="099_climax_overview" class="page">
+                    <h2>00_クライマックス概要.txt</h2>
+                    <p>最終決戦。</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+
+        // Toggle Folder
+        function toggleFolder(element) {
+            const parent = element.parentElement;
+            parent.classList.toggle('expanded');
+        }
+
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('open');
+            } else {
+                sidebar.classList.toggle('closed');
+            }
+        }
+
+        // Open Page (Switch View)
+        function openPage(pageId, treeItem) {
+            // 1. Deactivate all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+            // 2. Activate target page
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+            } else {
+                // Fallback for demo if ID doesn't exist
+                const contentArea = document.querySelector('.content-area');
+                // Check if a temp page exists, if not create one
+                let tempPage = document.getElementById('temp-page');
+                if (!tempPage) {
+                    tempPage = document.createElement('div');
+                    tempPage.id = 'temp-page';
+                    tempPage.className = 'page';
+                    contentArea.appendChild(tempPage);
+                }
+                tempPage.innerHTML = `<h2>${treeItem.querySelector('.tree-label span:last-child').innerText}</h2><p>コンテンツはまだ準備されていません。</p>`;
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                tempPage.classList.add('active');
+            }
+
+            // 3. Update Sidebar Selection
+            document.querySelectorAll('.tree-label').forEach(l => l.classList.remove('active'));
+            const label = treeItem.querySelector('.tree-label');
+            label.classList.add('active');
+
+            // 4. Update Breadcrumb
+            const filename = label.querySelector('span:last-child').innerText;
+            document.getElementById('breadcrumb-title').innerText = filename;
+
+            // Find parent folder name if exists
+            const parentFolder = treeItem.closest('.tree-children')?.previousElementSibling;
+            const rootCrumb = document.getElementById('bc-root');
+
+            if (parentFolder) {
+                const folderName = parentFolder.querySelector('span:last-child').innerText;
+                rootCrumb.innerHTML = `<span class="tree-icon">📂</span><span>${folderName}</span>`;
+            } else {
+                rootCrumb.innerHTML = `<span class="tree-icon">📂</span><span>ROOT</span>`; // Or Project Name
+            }
+
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        // Expand All / Collapse All
+        function expandAll() {
+            document.querySelectorAll('.tree-item.has-children').forEach(el => {
+                el.classList.add('expanded');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.tree-item.has-children').forEach(el => {
+                el.classList.remove('expanded');
+            });
+        }
+
+        // --- Theme Logic ---
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=Shift_JIS">
+<meta http-equiv="content-style-type" content="text/css">
+<style type="text/css">
+h3 {font-family: 'メイリオ';
+	position: relative;
+	padding: 0 .1em .1em 1em;
+	border-bottom: 2px solid #265A3C;
+}
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+.tg .tg-fnr9{font-weight:bold;font-size:11px;background-color:#cbcefb;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+.tg .tg-dx8v{font-size:12px;vertical-align:top}
+
+
+.tg .tg-7uzy{vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+
+
+
+</style>
+<title>能力値算出方法</title>
+</head>
+<body>
+<p style="text-align: left;">
+
+	<h3>探索者の能力値算出方法：一覧</h3>
+
+	
+	<table class="tg">
+
+  <tr>
+    <td class="tg-yw4l">
+	
+	
+	
+
+   
+<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; ">
+<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; "><span style="font-weight: bold;">◆基本能力値</span></span>
+<table class="tg">
+  <tr>
+    <th class="tg-fnr9">能力値</th>
+    <th class="tg-fnr9">意味</th>
+    <th class="tg-fnr9">読み（俗称）</th>
+    <th class="tg-fnr9">ダイス</th>
+	<th class="tg-fnr9">最低値＜最大値</th>
+	<th class="tg-fnr9">期待値</th>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">STR </td>
+    <td class="tg-dx8v">筋力</td>
+    <td class="tg-dx8v">エスティーアール</td>
+    <td class="tg-dx8v" rowspan="5">3D6</td>
+	<td class="tg-dx8v" rowspan="5">3～18</td>
+	<td class="tg-dx8v" rowspan="5">10.5</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">CON</td>
+    <td class="tg-dx8v">体力</td>
+    <td class="tg-dx8v">コン</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">POW</td>
+    <td class="tg-dx8v">精神力</td>
+    <td class="tg-dx8v">パウ</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">DEX</td>
+    <td class="tg-dx8v">敏捷性</td>
+    <td class="tg-dx8v">デックス</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">APP</td>
+    <td class="tg-dx8v">外見</td>
+    <td class="tg-dx8v">エーピーピー</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">SIZ</td>
+    <td class="tg-dx8v">体格</td>
+    <td class="tg-dx8v">サイズ</td>
+    <td class="tg-dx8v" rowspan="2">2D6＋6</td>
+	<td class="tg-dx8v" rowspan="2">8～18</td>
+	    <td class="tg-dx8v" rowspan="2">13</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">INT</td>
+    <td class="tg-dx8v">知力</td>
+    <td class="tg-dx8v">イント</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">EDU</td>
+    <td class="tg-dx8v">教養</td>
+    <td class="tg-dx8v">エデュ</td>
+    <td class="tg-dx8v">3D6＋3</td>
+	<td class="tg-dx8v">6～21</td>
+	    <td class="tg-dx8v">13.5</td>
+  </tr>
+</table>
+
+
+</td>
+    <td class="tg-7uzy">
+
+
+
+<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; ">
+<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; "> <span style="font-weight: bold;">◆算出される能力値</span></span>
+
+       
+     <table class="tg">
+ 
+        	<tr>
+                <th class="tg-fnr9">項目</th>
+               <th class="tg-fnr9">数式</th>
+           
+            </tr>
+        </thead>
+        <tbody>
+        	<tr>
+                <td class="tg-yw4l">SAN（正気度）</td>
+				<td class="tg-dx8v">POW×5<br>（ただし99から「クトゥルフ神話の値」を引いた値が上限）</td>
+               
+            </tr>
+            <tr>
+                <td class="tg-yw4l">幸運</td>
+                 <td class="tg-dx8v">POW×5</td>
+                
+            </tr>
+            <tr>
+                <td class="tg-yw4l">アイデア</td>
+                 <td class="tg-dx8v">INT×5</td>
+                
+            </tr>
+            <tr>
+                <td class="tg-yw4l">知識</td>
+                <td class="tg-dx8v">EDU×5</td>
+            </tr>
+            <tr>
+               <td class="tg-yw4l">耐久力</td>
+                <td class="tg-dx8v">(CON+SIZ)÷2</td>
+                
+            <tr>
+                <td class="tg-yw4l">マジックポイント</td>
+                <td class="tg-dx8v">POW×1</td>
+             
+                <span id="condice3_5" class="condice"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">職業技能ポイント</td>
+               <td class="tg-dx8v">EDU×20</td>
+				
+			
+            <tr>
+                <td class="tg-yw4l">趣味技能ポイント</td>
+                <td class="tg-dx8v">INT×10</td>
+           
+                
+            </tr>
+            <tr>
+               <td class="tg-yw4l">ダメージボーナス</td>
+                <td class="tg-dx8v">STR＋SIZ</td>
+            
+                
+            </tr>
+        </tbody>
+	</table>
+	<br>
+
+
+</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">
+  
+	 
+	  
+    <span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; ">
+	<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; "><span style="font-weight: bold;">◆ダメージボーナス(DB)</span></span>　※STR＋SIZの最大値は36
+
+     <table class="tg">
+ 	
+        	<tr>
+                <th class="tg-fnr9">STR＋SIZ</th>
+               <th class="tg-fnr9">ダメージボーナス(DB)</th>
+           
+            </tr>
+        </thead>
+        <tbody>
+        	<tr>
+                <td class="tg-yw4l">2～12</td>
+				<td class="tg-dx8v">-1D6</td>
+               
+            </tr>
+            <tr>
+                <td class="tg-yw4l">13～16</td>
+                 <td class="tg-dx8v">-1D4</td>
+                
+            </tr>
+            <tr>
+                <td class="tg-yw4l">17～24</td>
+                 <td class="tg-dx8v">±0</td>
+                
+            </tr>
+            <tr>
+                <td class="tg-yw4l">25～32</td>
+                <td class="tg-dx8v">+1D4</td>
+            </tr>
+            <tr>
+               <td class="tg-yw4l">33～40</td>
+                <td class="tg-dx8v">+1D6</td>
+                
+            <tr>
+                <td class="tg-yw4l">41～56</td>
+                <td class="tg-dx8v">+2D6</td>
+             
+                <span id="condice3_5" class="condice"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">57～72</td>
+               <td class="tg-dx8v">+3D6</td>
+				
+            </tr>
+        </tbody>
+	</table>
+	  
+	</td>
+    <td class="tg-7uzy">
+
+	<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; ">
+<span style="font-family: 'ＭＳ Ｐゴシック'; color: black; font-size: 11pt; "><span style="font-weight: bold;">◆年収と財産</span></span>　（うわっ私の年収、低すぎ！）
+<table class="tg">
+<th class="tg-fnr9">3D6の値</th>
+<th class="tg-fnr9">年収</th>
+<th class="tg-fnr9">財産（年収×５）</th>
+
+</tr>
+        </thead>
+        <tbody>
+        	<tr>
+                <td class="tg-yw4l">3</td>
+				<td class="tg-dx8v">150万円以下</td>
+               <td class="tg-dx8v">750万円以下</td>
+            </tr>
+            <tr>
+                 <td class="tg-yw4l">4</td>
+				<td class="tg-dx8v">200万円</td>
+               <td class="tg-dx8v">1000万円</td>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">5</td>
+				<td class="tg-dx8v">250万円</td>
+               <td class="tg-dx8v">1250万円</td>
+            </tr>
+            <tr>
+                   <td class="tg-yw4l">6</td>
+				<td class="tg-dx8v">300万円</td>
+               <td class="tg-dx8v">1500万円</td>
+		   </tr>
+		   <tr>
+                    <td class="tg-yw4l">7</td>
+				<td class="tg-dx8v">350万円</td>
+               <td class="tg-dx8v">1750万円</td>
+            </tr>
+            <tr>
+                    <td class="tg-yw4l">8</td>
+				<td class="tg-dx8v">400万円</td>
+               <td class="tg-dx8v">2000万円</td>
+            </tr>
+            <tr>
+                    <td class="tg-yw4l">9</td>
+				<td class="tg-dx8v">450万円</td>
+               <td class="tg-dx8v">2250万円</td>
+            </tr>
+            <tr>
+                    <td class="tg-yw4l">10</td>
+				<td class="tg-dx8v">500万円</td>
+               <td class="tg-dx8v">2500万円</td>
+            </tr>
+            <tr>
+				<td class="tg-yw4l">11</td>
+				<td class="tg-dx8v">600万円</td>
+               <td class="tg-dx8v">3000万円</td>
+		   </tr>
+		    <tr>
+		   <td class="tg-yw4l">12</td>
+				<td class="tg-dx8v">700万円</td>
+               <td class="tg-dx8v">3500万円</td>
+		   </tr>
+		   <tr>
+		   <td class="tg-yw4l">13</td>
+				<td class="tg-dx8v">800万円</td>
+               <td class="tg-dx8v">4000万円</td>
+		   </tr>
+		      <tr>
+		   <td class="tg-yw4l">14</td>
+				<td class="tg-dx8v">900万円</td>
+               <td class="tg-dx8v">4500万円</td>
+		   </tr>
+		      <tr>
+				  <td class="tg-yw4l">15</td>
+				<td class="tg-dx8v">1000万円</td>
+               <td class="tg-dx8v">5000万円</td>
+		   </tr>
+		   
+		    <tr>
+		   <td class="tg-yw4l">16</td>
+				<td class="tg-dx8v">2000万円</td>
+               <td class="tg-dx8v">１億円</td>
+		   </tr>
+		    <tr>
+		   <td class="tg-yw4l">17</td>
+				<td class="tg-dx8v">3000万円</td>
+               <td class="tg-dx8v">１億5000万円</td>
+		   </tr>
+		    <tr>
+		   <td class="tg-yw4l">18</td>
+				<td class="tg-dx8v">5000万円以上</td>
+               <td class="tg-dx8v">２億5000万円以上</td>
+		   </tr>
+		   
+</table>
+
+
+</td>
+  </tr>
+</table>    
+	
+</p>
+
+</body></html>

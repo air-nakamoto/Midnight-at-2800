@@ -1,0 +1,45 @@
+{{{
+<h3 style="margin-top:20px;">ミドル3 進行フロー</h3>
+
+<div class="flow">
+    <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+            <h4>異変発生判定（通常時）</h4>
+            <p>1d10で異変発生の有無を判定（≦7で異変発生）</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+            <h4>異変内容決定</h4>
+            <p>1d20で異変の種類を決定（異変リスト参照）</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+            <h4>スタジオ前 → 放送開始</h4>
+            <p>共通シーンを経て放送開始。異変の手がかりを探す。</p>
+        </div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-content">
+            <h4>放送終了後の選択</h4>
+            <p>正しい行動を選択すれば次のスタジオへ進む。</p>
+        </div>
+    </div>
+</div>
+<div class="card card-info" style="margin-bottom: 20px;">
+    <h4>目標：スタジオ1到達</h4>
+    <p>スタジオ番号を減らしていき、スタジオ1到達でクライマックスへ。</p>
+</div>
+
+<div class="card card-warning" style="margin-top: 30px;">
+    <h4>⚠️ 例外：初回スタジオ5到達時</h4>
+    <p><strong>初めてスタジオ5に到達した際</strong>は、ランダム判定を行わず、以下の強制イベントが発生します。</p>
+    <p>参照：<span class="tag">002_ミドル2/20_おざま進行台本.txt</span></p>
+    <p>（このイベント終了後、スタジオ4へ進みます）</p>
+</div>
+}}}

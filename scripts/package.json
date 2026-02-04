@@ -1,0 +1,13 @@
+{
+  "name": "28ji-radio-tools",
+  "version": "1.0.0",
+  "description": "28時の深夜ラジオ ユーティリティスクリプト",
+  "scripts": {
+    "pdf": "node html-to-pdf.js",
+    "pdf:index": "node html-to-pdf.js ../プレイヤー配布用/index.html ../プレイヤー配布用/index.pdf",
+    "pdf:script": "node html-to-pdf.js ../プレイヤー配布用/台本.html ../プレイヤー配布用/台本.pdf"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}
