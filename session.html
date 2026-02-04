@@ -12861,8 +12861,24 @@
             setTimeout(() => { contentArea.scrollTop = 0; }, 10);
         }
 
-        // Expand All / Collapse All Toggle
-        let isExpanded = true; // Start expanded
+        // Expand All / Collapse All Toggle with LocalStorage
+        let isExpanded = localStorage.getItem('treeExpanded') === 'true';
+
+        // Initialize tree state on load
+        function initTreeState() {
+            const items = document.querySelectorAll('.tree-item.has-children');
+            const btn = document.getElementById('toggle-expand-btn');
+            if (isExpanded) {
+                items.forEach(el => el.classList.add('expanded'));
+                btn.textContent = '➖ 全折畳';
+                btn.title = '全折畳';
+            } else {
+                items.forEach(el => el.classList.remove('expanded'));
+                btn.textContent = '➕ 全展開';
+                btn.title = '全展開';
+            }
+        }
+
         function toggleExpandAll() {
             const btn = document.getElementById('toggle-expand-btn');
             const items = document.querySelectorAll('.tree-item.has-children');
@@ -12878,7 +12894,11 @@
                 btn.title = '全折畳';
             }
             isExpanded = !isExpanded;
+            localStorage.setItem('treeExpanded', isExpanded);
         }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', initTreeState);
 
         // --- Theme Logic ---
         function toggleTheme() {
