@@ -236,16 +236,23 @@
 
         /* Page Content Container */
         .content-area {
+            display: grid;
+            align-content: start;
+            /* Force all content to top */
             padding: 0;
-            flex: 1;
+            height: 100%;
             overflow-y: auto;
         }
 
         .page {
             display: none;
-            padding: 30px 50px;
+            width: 100%;
             max-width: 900px;
+            padding: 30px 50px;
             margin: 0 auto;
+            box-sizing: border-box;
+            align-self: start;
+            /* Redundant safety */
             animation: fadeIn 0.2s ease;
         }
 
@@ -626,8 +633,8 @@
             <div class="sidebar-header">
                 <div class="sidebar-actions" style="width: 100%; display: flex; justify-content: space-around;">
                     <button class="sidebar-action-btn" onclick="toggleTheme()" title="テーマ切替">🌓 モード</button>
-                    <button class="sidebar-action-btn" onclick="expandAll()" title="全展開">➕ 展開</button>
-                    <button class="sidebar-action-btn" onclick="collapseAll()" title="全折畳">➖ 折畳</button>
+                    <button class="sidebar-action-btn" id="toggle-expand-btn" onclick="toggleExpandAll()"
+                        title="全展開/全折畳">➕ 全展開</button>
                 </div>
             </div>
             <div class="sidebar-content" id="file-tree">
@@ -871,17 +878,40 @@
             }
         }
 
-        // Expand All / Collapse All
-        function expandAll() {
-            document.querySelectorAll('.tree-item.has-children').forEach(el => {
-                el.classList.add('expanded');
-            });
+        // Expand All / Collapse All Toggle with LocalStorage
+        let isExpanded = localStorage.getItem('treeExpanded') === 'true';
+
+        // Initialize tree state on load
+        function initTreeState() {
+            const items = document.querySelectorAll('.tree-item.has-children');
+            const btn = document.getElementById('toggle-expand-btn');
+            if (isExpanded) {
+                items.forEach(el => el.classList.add('expanded'));
+                btn.textContent = '➖ 全折畳';
+                btn.title = '全折畳';
+            } else {
+                items.forEach(el => el.classList.remove('expanded'));
+                btn.textContent = '➕ 全展開';
+                btn.title = '全展開';
+            }
         }
 
-        function collapseAll() {
-            document.querySelectorAll('.tree-item.has-children').forEach(el => {
-                el.classList.remove('expanded');
-            });
+        function toggleExpandAll() {
+            const btn = document.getElementById('toggle-expand-btn');
+            const items = document.querySelectorAll('.tree-item.has-children');
+            if (isExpanded) {
+                // Collapse all
+                items.forEach(el => el.classList.remove('expanded'));
+                btn.textContent = '➕ 全展開';
+                btn.title = '全展開';
+            } else {
+                // Expand all
+                items.forEach(el => el.classList.add('expanded'));
+                btn.textContent = '➖ 全折畳';
+                btn.title = '全折畳';
+            }
+            isExpanded = !isExpanded;
+            localStorage.setItem('treeExpanded', isExpanded);
         }
 
         // --- Theme Logic ---
@@ -905,6 +935,9 @@
 
         // Initialize & Back to Top Logic
         window.addEventListener('DOMContentLoaded', () => {
+            // Initialize tree state
+            initTreeState();
+
             // Apply highlights if needed
             // applyHighlights();
 
