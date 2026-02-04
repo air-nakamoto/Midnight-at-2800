@@ -245,19 +245,22 @@
 
         /* Page Content Container */
         .content-area {
+            display: grid;
+            grid-template-rows: min-content;
+            align-items: start;
+            justify-items: center;
             padding: 0;
             height: 100%;
-            /* Fill the main container */
             overflow-y: auto;
-            /* Handle scrolling here */
         }
 
         .page {
             display: none;
-            padding: 30px 50px;
+            width: 100%;
             max-width: 900px;
-            margin: 0 auto 50px auto;
-            /* Top 0, Bottom 50px */
+            padding: 30px 50px;
+            margin: 0;
+            box-sizing: border-box;
             animation: fadeIn 0.2s ease;
         }
 
