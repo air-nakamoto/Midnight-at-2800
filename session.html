@@ -233,12 +233,11 @@
         .main {
             flex: 1;
             background: var(--bg-primary);
-            overflow-y: auto;
+            overflow: hidden;
+            /* Let .content-area handle scrolling */
             position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            /* Ensure top alignment */
+            display: block;
+            /* Simple block, no flex */
         }
 
 
