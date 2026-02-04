@@ -246,9 +246,8 @@
         /* Page Content Container */
         .content-area {
             display: grid;
-            grid-template-rows: min-content;
-            align-items: start;
-            /* Horizontal centering via .page margin */
+            align-content: start;
+            /* Force all content to top */
             padding: 0;
             height: 100%;
             overflow-y: auto;
@@ -260,8 +259,9 @@
             max-width: 900px;
             padding: 30px 50px;
             margin: 0 auto;
-            /* Horizontal center */
             box-sizing: border-box;
+            align-self: start;
+            /* Redundant safety */
             animation: fadeIn 0.2s ease;
         }
 
