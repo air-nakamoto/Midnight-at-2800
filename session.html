@@ -246,8 +246,10 @@
         /* Page Content Container */
         .content-area {
             padding: 0;
-            flex: 1;
+            height: 100%;
+            /* Fill the main container */
             overflow-y: auto;
+            /* Handle scrolling here */
         }
 
         .page {
@@ -12849,7 +12851,10 @@
             }
 
             // Scroll to top
-            document.querySelector('.content-area').scrollTop = 0;
+            // Scroll to top with delay to ensure rendering
+            const contentArea = document.querySelector('.content-area');
+            contentArea.scrollTop = 0;
+            setTimeout(() => { contentArea.scrollTop = 0; }, 10);
         }
 
         // Expand All / Collapse All
