@@ -312,27 +312,97 @@
         .script-box {
             background: rgba(0, 0, 0, 0.2);
             border-left: 3px solid var(--accent);
-            padding: 15px;
-            border-radius: 0 4px 4px 0;
-            margin: 15px 0;
+            padding: 18px 20px;
+            border-radius: 0 6px 6px 0;
+            margin: 18px 0;
             font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            font-size: 15.5px;
+            line-height: 1.95;
+        }
+
+        [data-theme="light"] .script-box {
+            background: rgba(0, 0, 0, 0.04);
         }
 
         .script-line {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
+            gap: 10px;
+            padding: 4px 8px;
+            border-left: 3px solid transparent;
+            border-radius: 0 4px 4px 0;
+            background: transparent;
+        }
+
+        .script-line:last-child {
+            margin-bottom: 0;
         }
 
         .script-name {
             font-weight: bold;
             color: var(--info);
-            width: 80px;
+            width: 6em;
+            min-width: 6em;
             flex-shrink: 0;
         }
 
         .script-text {
             flex: 1;
         }
+
+        /* NPC speaker color coding */
+        .script-line.sp-low { border-left-color: #60a5fa; background: rgba(96, 165, 250, 0.06); }
+        .script-line.sp-low .script-name { color: #60a5fa; }
+
+        .script-line.sp-high { border-left-color: #fbbf24; background: rgba(251, 191, 36, 0.06); }
+        .script-line.sp-high .script-name { color: #fbbf24; }
+
+        .script-line.sp-minato { border-left-color: #38bdf8; background: rgba(56, 189, 248, 0.06); }
+        .script-line.sp-minato .script-name { color: #38bdf8; }
+
+        .script-line.sp-minako { border-left-color: #f472b6; background: rgba(244, 114, 182, 0.07); }
+        .script-line.sp-minako .script-name { color: #f472b6; }
+
+        .script-line.sp-minato-q { border-left-color: #c084fc; background: rgba(192, 132, 252, 0.07); }
+        .script-line.sp-minato-q .script-name { color: #c084fc; }
+
+        .script-line.sp-ozama { border-left-color: #fb923c; background: rgba(251, 146, 60, 0.07); }
+        .script-line.sp-ozama .script-name { color: #fb923c; }
+
+        .script-line.sp-dj { border-left-color: #4ade80; background: rgba(74, 222, 128, 0.06); }
+        .script-line.sp-dj .script-name { color: #4ade80; }
+
+        .script-line.sp-kp { border-left-color: #e94560; background: rgba(233, 69, 96, 0.07); }
+        .script-line.sp-kp .script-name { color: #e94560; }
+
+        .script-line.sp-phone { border-left-color: #94a3b8; background: rgba(148, 163, 184, 0.07); }
+        .script-line.sp-phone .script-name { color: #94a3b8; }
+
+        .script-line.sp-phone-female { border-left-color: #fb7185; background: rgba(251, 113, 133, 0.07); }
+        .script-line.sp-phone-female .script-name { color: #fb7185; }
+
+        .script-line.sp-phone-pc { border-left-color: #a78bfa; background: rgba(167, 139, 250, 0.08); }
+        .script-line.sp-phone-pc .script-name { color: #a78bfa; }
+
+        .script-line.sp-request { border-left-color: #facc15; background: rgba(250, 204, 21, 0.06); }
+        .script-line.sp-request .script-name { color: #facc15; }
+
+        [data-theme="light"] .script-line.sp-low { background: rgba(96, 165, 250, 0.12); }
+        [data-theme="light"] .script-line.sp-high { background: rgba(217, 119, 6, 0.12); }
+        [data-theme="light"] .script-line.sp-high .script-name { color: #b45309; }
+        [data-theme="light"] .script-line.sp-minato { background: rgba(56, 189, 248, 0.12); }
+        [data-theme="light"] .script-line.sp-minako { background: rgba(244, 114, 182, 0.14); }
+        [data-theme="light"] .script-line.sp-minato-q { background: rgba(192, 132, 252, 0.14); }
+        [data-theme="light"] .script-line.sp-ozama { background: rgba(251, 146, 60, 0.14); }
+        [data-theme="light"] .script-line.sp-dj { background: rgba(74, 222, 128, 0.14); }
+        [data-theme="light"] .script-line.sp-dj .script-name { color: #15803d; }
+        [data-theme="light"] .script-line.sp-kp { background: rgba(233, 69, 96, 0.12); }
+        [data-theme="light"] .script-line.sp-phone { background: rgba(100, 116, 139, 0.12); }
+        [data-theme="light"] .script-line.sp-phone .script-name { color: #475569; }
+        [data-theme="light"] .script-line.sp-phone-female { background: rgba(251, 113, 133, 0.14); }
+        [data-theme="light"] .script-line.sp-phone-pc { background: rgba(167, 139, 250, 0.14); }
+        [data-theme="light"] .script-line.sp-request { background: rgba(202, 138, 4, 0.14); }
+        [data-theme="light"] .script-line.sp-request .script-name { color: #a16207; }
 
         /* Flow Chart */
         .flow {
@@ -674,7 +744,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_導入_フロー.txt</span>
+                                <span>00_導入_フロー</span>
                             </div>
                         </div>
 
@@ -724,7 +794,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_ミドル1_概要.txt</span>
+                                <span>00_ミドル1_概要</span>
                             </div>
                         </div>
 
@@ -736,7 +806,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>01_ミドル1-1.txt</span>
+                                <span>01_ミドル1-1</span>
                             </div>
                         </div>
 
@@ -747,7 +817,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>02_ミドル1-2_進行台本.txt</span>
+                                <span>02_ミドル1-2_進行台本</span>
                             </div>
                         </div>
 
@@ -773,7 +843,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_ミドル2_概要.txt</span>
+                                <span>00_ミドル2_概要</span>
                             </div>
                         </div>
 
@@ -785,7 +855,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>01_共通シーン.txt</span>
+                                <span>01_共通シーン</span>
                             </div>
                         </div>
 
@@ -797,7 +867,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>02_進行台本.txt</span>
+                                <span>02_進行台本</span>
                             </div>
                         </div>
 
@@ -809,7 +879,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>03_異変ミナコ.txt</span>
+                                <span>03_異変ミナコ</span>
                             </div>
                         </div>
 
@@ -821,7 +891,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>04_初スタジオ6到達.txt</span>
+                                <span>04_初スタジオ6到達</span>
                             </div>
                         </div>
 
@@ -833,7 +903,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>05_異変ルール.txt</span>
+                                <span>05_異変ルール</span>
                             </div>
                         </div>
 
@@ -845,7 +915,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>06_ダイス表と異変一覧.txt</span>
+                                <span>06_ダイス表と異変一覧</span>
                             </div>
                         </div>
 
@@ -857,7 +927,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>07_実績解放システム.txt</span>
+                                <span>07_実績解放システム</span>
                             </div>
                         </div>
 
@@ -869,7 +939,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>10_台本を手にする.txt</span>
+                                <span>10_台本を手にする</span>
                             </div>
                         </div>
 
@@ -881,7 +951,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>20_特殊異変：スタジオ5_タンテイおざまのタンテイラジオ_進行台本.txt</span>
+                                <span>20_特殊異変：スタジオ5_タンテイおざまのタンテイラジオ_進行台本</span>
                             </div>
                         </div>
 
@@ -893,7 +963,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>21_特殊異変_オリジナル台本作成ガイド.txt</span>
+                                <span>21_特殊異変_オリジナル台本作成ガイド</span>
                             </div>
                         </div>
 
@@ -919,7 +989,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_ミドル3_フロー.txt</span>
+                                <span>00_ミドル3_フロー</span>
                             </div>
                         </div>
 
@@ -931,7 +1001,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>01_ミドル3_共通シーン.txt</span>
+                                <span>01_ミドル3_共通シーン</span>
                             </div>
                         </div>
 
@@ -943,7 +1013,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変00_通常.txt</span>
+                                <span>異変00_通常</span>
                             </div>
                         </div>
 
@@ -955,7 +1025,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変01_ミナコ.txt</span>
+                                <span>異変01_ミナコ</span>
                             </div>
                         </div>
 
@@ -967,7 +1037,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変02_オタク.txt</span>
+                                <span>異変02_オタク</span>
                             </div>
                         </div>
 
@@ -979,7 +1049,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変03_Youtube.txt</span>
+                                <span>異変03_Youtube</span>
                             </div>
                         </div>
 
@@ -991,7 +1061,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変04_背景.txt</span>
+                                <span>異変04_背景</span>
                             </div>
                         </div>
 
@@ -1003,7 +1073,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変05_BGM.txt</span>
+                                <span>異変05_BGM</span>
                             </div>
                         </div>
 
@@ -1015,7 +1085,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変06_話題違い.txt</span>
+                                <span>異変06_話題違い</span>
                             </div>
                         </div>
 
@@ -1027,7 +1097,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変07_リクエスト曲.txt</span>
+                                <span>異変07_リクエスト曲</span>
                             </div>
                         </div>
 
@@ -1039,7 +1109,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変08_Rec.txt</span>
+                                <span>異変08_Rec</span>
                             </div>
                         </div>
 
@@ -1051,7 +1121,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変09_日付.txt</span>
+                                <span>異変09_日付</span>
                             </div>
                         </div>
 
@@ -1063,7 +1133,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変10_構成順序.txt</span>
+                                <span>異変10_構成順序</span>
                             </div>
                         </div>
 
@@ -1075,7 +1145,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変11_ONAIRランプ.txt</span>
+                                <span>異変11_ONAIRランプ</span>
                             </div>
                         </div>
 
@@ -1087,7 +1157,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変12_悪態.txt</span>
+                                <span>異変12_悪態</span>
                             </div>
                         </div>
 
@@ -1099,7 +1169,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変13_セリフ欠落.txt</span>
+                                <span>異変13_セリフ欠落</span>
                             </div>
                         </div>
 
@@ -1111,7 +1181,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変14_赤い8.txt</span>
+                                <span>異変14_赤い8</span>
                             </div>
                         </div>
 
@@ -1123,7 +1193,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変15_グリッド線.txt</span>
+                                <span>異変15_グリッド線</span>
                             </div>
                         </div>
 
@@ -1135,7 +1205,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変16_お便り送り主.txt</span>
+                                <span>異変16_お便り送り主</span>
                             </div>
                         </div>
 
@@ -1147,7 +1217,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変17_電話相手.txt</span>
+                                <span>異変17_電話相手</span>
                             </div>
                         </div>
 
@@ -1159,7 +1229,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変18_CM.txt</span>
+                                <span>異変18_CM</span>
                             </div>
                         </div>
 
@@ -1171,7 +1241,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変19_フレーム.txt</span>
+                                <span>異変19_フレーム</span>
                             </div>
                         </div>
 
@@ -1183,7 +1253,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>異変20_罠.txt</span>
+                                <span>異変20_罠</span>
                             </div>
                         </div>
 
@@ -1209,7 +1279,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_クライマックス_概要.txt</span>
+                                <span>00_クライマックス_概要</span>
                             </div>
                         </div>
 
@@ -1221,7 +1291,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>01_CLX1.txt</span>
+                                <span>01_CLX1</span>
                             </div>
                         </div>
 
@@ -1247,7 +1317,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_エンディング_概要.txt</span>
+                                <span>00_エンディング_概要</span>
                             </div>
                         </div>
 
@@ -1259,7 +1329,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>01_ED1.txt</span>
+                                <span>01_ED1</span>
                             </div>
                         </div>
 
@@ -1285,7 +1355,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_解説.txt</span>
+                                <span>00_解説</span>
                             </div>
                         </div>
 
@@ -1300,7 +1370,7 @@
 
                             <span class="tree-icon">📄</span>
                         </div>
-                        <span>PC情報.txt</span>
+                        <span>PC情報</span>
                     </div>
                 </div>
 
@@ -1312,7 +1382,7 @@
 
                             <span class="tree-icon">📄</span>
                         </div>
-                        <span>【悪用厳禁】人間がだまされる心理トリック16選.txt</span>
+                        <span>【悪用厳禁】人間がだまされる心理トリック16選</span>
                     </div>
                 </div>
 
@@ -1324,7 +1394,7 @@
 
                             <span class="tree-icon">📄</span>
                         </div>
-                        <span>【衝撃】12の頭がおかしくなるパラドックス.txt</span>
+                        <span>【衝撃】12の頭がおかしくなるパラドックス</span>
                     </div>
                 </div>
 
@@ -1336,7 +1406,7 @@
 
                             <span class="tree-icon">📄</span>
                         </div>
-                        <span>シナリオ_ゼロ・シグナル・パラドクス.txt</span>
+                        <span>シナリオ_ゼロ・シグナル・パラドクス</span>
                     </div>
                 </div>
 
@@ -1348,7 +1418,7 @@
 
                             <span class="tree-icon">📄</span>
                         </div>
-                        <span>ナチュラルプランニング.txt</span>
+                        <span>ナチュラルプランニング</span>
                     </div>
                 </div>
 
@@ -1360,7 +1430,7 @@
 
                             <span class="tree-icon">📄</span>
                         </div>
-                        <span>ハンドアウト.txt</span>
+                        <span>ハンドアウト</span>
                     </div>
                 </div>
 
@@ -1377,7 +1447,7 @@
             <div class="content-area">
 
                 <div id="file_829807373993501129" class="page" data-filename="00_導入_フロー.txt">
-                    <h2>00_導入_フロー.txt</h2>
+                    <h2>00_導入_フロー</h2>
                     <div class="page-content">
                         <h3 style="margin-top:20px;">導入フロー</h3>
                         <div class="flow">
@@ -1722,7 +1792,7 @@
 
 
                 <div id="file_middle1_0" class="page" data-filename="00_ミドル1_概要.txt">
-                    <h2>00_ミドル1_概要.txt</h2>
+                    <h2>00_ミドル1_概要</h2>
                     <div class="page-content">
                         <div class="flow">
                             <div class="flow-step">
@@ -1757,7 +1827,7 @@
 
 
                 <div id="file_middle1_1" class="page" data-filename="01_ミドル1-1.txt">
-                    <h2>01_ミドル1-1.txt</h2>
+                    <h2>01_ミドル1-1</h2>
                     <div class="page-content">
                         <h3>ミドル1-1</h3>
                         <p>「……おい、邪魔だぞ」</p>
@@ -1814,7 +1884,7 @@
 
 
             <div id="file_middle1_2" class="page" data-filename="02_ミドル1-2_進行台本.txt">
-                <h2>02_ミドル1-2_進行台本.txt</h2>
+                <h2>02_ミドル1-2_進行台本</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 通常台本（詳細版）</h3>
                     <div class="script-box">
@@ -2266,7 +2336,7 @@
 
 
             <div id="file_7333552477091354905" class="page" data-filename="00_ミドル2_概要.txt">
-                <h2>00_ミドル2_概要.txt</h2>
+                <h2>00_ミドル2_概要</h2>
                 <div class="page-content">
                     <h3>ミドル2：概要と導線</h3>
                     <h3>📁 ファイル構成</h3>
@@ -2412,7 +2482,7 @@
 
 
             <div id="file_8545929508536706541" class="page" data-filename="01_共通シーン.txt">
-                <h2>01_共通シーン.txt</h2>
+                <h2>01_共通シーン</h2>
                 <div class="page-content">
                     <h3>01-2_共通シーン：スタジオ前に戻される</h3>
                     <p>※異変判定後、または初回ループ開始時の共通演出</p>
@@ -2461,7 +2531,7 @@
 
 
             <div id="file_4301954646068414145" class="page" data-filename="02_進行台本.txt">
-                <h2>02_進行台本.txt</h2>
+                <h2>02_進行台本</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 通常台本（詳細版）</h3>
                     <div class="script-box">
@@ -2913,7 +2983,7 @@
 
 
             <div id="file_5732926767917688751" class="page" data-filename="03_異変ミナコ.txt">
-                <h2>03_異変ミナコ.txt</h2>
+                <h2>03_異変ミナコ</h2>
                 <div class="page-content">
                     <h3>02_異変ミナコ</h3>
                     <p>※初回「スタジオ待機」選択時に発生する固定異変</p>
@@ -3131,7 +3201,7 @@
 
 
             <div id="file_682172943020748956" class="page" data-filename="04_初スタジオ6到達.txt">
-                <h2>04_初スタジオ6到達.txt</h2>
+                <h2>04_初スタジオ6到達</h2>
                 <div class="page-content">
                     <h3>03_初スタジオ6到達</h3>
                     <p>※世界のルールを理解し、スタジオ6に初めて到達した時のシーン</p>
@@ -3193,7 +3263,7 @@
 
 
             <div id="file_3505933591385760766" class="page" data-filename="05_異変ルール.txt">
-                <h2>05_異変ルール.txt</h2>
+                <h2>05_異変ルール</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変リスト</h3>
                     <p>===================================================================</p>
@@ -3335,7 +3405,7 @@
 
 
             <div id="file_middle2_6" class="page" data-filename="06_ダイス表と異変一覧.txt">
-                <h2>06_ダイス表と異変一覧.txt</h2>
+                <h2>06_ダイス表と異変一覧</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ ダイスロール表</h3>
 
@@ -3563,7 +3633,7 @@
 
 
             <div id="file_4171515640498457199" class="page" data-filename="07_実績解放システム.txt">
-                <h2>07_実績解放システム.txt</h2>
+                <h2>07_実績解放システム</h2>
                 <div class="page-content">
                     <h3>実績解放システム・機能一覧</h3>
                     <h3>概要</h3>
@@ -3707,7 +3777,7 @@
 
 
             <div id="file_7379600333135033212" class="page" data-filename="10_台本を手にする.txt">
-                <h2>10_台本を手にする.txt</h2>
+                <h2>10_台本を手にする</h2>
                 <div class="page-content">
                     <div class="card card-info" style="text-align: center; margin-bottom: 20px;">
                         <p><strong>プレイヤー配布用ページ:</strong></p>
@@ -4020,7 +4090,7 @@
 
 
             <div id="file_5334562604312978387" class="page" data-filename="20_特殊異変：スタジオ5_タンテイおざまのタンテイラジオ_進行台本.txt">
-                <h2>20_特殊異変：スタジオ5_タンテイおざまのタンテイラジオ_進行台本.txt</h2>
+                <h2>20_特殊異変：スタジオ5_タンテイおざまのタンテイラジオ_進行台本</h2>
                 <div class="page-content">
                     <h3>特殊異変：進行台本</h3>
                     <p>※初めてスタジオ5に到達した際に、発生する強制イベント</p>
@@ -4406,7 +4476,7 @@
 
 
             <div id="file_4125398027576435332" class="page" data-filename="21_特殊異変_オリジナル台本作成ガイド.txt">
-                <h2>21_特殊異変_オリジナル台本作成ガイド.txt</h2>
+                <h2>21_特殊異変_オリジナル台本作成ガイド</h2>
                 <div class="page-content">
                     <h3>特殊異変：オリジナル台本作成ガイド</h3>
                     <p>オリジナル異変台本を創ろう！！！</p>
@@ -4584,7 +4654,7 @@
 
 
             <div id="file_5191332784278767987" class="page" data-filename="00_ミドル3_フロー.txt">
-                <h2>00_ミドル3_フロー.txt</h2>
+                <h2>00_ミドル3_フロー</h2>
                 <div class="page-content">
                     <h3 style="margin-top:20px;">ミドル3 進行フロー</h3>
 
@@ -4634,7 +4704,7 @@
 
 
             <div id="file_6304104065693693194" class="page" data-filename="01_ミドル3_共通シーン.txt">
-                <h2>01_ミドル3_共通シーン.txt</h2>
+                <h2>01_ミドル3_共通シーン</h2>
                 <div class="page-content">
                     <p>異変判定後、スタジオ前に戻されたときの共通シーン</p>
                     <p>→スタジオ6を通過した後は、完全にランダム異変となり、</p>
@@ -4680,7 +4750,7 @@
 
 
             <div id="file_3026923679959166064" class="page" data-filename="異変00_通常.txt">
-                <h2>異変00_通常.txt</h2>
+                <h2>異変00_通常</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 通常台本</h3>
                     <div class="script-box">
@@ -5143,7 +5213,7 @@
 
 
             <div id="file_1237601008277371249" class="page" data-filename="異変01_ミナコ.txt">
-                <h2>異変01_ミナコ.txt</h2>
+                <h2>異変01_ミナコ</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.01 ミナコ</h3>
                     <div class="script-box">
@@ -5584,7 +5654,7 @@
 
 
             <div id="file_6603843676226009378" class="page" data-filename="異変02_オタク.txt">
-                <h2>異変02_オタク.txt</h2>
+                <h2>異変02_オタク</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.02 オタク口調</h3>
                     <div class="script-box">
@@ -6020,7 +6090,7 @@
 
 
             <div id="file_3115652572061071154" class="page" data-filename="異変03_Youtube.txt">
-                <h2>異変03_Youtube.txt</h2>
+                <h2>異変03_Youtube</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.03 Youtube読み上げ</h3>
                     <div class="script-box">
@@ -6517,7 +6587,7 @@
 
 
             <div id="file_8666479140902094740" class="page" data-filename="異変04_背景.txt">
-                <h2>異変04_背景.txt</h2>
+                <h2>異変04_背景</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.04 背景違い</h3>
                     <h3>異変の概要</h3>
@@ -6534,7 +6604,7 @@
 
 
             <div id="file_3548878018038007464" class="page" data-filename="異変05_BGM.txt">
-                <h2>異変05_BGM.txt</h2>
+                <h2>異変05_BGM</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.05 BGM違い</h3>
                     <h3>異変の概要</h3>
@@ -7021,7 +7091,7 @@
 
 
             <div id="file_1127582982929645766" class="page" data-filename="異変06_話題違い.txt">
-                <h2>異変06_話題違い.txt</h2>
+                <h2>異変06_話題違い</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.06 話題違い</h3>
                     <div class="script-box">
@@ -7478,7 +7548,7 @@
 
 
             <div id="file_7630877157994217532" class="page" data-filename="異変07_リクエスト曲.txt">
-                <h2>異変07_リクエスト曲.txt</h2>
+                <h2>異変07_リクエスト曲</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.07 リクエスト曲違い</h3>
                     <div class="script-box">
@@ -7921,7 +7991,7 @@
 
 
             <div id="file_5985100263498935017" class="page" data-filename="異変08_Rec.txt">
-                <h2>異変08_Rec.txt</h2>
+                <h2>異変08_Rec</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.08 画面にRECアイコン</h3>
                     <div class="script-box">
@@ -8358,7 +8428,7 @@
 
 
             <div id="file_233903672042674792" class="page" data-filename="異変09_日付.txt">
-                <h2>異変09_日付.txt</h2>
+                <h2>異変09_日付</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.09 日付違い</h3>
                     <div class="script-box">
@@ -8796,7 +8866,7 @@
 
 
             <div id="file_7093748911356648257" class="page" data-filename="異変10_構成順序.txt">
-                <h2>異変10_構成順序.txt</h2>
+                <h2>異変10_構成順序</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.10 構成順序違い</h3>
                     <div class="script-box">
@@ -9244,7 +9314,7 @@
 
 
             <div id="file_1930906265476703082" class="page" data-filename="異変11_ONAIRランプ.txt">
-                <h2>異変11_ONAIRランプ.txt</h2>
+                <h2>異変11_ONAIRランプ</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.11 ON AIRランプ違い</h3>
                     <h3>異変の概要</h3>
@@ -9263,7 +9333,7 @@
 
 
             <div id="file_2692076732748913196" class="page" data-filename="異変12_悪態.txt">
-                <h2>異変12_悪態.txt</h2>
+                <h2>異変12_悪態</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.12 悪態</h3>
                     <div class="script-box">
@@ -9706,7 +9776,7 @@
 
 
             <div id="file_2503251679623713521" class="page" data-filename="異変13_セリフ欠落.txt">
-                <h2>異変13_セリフ欠落.txt</h2>
+                <h2>異変13_セリフ欠落</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.13 エンディングセリフ欠落</h3>
                     <h3>異変の概要</h3>
@@ -10178,7 +10248,7 @@
 
 
             <div id="file_3864066688361393180" class="page" data-filename="異変14_赤い8.txt">
-                <h2>異変14_赤い8.txt</h2>
+                <h2>異変14_赤い8</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.14 28時の「8」が赤い</h3>
                     <h3>異変の概要</h3>
@@ -10202,7 +10272,7 @@
 
 
             <div id="file_562624150424518337" class="page" data-filename="異変15_グリッド線.txt">
-                <h2>異変15_グリッド線.txt</h2>
+                <h2>異変15_グリッド線</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.15 グリッド線違い</h3>
                     <h3>異変の概要</h3>
@@ -10219,7 +10289,7 @@
 
 
             <div id="file_6375945226778035440" class="page" data-filename="異変16_お便り送り主.txt">
-                <h2>異変16_お便り送り主.txt</h2>
+                <h2>異変16_お便り送り主</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.16 お便り送り主違い</h3>
                     <div class="script-box">
@@ -10665,7 +10735,7 @@
 
 
             <div id="file_2036138017282272809" class="page" data-filename="異変17_電話相手.txt">
-                <h2>異変17_電話相手.txt</h2>
+                <h2>異変17_電話相手</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.17 電話相手違い</h3>
                     <div class="script-box">
@@ -11104,7 +11174,7 @@
 
 
             <div id="file_7097240706983700605" class="page" data-filename="異変18_CM.txt">
-                <h2>異変18_CM.txt</h2>
+                <h2>異変18_CM</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変台本：No.18 CM違い</h3>
                     <div class="script-box">
@@ -11547,7 +11617,7 @@
 
 
             <div id="file_345727482916712209" class="page" data-filename="異変19_フレーム.txt">
-                <h2>異変19_フレーム.txt</h2>
+                <h2>異変19_フレーム</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.19 前景フレーム違い</h3>
                     <h3>異変の概要</h3>
@@ -11570,7 +11640,7 @@
 
 
             <div id="file_5664810999012480091" class="page" data-filename="異変20_罠.txt">
-                <h2>異変20_罠.txt</h2>
+                <h2>異変20_罠</h2>
                 <div class="page-content">
                     <h3>28時の深夜ラジオ 異変：No.20 罠（トラップ）</h3>
                     <h3>異変の概要</h3>
@@ -11678,7 +11748,7 @@
 
 
             <div id="file_6163447575628053023" class="page" data-filename="00_クライマックス_概要.txt">
-                <h2>00_クライマックス_概要.txt</h2>
+                <h2>00_クライマックス_概要</h2>
                 <div class="page-content">
                     <p>スタジオ１をクリアすると　クライマックス演出後エンディング</p>
                 </div>
@@ -11686,7 +11756,7 @@
 
 
             <div id="file_3866308417087209778" class="page" data-filename="01_CLX1.txt">
-                <h2>01_CLX1.txt</h2>
+                <h2>01_CLX1</h2>
                 <div class="page-content">
                     <h3>CLMAX1</h3>
                     <p>気がつくと、薄暗い廊下に立っていた。</p>
@@ -11795,7 +11865,7 @@
 
 
             <div id="file_8549416408773890049" class="page" data-filename="00_エンディング_概要.txt">
-                <h2>00_エンディング_概要.txt</h2>
+                <h2>00_エンディング_概要</h2>
                 <div class="page-content">
                     <p>なにも変えることなく、不思議たいけんだったなあで終了</p>
                 </div>
@@ -11803,7 +11873,7 @@
 
 
             <div id="file_2350760554188368367" class="page" data-filename="01_ED1.txt">
-                <h2>01_ED1.txt</h2>
+                <h2>01_ED1</h2>
                 <div class="page-content">
                     <h3>ED1</h3>
                     <p>――気がつくと、喫茶店にいた。</p>
@@ -11821,7 +11891,7 @@
 
 
             <div id="file_5126562712904847217" class="page" data-filename="00_解説.txt">
-                <h2>00_解説.txt</h2>
+                <h2>00_解説</h2>
                 <div class="page-content">
 
                 </div>
@@ -11829,7 +11899,7 @@
 
 
             <div id="file_7992592922503530960" class="page" data-filename="PC情報.txt">
-                <h2>PC情報.txt</h2>
+                <h2>PC情報</h2>
                 <div class="page-content">
                     <p>PC名@PL名1</p>
                     <p>PC名@PL名2</p>
@@ -11842,7 +11912,7 @@
 
 
             <div id="file_8408836128274936234" class="page" data-filename="【悪用厳禁】人間がだまされる心理トリック16選.txt">
-                <h2>【悪用厳禁】人間がだまされる心理トリック16選.txt</h2>
+                <h2>【悪用厳禁】人間がだまされる心理トリック16選</h2>
                 <div class="card card-info" style="margin-bottom: 15px;">
                     <p><strong>参考URL:</strong> <a href="https://www.youtube.com/watch?v=aBelQE1oPek"
                             target="_blank">https://www.youtube.com/watch?v=aBelQE1oPek</a></p>
@@ -12278,7 +12348,7 @@
 
 
             <div id="file_6036152785879364158" class="page" data-filename="【衝撃】12の頭がおかしくなるパラドックス.txt">
-                <h2>【衝撃】12の頭がおかしくなるパラドックス.txt</h2>
+                <h2>【衝撃】12の頭がおかしくなるパラドックス</h2>
                 <div class="card card-info" style="margin-bottom: 15px;">
                     <p><strong>参考URL:</strong> <a href="https://youtu.be/uOBE4zRW5EQ?si=plGItYMU2wUfZutZ"
                             target="_blank">https://youtu.be/uOBE4zRW5EQ?si=plGItYMU2wUfZutZ</a></p>
@@ -12549,7 +12619,7 @@
 
 
             <div id="file_2776545767372544480" class="page" data-filename="シナリオ_ゼロ・シグナル・パラドクス.txt">
-                <h2>シナリオ_ゼロ・シグナル・パラドクス.txt</h2>
+                <h2>シナリオ_ゼロ・シグナル・パラドクス</h2>
                 <div class="page-content">
 
                     <div class="card"
@@ -12779,7 +12849,7 @@
 
 
             <div id="file_6708316657415418120" class="page" data-filename="ナチュラルプランニング.txt">
-                <h2>ナチュラルプランニング.txt</h2>
+                <h2>ナチュラルプランニング</h2>
                 <div class="page-content">
                     <p>ナチュラル・プランニングモデル</p>
                     <p class="note" style="color:var(--text-secondary); font-style:italic;">（1）目的は何か？ どんな価値観で行うか？
@@ -12795,7 +12865,7 @@
 
 
             <div id="file_2120909450015585522" class="page" data-filename="ハンドアウト.txt">
-                <h2>ハンドアウト.txt</h2>
+                <h2>ハンドアウト</h2>
                 <div class="page-content">
                     <h3>ハンドアウト】…PC参加概要</h3>
                 </div>
@@ -12906,6 +12976,35 @@
 
         // Run on page load
         document.addEventListener('DOMContentLoaded', initTreeState);
+
+        // NPC speaker color-coding: assign classes based on script-name content
+        function applySpeakerClasses() {
+            const rules = [
+                { match: n => n === '低', cls: 'sp-low' },
+                { match: n => n === '高', cls: 'sp-high' },
+                { match: n => n === 'ミナト' || n === '・DJ' || n === 'DJ', cls: 'sp-minato' },
+                { match: n => n === 'ミナコ', cls: 'sp-minako' },
+                { match: n => n === 'ミナト？', cls: 'sp-minato-q' },
+                { match: n => n === 'オザマ', cls: 'sp-ozama' },
+                { match: n => n === 'KP', cls: 'sp-kp' },
+                { match: n => n.startsWith('電話の声（女性'), cls: 'sp-phone-female' },
+                { match: n => n.startsWith('電話の声（PC'), cls: 'sp-phone-pc' },
+                { match: n => n.startsWith('電話の声'), cls: 'sp-phone' },
+                { match: n => n.includes('リクエスト'), cls: 'sp-request' },
+            ];
+            document.querySelectorAll('.script-line').forEach(line => {
+                const nameEl = line.querySelector('.script-name');
+                if (!nameEl) return;
+                const name = nameEl.textContent.trim();
+                for (const r of rules) {
+                    if (r.match(name)) {
+                        line.classList.add(r.cls);
+                        break;
+                    }
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', applySpeakerClasses);
 
         // --- Theme Logic ---
         function toggleTheme() {
