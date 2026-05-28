@@ -338,6 +338,16 @@
             margin-bottom: 0;
         }
 
+        /* Continuation: hide repeated speaker name, tighten spacing */
+        .script-line.script-cont {
+            margin-top: -4px;
+            margin-bottom: 6px;
+        }
+
+        .script-line.script-cont .script-name {
+            visibility: hidden;
+        }
+
         .script-name {
             font-weight: bold;
             color: var(--info);
@@ -13005,6 +13015,23 @@
             });
         }
         document.addEventListener('DOMContentLoaded', applySpeakerClasses);
+
+        // Hide repeated speaker name when the same speaker continues
+        function collapseRepeatedSpeakers() {
+            document.querySelectorAll('.script-box').forEach(box => {
+                let prev = null;
+                box.querySelectorAll(':scope > .script-line').forEach(line => {
+                    const nameEl = line.querySelector('.script-name');
+                    if (!nameEl) { prev = null; return; }
+                    const name = nameEl.textContent.trim();
+                    if (name && name === prev) {
+                        line.classList.add('script-cont');
+                    }
+                    prev = name;
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', collapseRepeatedSpeakers);
 
         // --- Theme Logic ---
         function toggleTheme() {
