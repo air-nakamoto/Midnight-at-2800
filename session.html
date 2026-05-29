@@ -461,6 +461,27 @@
             margin: 0;
         }
 
+        /* In-page file link (auto-linkified branch destinations) */
+        .file-link {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            cursor: pointer;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+
+        .file-link:hover {
+            background: var(--bg-tertiary);
+            text-decoration: none;
+        }
+
+        .file-link::before {
+            content: '📄 ';
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
@@ -13032,6 +13053,82 @@
             });
         }
         document.addEventListener('DOMContentLoaded', collapseRepeatedSpeakers);
+
+        // Auto-linkify references to other pages within body text.
+        // Matches plain text mentions of known filenames (data-filename attr,
+        // sans .txt) inside .page bodies, and wires them to openPage().
+        function linkifyFileReferences() {
+            const filenameToId = new Map();
+            document.querySelectorAll('[data-filename]').forEach(el => {
+                if (!el.id) return;
+                const fn = el.getAttribute('data-filename').replace(/\.txt$/, '');
+                if (fn && !filenameToId.has(fn)) filenameToId.set(fn, el.id);
+            });
+            if (filenameToId.size === 0) return;
+
+            const names = Array.from(filenameToId.keys()).sort((a, b) => b.length - a.length);
+            const pattern = names.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+            const re = new RegExp('(' + pattern + ')', 'g');
+            const skipTags = new Set(['SCRIPT', 'STYLE', 'A', 'BUTTON', 'H2']);
+
+            document.querySelectorAll('.content-area .page').forEach(page => {
+                const walker = document.createTreeWalker(page, NodeFilter.SHOW_TEXT, {
+                    acceptNode(node) {
+                        if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
+                        let p = node.parentElement;
+                        while (p && p !== page) {
+                            if (skipTags.has(p.tagName)) return NodeFilter.FILTER_REJECT;
+                            if (p.classList && p.classList.contains('file-link')) return NodeFilter.FILTER_REJECT;
+                            p = p.parentElement;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                });
+                const targets = [];
+                let n;
+                while ((n = walker.nextNode())) targets.push(n);
+                targets.forEach(node => {
+                    const text = node.nodeValue;
+                    re.lastIndex = 0;
+                    if (!re.test(text)) return;
+                    re.lastIndex = 0;
+                    const frag = document.createDocumentFragment();
+                    let last = 0, m;
+                    while ((m = re.exec(text)) !== null) {
+                        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+                        const link = document.createElement('a');
+                        link.className = 'file-link';
+                        link.href = '#';
+                        link.dataset.target = filenameToId.get(m[1]);
+                        link.textContent = m[1];
+                        link.title = '📄 ' + m[1] + ' を開く';
+                        frag.appendChild(link);
+                        last = re.lastIndex;
+                    }
+                    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+                    node.parentNode.replaceChild(frag, node);
+                });
+            });
+
+            document.addEventListener('click', e => {
+                const link = e.target.closest('.file-link');
+                if (!link) return;
+                e.preventDefault();
+                const id = link.dataset.target;
+                const treeItem = document.querySelector(`.tree-item[onclick*="${id}"]`);
+                if (!treeItem) return;
+                let cur = treeItem.parentElement;
+                while (cur && cur !== document.body) {
+                    if (cur.classList && cur.classList.contains('tree-item') && cur.classList.contains('has-children')) {
+                        cur.classList.add('expanded');
+                    }
+                    cur = cur.parentElement;
+                }
+                openPage(id, treeItem);
+                treeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', linkifyFileReferences);
 
         // --- Theme Logic ---
         function toggleTheme() {
