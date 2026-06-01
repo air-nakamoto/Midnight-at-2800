@@ -4800,11 +4800,35 @@
                     <p>ONAIRの赤いランプが、静かに灯り。</p>
                     <p>**放送が始まる。**</p>
                     <p>ーーーーーーーーーー</p>
-                
+
                     <div class="card card-success" style="margin-top: 2em;">
-                        <h4>【次のシーン】</h4>
-                        <p>→ <span class="nav-link" onclick="navigateTo('file_6304104065693693194')">01_ミドル3_共通シーン</span>（次のループへ）</p>
-                        <p>→ <span class="nav-link" onclick="navigateTo('file_6163447575628053023')">099_クライマックス</span>（スタジオ1到達後）</p>
+                        <h4>【KP向け：分岐案内】ダイス結果に応じて進む</h4>
+                        <p style="color:var(--text-secondary);">異変発生判定(1d10)と異変表(1d20)の結果に応じて、該当ページへ移動します。</p>
+                        <p><strong>■ 異変なし（1d10 で 8〜10）</strong></p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_3026923679959166064')">異変00_通常</span></p>
+                        <p><strong>■ 異変あり（1d10 で 1〜7 → 異変表 1d20）</strong></p>
+                        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+                            <span class="nav-link" onclick="navigateTo('file_1237601008277371249')">1. ミナコ</span>
+                            <span class="nav-link" onclick="navigateTo('file_6603843676226009378')">2. オタク</span>
+                            <span class="nav-link" onclick="navigateTo('file_3115652572061071154')">3. Youtube</span>
+                            <span class="nav-link" onclick="navigateTo('file_8666479140902094740')">4. 背景</span>
+                            <span class="nav-link" onclick="navigateTo('file_3548878018038007464')">5. BGM</span>
+                            <span class="nav-link" onclick="navigateTo('file_1127582982929645766')">6. 話題違い</span>
+                            <span class="nav-link" onclick="navigateTo('file_7630877157994217532')">7. リクエスト曲</span>
+                            <span class="nav-link" onclick="navigateTo('file_5985100263498935017')">8. Rec</span>
+                            <span class="nav-link" onclick="navigateTo('file_233903672042674792')">9. 日付</span>
+                            <span class="nav-link" onclick="navigateTo('file_7093748911356648257')">10. 構成順序</span>
+                            <span class="nav-link" onclick="navigateTo('file_1930906265476703082')">11. ONAIRランプ</span>
+                            <span class="nav-link" onclick="navigateTo('file_2692076732748913196')">12. 悪態</span>
+                            <span class="nav-link" onclick="navigateTo('file_2503251679623713521')">13. セリフ欠落</span>
+                            <span class="nav-link" onclick="navigateTo('file_3864066688361393180')">14. 赤い8</span>
+                            <span class="nav-link" onclick="navigateTo('file_562624150424518337')">15. グリッド線</span>
+                            <span class="nav-link" onclick="navigateTo('file_6375945226778035440')">16. お便り送り主</span>
+                            <span class="nav-link" onclick="navigateTo('file_2036138017282272809')">17. 電話相手</span>
+                            <span class="nav-link" onclick="navigateTo('file_7097240706983700605')">18. CM</span>
+                            <span class="nav-link" onclick="navigateTo('file_345727482916712209')">19. フレーム</span>
+                            <span class="nav-link" onclick="navigateTo('file_5664810999012480091')">20. 罠</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -13131,7 +13155,8 @@
             const target = document.getElementById(pageId);
             if (target) target.classList.add('active');
             document.querySelectorAll('.tree-label').forEach(l => l.classList.remove('active'));
-            const treeItem = document.querySelector(`[onclick*="'${pageId}'"]`);
+            // サイドバーの該当項目（openPage呼び出し）に限定して特定
+            const treeItem = document.querySelector(`[onclick^="openPage('${pageId}'"]`);
             if (treeItem) {
                 const label = treeItem.querySelector('.tree-label');
                 if (label) label.classList.add('active');
@@ -13144,9 +13169,15 @@
                     parent = parent.parentElement;
                 }
             }
-            const contentArea = document.querySelector('.content-area');
-            contentArea.scrollTop = 0;
-            setTimeout(() => { contentArea.scrollTop = 0; }, 10);
+            // 必ずページ冒頭へスクロール（スクロールコンテナを全てリセット）
+            const scrollToTop = () => {
+                document.querySelectorAll('.content-area, .main').forEach(el => { el.scrollTop = 0; });
+                if (target && target.scrollIntoView) target.scrollIntoView({ block: 'start' });
+                window.scrollTo(0, 0);
+            };
+            scrollToTop();
+            setTimeout(scrollToTop, 10);
+            setTimeout(scrollToTop, 60);
         }
 
         // Expand All / Collapse All Toggle with LocalStorage
