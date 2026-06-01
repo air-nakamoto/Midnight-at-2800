@@ -621,6 +621,24 @@
             background: rgba(96, 165, 250, 0.1);
         }
 
+        /* Navigation Links (in-content) */
+        .nav-link {
+            display: inline-block;
+            color: var(--accent);
+            background: rgba(86, 156, 214, 0.12);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            padding: 2px 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+        .nav-link:hover {
+            background: rgba(86, 156, 214, 0.28);
+        }
+
         /* Tags */
         .tag {
             display: inline-block;
@@ -1519,7 +1537,7 @@
                             </div>
                         </div>
                         <div class="card card-success">
-                            <h4>→ ミドル1へ進む</h4>
+                            <h4>→ <span class="nav-link" onclick="navigateTo('file_middle1_0')">ミドル1へ進む</span></h4>
                         </div>
                     </div>
                 </div>
@@ -1816,7 +1834,7 @@
                         <p>〜Zero Signal Paradox〜</p>
                         <div class="card card-success" style="margin-top: 1em;">
                             <h4>ミドル1へ移動</h4>
-                            <p>→ 01_ミドル1-1 へ</p>
+                            <p>→ <span class="nav-link" onclick="navigateTo('file_middle1_1')">01_ミドル1-1</span> へ</p>
                         </div>
                     </div>
                 </div>
@@ -1851,7 +1869,7 @@
                         <p>ーーーーーーーーーーーーーー</p>
                         <div class="card card-success" style="margin-top: 1em;">
                             <h4>ミドル1-1へ移動</h4>
-                            <p>→ 01_ミドル1-1 へ</p>
+                            <p>→ <span class="nav-link" onclick="navigateTo('file_middle1_1')">01_ミドル1-1</span> へ</p>
                         </div>
                     </div>
                 </div>
@@ -1906,7 +1924,7 @@
                         <p>ーーーーーーーーーー</p>
                         <div class="card card-success" style="margin-top: 1em;">
                             <h4>ミドル1-2へ移動</h4>
-                            <p>→ 02_ミドル1-2_進行台本 へ</p>
+                            <p>→ <span class="nav-link" onclick="navigateTo('file_middle1_2')">02_ミドル1-2_進行台本</span> へ</p>
                         </div>
 
                     </div>
@@ -2353,11 +2371,11 @@
                         <h4>【KP向け：分岐案内】</h4>
                         <p><strong>■ スタジオに向かう</strong></p>
                         <p>　→異変が起きていないので、不正解。</p>
-                        <p>　→ミドル2へ移動：ミドル2/01_共通シーン へ</p>
+                        <p>　→ミドル2へ移動：<span class="nav-link" onclick="navigateTo('file_8545929508536706541')">ミドル2/01_共通シーン</span> へ</p>
                         <br>
                         <p><strong>■ スタジオ待機</strong></p>
                         <p>　→異変が起きていないので正解。</p>
-                        <p>　→ミドル2へ移動：ミドル2/01_共通シーン へ</p>
+                        <p>　→ミドル2へ移動：<span class="nav-link" onclick="navigateTo('file_8545929508536706541')">ミドル2/01_共通シーン</span> へ</p>
                         <br>
                         <p style="color:var(--text-secondary);">※どちらを選んでもミドル2の共通シーンへ進みます。</p>
                         <p style="color:var(--text-secondary);">　正解/不正解の違いは、スタジオ番号が進むかどうかです。</p>
@@ -2506,8 +2524,8 @@
                     <p>===================================================================</p>
                     <h3>次のフェーズ</h3>
                     <p>===================================================================</p>
-                    <p>→ 003_ミドル3（ランダム異変ループ）</p>
-                    <p>→ 099_クライマックス（スタジオ1到達後）</p>
+                    <p>→ <span class="nav-link" onclick="navigateTo('file_5191332784278767987')">003_ミドル3</span>（ランダム異変ループ）</p>
+                    <p>→ <span class="nav-link" onclick="navigateTo('file_6163447575628053023')">099_クライマックス</span>（スタジオ1到達後）</p>
                 </div>
             </div>
 
@@ -2550,11 +2568,11 @@
                         <p>直前の放送終了後、PLがどちらを選んだかで分岐します。</p>
                         <br>
                         <p><strong>■ スタジオに向かった場合（前回不正解だった）</strong></p>
-                        <p>　→ <strong>02_進行台本</strong>へ</p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_4301954646068414145')">02_進行台本</span>へ</p>
                         <p style="color:var(--text-secondary);">　　通常ラジオを再放送。異変なし。</p>
                         <br>
                         <p><strong>■ 待機した場合（前回正解だった）</strong></p>
-                        <p>　→ <strong>03_異変ミナコ</strong>へ</p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_5732926767917688751')">03_異変ミナコ</span>へ</p>
                         <p style="color:var(--text-secondary);">　　初回固定異変「ミナコ」が発生。</p>
                     </div>
                 </div>
@@ -3002,12 +3020,12 @@
                         <br>
                         <p><strong>■ スタジオに向かう</strong></p>
                         <p>　→ 異変が起きていないので、<span style="color:#e74c3c; font-weight:bold;">不正解</span>。スタジオ8へ移動</p>
-                        <p>　→ <strong>01_共通シーン</strong> → <strong>02_進行台本</strong>（通常ラジオ・異変なし）</p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_8545929508536706541')">01_共通シーン</span> → <span class="nav-link" onclick="navigateTo('file_4301954646068414145')">02_進行台本</span>（通常ラジオ・異変なし）</p>
                         <p style="color:var(--text-secondary);">　　エンディング後、待機を選べたらスタジオ7へ移動。</p>
                         <br>
                         <p><strong>■ スタジオ待機</strong></p>
                         <p>　→ 異変が起きていないので、<span style="color:#27ae60; font-weight:bold;">正解</span>。スタジオ7へ移動</p>
-                        <p>　→ <strong>01_共通シーン</strong> → <strong>03_異変ミナコ</strong>（初回固定異変）</p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_8545929508536706541')">01_共通シーン</span> → <span class="nav-link" onclick="navigateTo('file_5732926767917688751')">03_異変ミナコ</span>（初回固定異変）</p>
                     </div>
                 </div>
             </div>
@@ -3221,11 +3239,11 @@
                         <br>
                         <p><strong>■ スタジオに向かう</strong></p>
                         <p>　→ 異変が起きていたので、<span style="color:#27ae60; font-weight:bold;">正解</span>。スタジオ6へ移動</p>
-                        <p>　→ <strong>04_初スタジオ6到達</strong> へ</p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_682172943020748956')">04_初スタジオ6到達</span> へ</p>
                         <br>
                         <p><strong>■ スタジオ待機</strong></p>
                         <p>　→ 異変が起きていたので、<span style="color:#e74c3c; font-weight:bold;">不正解</span>。スタジオ8へ移動</p>
-                        <p>　→ <strong>01_共通シーン</strong> → <strong>02_進行台本</strong>（通常ラジオ）</p>
+                        <p>　→ <span class="nav-link" onclick="navigateTo('file_8545929508536706541')">01_共通シーン</span> → <span class="nav-link" onclick="navigateTo('file_4301954646068414145')">02_進行台本</span>（通常ラジオ）</p>
                     </div>
                 </div>
             </div>
@@ -12818,7 +12836,7 @@
                     <p>何も答えず、ただ彼を見つめ返す。あるいは立ち去る。</p>
                     <p>彼は恐怖のあまり発狂し、あるいは何らかの力で消滅し、放送は史実通りに途切れる。</p>
                     <p>「ON AIR」のランプが消え、出口の鍵が開く。</p>
-                    <p>→ **エンディングAへ**</p>
+                    <p>→ <span class="nav-link" onclick="navigateTo('file_8549416408773890049')">エンディングAへ</span></p>
                     <div class="script-box">
 
                         <div class="script-line">
@@ -12831,7 +12849,7 @@
                     <p>しかし、それは歴史と矛盾する。</p>
                     <p>世界はホワイトアウトし、探索者は**第8スタジオ（最初）**に戻される。</p>
                     <p>「何度でも繰り返して、彼が恐怖しない時間を作る」という修羅の道。</p>
-                    <p>→ **エンディングBへ**</p>
+                    <p>→ <span class="nav-link" onclick="navigateTo('file_2350760554188368367')">エンディングBへ</span></p>
                     <p>---</p>
                     <h3>エンディング</h3>
                     <div class="script-box">
@@ -12964,6 +12982,30 @@
 
             // Scroll to top
             // Scroll to top with delay to ensure rendering
+            const contentArea = document.querySelector('.content-area');
+            contentArea.scrollTop = 0;
+            setTimeout(() => { contentArea.scrollTop = 0; }, 10);
+        }
+
+        // Navigate to page by ID (for in-content links, no treeItem needed)
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('.tree-label').forEach(l => l.classList.remove('active'));
+            const treeItem = document.querySelector(`[onclick*="'${pageId}'"]`);
+            if (treeItem) {
+                const label = treeItem.querySelector('.tree-label');
+                if (label) label.classList.add('active');
+                // 親フォルダを展開
+                let parent = treeItem.parentElement;
+                while (parent) {
+                    if (parent.classList.contains('tree-item') && parent.classList.contains('has-children')) {
+                        parent.classList.add('expanded');
+                    }
+                    parent = parent.parentElement;
+                }
+            }
             const contentArea = document.querySelector('.content-area');
             contentArea.scrollTop = 0;
             setTimeout(() => { contentArea.scrollTop = 0; }, 10);
