@@ -397,6 +397,12 @@
         .script-line.sp-request { border-left-color: #facc15; background: rgba(250, 204, 21, 0.06); }
         .script-line.sp-request .script-name { color: #facc15; }
 
+        .script-line.sp-staff1 { border-left-color: #34d399; background: rgba(52, 211, 153, 0.07); }
+        .script-line.sp-staff1 .script-name { color: #34d399; }
+
+        .script-line.sp-staff2 { border-left-color: #2dd4bf; background: rgba(45, 212, 191, 0.07); }
+        .script-line.sp-staff2 .script-name { color: #2dd4bf; }
+
         [data-theme="light"] .script-line.sp-low { background: rgba(96, 165, 250, 0.12); }
         [data-theme="light"] .script-line.sp-high { background: rgba(217, 119, 6, 0.12); }
         [data-theme="light"] .script-line.sp-high .script-name { color: #b45309; }
@@ -2536,28 +2542,36 @@
                     <h3>01-2_共通シーン：スタジオ前に戻される</h3>
                     <p>※異変判定後、または初回ループ開始時の共通演出</p>
                     <p>===================================================================</p>
-                    <p>「……おい、邪魔だぞ」</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span class="script-text">「……おい、邪魔だぞ」</span></div>
+                    </div>
                     <p>気がつくと、薄暗い廊下に立っていた。</p>
                     <p>目の前には「第◯スタジオ」が見える　（※正解なら数字を減らず、不正解ならスタジオ8）</p>
-                    <p>「本番始まるぞ！ 」</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span class="script-text">「本番始まるぞ！ 」</span></div>
+                    </div>
                     <p>あなたの手にあった「台本」は、スタッフにひったくられる</p>
                     <p>副調整室から、</p>
                     <p>パーソナリティーのミナトがスタジオ入りするのが見える</p>
                     <p>/scene 本番前</p>
-                    <p>「おまえらは、ひとまずミナトさんの動向を見守るだけでいい。</p>
-                    <p>　まあ、今日もいつも通りだろうから、」</p>
-                    <p>『とくに変なことがない限りは、そのまま待機してろ。</p>
-                    <p>　最初はそれでいい。</p>
-                    <p>　いいか、ON AIR中、なんもない限り余計な事するなよ』</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span class="script-text">「おまえらは、ひとまずミナトさんの動向を見守るだけでいい。</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　まあ、今日もいつも通りだろうから、」</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">『とくに変なことがない限りは、そのまま待機してろ。</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　最初はそれでいい。</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　いいか、ON AIR中、なんもない限り余計な事するなよ』</span></div>
+                    </div>
                     <p>※１回目のループの際は『』内テキストを貼る</p>
                     <p>※2回目以降は省略可（スキップ実績解放後はスキップ宣言可能）</p>
                     <p>/scene 本番前</p>
-                    <p>『こちらメイン、レベルチェック入ります』</p>
-                    <p>「スタジオの、ミナトさん、音声ください」</p>
-                    <p>「はーい、聞こえてまーす。」</p>
-                    <p>「サブ、音量はいってますか、応答だけください」</p>
-                    <p>『10秒前、9、8、7、6……』</p>
-                    <p>『5、4、　……』</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff2"><span class="script-name">スタッフ2</span><span class="script-text">『こちらメイン、レベルチェック入ります』</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">「スタジオの、ミナトさん、音声ください」</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">「はーい、聞こえてまーす。」</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">「サブ、音量はいってますか、応答だけください」</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">『10秒前、9、8、7、6……』</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">『5、4、　……』</span></div>
+                    </div>
                     <p>/scene 無音（収録OFF）</p>
                     <p>ONAIRの赤いランプが、静かに灯り。</p>
                     <p>**放送が始まる。**</p>
@@ -4772,17 +4786,23 @@
                     <p>・失敗→８番スタジオ</p>
                     <p>→ SANチェック 1d3/1d6</p>
                     <p>ーーーーーーーーーー</p>
-                    <p>「本番始まるぞ！ 」</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span class="script-text">「本番始まるぞ！ 」</span></div>
+                    </div>
                     <p>あなたの手にあった「台本」はひったくられる</p>
                     <p>副調整室から、</p>
                     <p>パーソナリティーミナトのスタジオ入りが見える</p>
                     <p>/scene 本番前</p>
-                    <p>「おまえらは、ひとまずミナトさんの動向を見守るだけでいい。</p>
-                    <p>　まあ、今日もいつも通りだろうから、</p>
-                    <p>　とくに変なことがない限りは、そのまま待機してろ。</p>
-                    <p>　最初はそれでいい。</p>
-                    <p>　いいか、ON AIR中、なんもない限り余計な事するなよ」</p>
-                    <p>『こちらメイン、レベルチェック入ります』</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span class="script-text">「おまえらは、ひとまずミナトさんの動向を見守るだけでいい。</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　まあ、今日もいつも通りだろうから、</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　とくに変なことがない限りは、そのまま待機してろ。</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　最初はそれでいい。</span></div>
+                        <div class="script-line sp-staff1 script-cont"><span class="script-name">スタッフ1</span><span class="script-text">　いいか、ON AIR中、なんもない限り余計な事するなよ」</span></div>
+                    </div>
+                    <div class="script-box">
+                        <div class="script-line sp-staff2"><span class="script-name">スタッフ2</span><span class="script-text">『こちらメイン、レベルチェック入ります』</span></div>
+                    </div>
                     <p>ーーーーーーーーー</p>
                     <h3>2回ダイスを振ります</h3>
                     <p>＜異変発生判定＞</p>
@@ -4791,11 +4811,13 @@
                     <p>※異変なしの場合も、以下ダイスを降る</p>
                     <p>s1d20 (ダイス目により、異変リストを参照)</p>
                     <p>ーーーーーーーーー</p>
-                    <p>「スタジオの、ミナトさん、音声ください」</p>
-                    <p>「はーい、聞こえてまーす。」</p>
-                    <p>「サブ、音量はいってますか、応答だけください」</p>
-                    <p>『10秒前、9、8、7、6……』</p>
-                    <p>『5、4、　……』</p>
+                    <div class="script-box">
+                        <div class="script-line sp-staff2"><span class="script-name">スタッフ2</span><span class="script-text">「スタジオの、ミナトさん、音声ください」</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">「はーい、聞こえてまーす。」</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">「サブ、音量はいってますか、応答だけください」</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">『10秒前、9、8、7、6……』</span></div>
+                        <div class="script-line sp-staff2 script-cont"><span class="script-name">スタッフ2</span><span class="script-text">『5、4、　……』</span></div>
+                    </div>
                     <p>/scene 無音（収録OFF）</p>
                     <p>ONAIRの赤いランプが、静かに灯り。</p>
                     <p>**放送が始まる。**</p>
