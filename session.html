@@ -855,22 +855,29 @@
             position: fixed;
             bottom: 25px;
             right: 25px;
-            width: 45px;
-            height: 45px;
+            padding: 12px 20px;
             background: var(--accent);
             color: white;
             border: none;
-            border-radius: 50%;
-            font-size: 20px;
+            border-radius: 28px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s, transform 0.2s, background-color 0.2s;
             z-index: 100;
+        }
+
+        .back-to-top .bt-arrow {
+            font-size: 17px;
+            line-height: 1;
         }
 
         .back-to-top.show {
@@ -903,6 +910,54 @@
             border: none;
             border-top: 1px solid var(--border);
             margin: 1.6em 0;
+        }
+
+        /* ダウンロードボタン */
+        .download-kit-section {
+            margin-top: 2em;
+            padding: 20px;
+            border: 2px dashed var(--accent);
+            border-radius: 8px;
+            background: rgba(86, 156, 214, 0.06);
+            text-align: center;
+        }
+
+        .download-kit-section h4 {
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-size: 1.1em;
+        }
+
+        .download-kit-section p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-bottom: 14px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .download-btn:hover {
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(86, 156, 214, 0.3);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -1644,7 +1699,8 @@
         <main class="main">
 
             <!-- Back to Top Button -->
-            <button id="back-to-top" class="back-to-top" onclick="scrollToTop()" title="トップへ戻る">↑</button>
+            <button id="back-to-top" class="back-to-top" onclick="scrollToTop()" title="一番上へ移動"><span class="bt-arrow"
+                    aria-hidden="true">↑</span>一番上へ移動</button>
 
             <!-- Editor Area -->
             <div class="content-area">
@@ -1919,8 +1975,9 @@
                         <p>二人の話題を聞いていたあなたたちは、</p>
                         <p class="para-end">たしかに、この二人なら関心を持ちそうな話題だと感じるでしょう</p>
                         <p class="note" style="color:var(--text-secondary); font-style:italic;">
-                            ※PLに、自身の探索者が知っていそうかどうか尋ねてみてもよい。<br>元々知っていたでも、今、初めて知ったのでも構いません </p>
-                        <p class="para-end">ここからの話題は、初めて耳にするものでした。</p>
+                            ※PLに、自身の探索者が知っていそうかどうか尋ねてみてもよい。<br>元々知っていたでも、今、初めて知ったのでも構いません
+                            <br>ただし、ここからの話題は、初めて耳にするものでした。
+                        </p>
                         <div class="script-box">
 
                             <div class="script-line">
@@ -2742,7 +2799,7 @@
                     </div>
                     <p>あなたの手にあった「台本」は、スタッフにひったくられる
                         <span class="note" style="color:var(--text-secondary); font-style:italic;">
-                            （台本を取り戻そうとして取り返した場合は実績解放 → <span class="nav-link"
+                            <br> （台本を取り戻そうとして取り返した場合は実績解放 → <span class="nav-link"
                                 onclick="navigateTo('file_7379600333135033212')">10_台本を手にする</span>）
                         </span>
                     </p>
@@ -4065,6 +4122,22 @@
                         <a href="https://air-nakamoto.github.io/Midnight-at-2800/" target="_blank"
                             style="font-size: 1.2em; font-weight: bold; color: var(--accent);">https://air-nakamoto.github.io/Midnight-at-2800/</a>
                     </div>
+                    <div class="card card-success" style="margin-bottom: 20px;">
+                        <h4>🏆 【実績解放】台本再取得</h4>
+                        <div class="script-box">
+                            <div class="script-line">
+                                <span class="script-name">・条件</span>
+                                <span class="script-text">台本を入手する</span>
+                            </div>
+                            <div class="script-line">
+                                <span class="script-name">・報酬</span>
+                                <span class="script-text">新機能「チャプターセレクト」<br>→ 任意の章（チャプター）を指定して、その部分だけを再生・確認できる。</span>
+                            </div>
+                        </div>
+                        <h4 style="margin-top: 1.2em;">↩ 元のシーンへ戻る</h4>
+                        <p>→ ミドル2のチュートリアル中に取得した場合：<span class="nav-link" onclick="navigateTo('file_8545929508536706541')">ミドル2 共通シーン</span></p>
+                        <p>→ ミドル3のランダム異変中に取得した場合：<span class="nav-link" onclick="navigateTo('file_6304104065693693194')">ミドル3 共通シーン</span></p>
+                    </div>
                     <p>※ループ最初に戻った際、台本を取られないよう死守したり、</p>
                     <p>　取り返した後は、以後以下台本を確認できる</p>
                     <p class="note" style="color:var(--text-secondary); font-style:italic;">
@@ -4919,6 +4992,15 @@
                     <p>[ ] キャラクターの個性・口調が一貫しているか</p>
                     <p>[ ] 放送終了で終わっているか</p>
                     <p>[ ] PLが「異変あり（スタジオへ行く）」を選べるような内容か</p>
+
+                    <div class="download-kit-section">
+                        <h4>📥 オリジナル台本作成KIT</h4>
+                        <p>上記テンプレートとチェックリストをまとめたテキストファイルをダウンロードできます。<br>お好みのエディタで編集して、オリジナルの特殊異変台本を作成しましょう！</p>
+                        <button class="download-btn" onclick="downloadScriptKit()">
+                            📄 台本テンプレートをダウンロード
+                        </button>
+                    </div>
+
                     <p>===================================================================</p>
                     <h3>参考：既存の特殊異変台本</h3>
                     <p>===================================================================</p>
@@ -5016,7 +5098,7 @@
                     </div>
                     <p>あなたの手にあった「台本」はひったくられる
                         <span class="note" style="color:var(--text-secondary); font-style:italic;">
-                            （台本を取り戻そうとして取り返した場合は実績解放 → <span class="nav-link"
+                            <br>（台本を取り戻そうとして取り返した場合は実績解放 → <span class="nav-link"
                                 onclick="navigateTo('file_7379600333135033212')">10_台本を手にする</span>）
                         </span>
                     </p>
@@ -13781,6 +13863,134 @@
             });
         }
 
+
+        // オリジナル台本作成KITダウンロード
+        function downloadScriptKit() {
+            const template = `【特殊異変：オリジナル台本作成ガイド】
+オリジナル異変台本を創ろう！！！
+
+※このガイドは初めて「スタジオ5」到達で発生する特殊異変用
+オリジナルラジオ台本を作成するためのテンプレートです。
+
+===================================================================
+■ 特殊異変について
+===================================================================
+・初めてスタジオ5に到達した際に、強制的に発生するイベント
+・「28時の深夜ラジオ」とは別のラジオ番組が放送されている
+・一度この特殊異変が発生した後は、通常のランダム異変に戻る
+・この異変は「台本と違う番組が放送されている」こと自体が異変
+
+===================================================================
+■ 台本作成のポイント
+===================================================================
+※とにかく自由！
+・GMはいっぱい同じラジオやって大変だから、
+ 自分が楽しめるブレイクタイムにできるといいね！
+
+　　・自分の探索者をDJにしてもいい
+   ・参加者に縁がある身内ネタ台本でもいい
+   ・とっても怖くしてもいい
+
+※あんまり一生懸命つくっても、
+すぐにスタジオに向かったら、ラジオは全カットされるよ！
+
+===================================================================
+■ キャラクター設定
+===================================================================
+【DJ名】：
+【番組名】：
+【スタジオ】：スタジオ5
+【放送時間】：
+【キャラクター概要】：
+【口調・話し方の特徴】：
+
+
+===================================================================
+■ テンプレート ここから下を編集してください
+===================================================================
+【特殊異変：進行台本】
+※初めてスタジオ5に到達した際に、発生する強制イベント
+※一度この特殊異変が発生した後は、通常のランダム異変に戻る
+
+
+（番組名）
+DJ：（DJ名） ／ スタジオ5
+
+===================================================================
+【チャプター１：オープニング】
+===================================================================
+
+DJ：「（挨拶）」
+DJ：「（自己紹介）」
+DJ：「（番組コンセプトの説明）」
+DJ：「（今日のテーマ or 導入）」
+
+
+===================================================================
+【チャプター２：お便り/リクエストコーナー】
+===================================================================
+
+DJ：「（お便り紹介）」
+DJ：「（リスナーへの返答）」
+
+
+===================================================================
+【チャプター３：フリートーク】
+===================================================================
+
+DJ：「（自由なトーク）」
+DJ：「（雑談、小ネタ等）」
+
+
+===================================================================
+【チャプター４：仕切り直し/CM前】
+===================================================================
+
+DJ：「（話題の切り替え）」
+DJ：「（CMへの振り）」
+
+＜ジングル＞
+
+
+===================================================================
+【チャプター５：メインコーナー】
+===================================================================
+
+DJ：「（メインの話題・エピソード）」
+DJ：「（番組の特色が出る内容）」
+
+
+===================================================================
+【チャプター６：エンディング】
+===================================================================
+
+DJ：「（締めの挨拶）」
+DJ：「（次回予告 or メッセージ）」
+DJ：「（お別れの言葉）」
+
+［放送終了］
+
+
+===================================================================
+■ 台本作成チェックリスト
+===================================================================
+[ ] DJ名が「ミナト」以外になっているか
+[ ] 番組名が「28時の深夜ラジオ」以外になっているか
+[ ] スタジオ番号が「5」になっているか
+[ ] キャラクターの個性・口調が一貫しているか
+[ ] 放送終了で終わっているか
+[ ] PLが「異変あり（スタジオへ行く）」を選べるような内容か
+`;
+            const blob = new Blob([template], { type: 'text/plain; charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '特殊異変_オリジナル台本テンプレート.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
 
     </script>
 
