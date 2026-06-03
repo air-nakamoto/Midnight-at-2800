@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>28時の深夜ラジオ - トレーラー</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .trailer-container {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+  /* === C案：テーブル＆小物が映る別の背景 === */
+  .bg-image {
+    position: absolute; inset: 0;
+    background: url('trailer_bg.png') center center / cover no-repeat;
+    filter: brightness(0.75) contrast(1.05) saturate(0.85);
+    z-index: 1;
+  }
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%);
+    z-index: 2;
+  }
+  .bottom-gradient {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.82) 100%);
+    z-index: 3;
+  }
+  /* 左側グラデ（テキスト読みやすさ） */
+  .left-gradient {
+    position: absolute; top: 0; left: 0; bottom: 0; width: 55%;
+    background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+    z-index: 3;
+  }
+  .scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+    z-index: 4; pointer-events: none;
+  }
+  .grain {
+    position: absolute; inset: -50%; width: 200%; height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.08; z-index: 5; pointer-events: none;
+  }
+
+  /* ON AIR */
+  .on-air {
+    position: absolute; top: 24px; right: 32px; z-index: 20;
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(0,0,0,0.55); padding: 10px 20px 10px 16px;
+    border: 1px solid rgba(231,76,60,0.5); border-radius: 4px;
+    backdrop-filter: blur(6px);
+  }
+  .on-air-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #e74c3c;
+    box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 24px rgba(231,76,60,0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .on-air-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.35em;
+    color: #e74c3c; text-shadow: 0 0 10px rgba(231,76,60,0.4);
+  }
+
+  /* テキストレイヤー */
+  .text-layer {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 36px 56px 96px;
+    font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+  }
+  .copy {
+    color: rgba(240,235,228,0.95); font-size: 19px; font-weight: 400;
+    line-height: 2.2; letter-spacing: 0.12em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.95), 0 0 20px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.4);
+    max-width: 520px;
+  }
+  .copy .line { display: block; }
+  .copy .line-indent { display: block; padding-left: 3em; }
+  .copy .line-gap { display: block; height: 0.5em; }
+  .redacted { display: inline-block; letter-spacing: 0.3em; color: rgba(15,12,10,0.95); text-shadow: 0 0 2px rgba(15,12,10,0.5); }
+  .brackets { color: rgba(240,235,228,0.5); letter-spacing: 0.2em; }
+
+  /* === B案：大きいロゴ 右中央配置 === */
+  .big-logo {
+    position: absolute;
+    z-index: 10;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+  }
+  .big-logo .logo-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+  }
+  .big-logo .logo-28ji {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 108px; font-weight: 900;
+    color: #e8872a; letter-spacing: -0.02em; line-height: 1;
+    text-shadow: 0 0 50px rgba(232,135,42,0.5), 0 0 100px rgba(232,135,42,0.2), 0 4px 12px rgba(0,0,0,0.6);
+  }
+  .big-logo .logo-no {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 40px; font-weight: 300;
+    color: rgba(240,235,228,0.6); margin: 0 4px;
+    position: relative; top: -14px;
+  }
+  .big-logo .logo-shinya {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 80px; font-weight: 900;
+    color: rgba(240,235,228,0.95); letter-spacing: 0.06em; line-height: 1;
+    margin-top: -8px;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.3);
+  }
+  .big-logo .logo-sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px; font-weight: 400;
+    color: rgba(220,210,195,0.5); letter-spacing: 0.35em;
+    margin-top: 12px;
+    display: flex; align-items: center; justify-content: flex-end; gap: 4px;
+  }
+  .big-logo .logo-sub .divider {
+    display: inline-block; width: 40px; height: 1px;
+    background: linear-gradient(to right, rgba(231,76,60,0.6), rgba(46,204,113,0.4), rgba(52,152,219,0.4));
+    margin: 0 8px;
+  }
+  .big-logo .circle-deco {
+    position: absolute; right: -10px; top: -20px;
+  }
+  .big-logo .circle-deco .c1 {
+    width: 24px; height: 24px;
+    border: 1.5px solid rgba(220,210,195,0.2); border-radius: 50%;
+    position: absolute; right: 0; top: 0;
+  }
+  .big-logo .circle-deco .c2 {
+    width: 14px; height: 14px;
+    border: 1px solid rgba(220,210,195,0.12); border-radius: 50%;
+    position: absolute; right: -12px; top: 30px;
+  }
+
+  /* 左下サブタイトル */
+  .bottom-sub-title {
+    position: absolute;
+    bottom: 34px; left: 56px; z-index: 10;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px; font-weight: 400;
+    color: rgba(240,235,228,0.7); letter-spacing: 0.15em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.6);
+  }
+
+  /* 右下システム名 */
+  .bottom-info {
+    position: absolute;
+    bottom: 32px; right: 56px; z-index: 10;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px; font-weight: 500;
+    color: rgba(240,235,228,0.8); letter-spacing: 0.18em;
+    text-align: right; line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.6);
+  }
+
+  /* 水平線 */
+  .divider-line {
+    position: absolute;
+    bottom: 96px; left: 56px; right: 56px;
+    height: 1px;
+    background: rgba(220,200,170,0.2);
+    z-index: 10;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 24px rgba(231,76,60,0.5); }
+    50% { opacity: 0.35; box-shadow: 0 0 4px rgba(231,76,60,0.4), 0 0 12px rgba(231,76,60,0.2); }
+  }
+</style>
+</head>
+<body>
+<div class="trailer-container" id="trailer">
+  <div class="bg-image"></div>
+  <div class="vignette"></div>
+  <div class="bottom-gradient"></div>
+  <div class="left-gradient"></div>
+  <div class="scanlines"></div>
+  <div class="grain"></div>
+
+  <div class="on-air">
+    <div class="on-air-dot"></div>
+    <span class="on-air-text">ON AIR</span>
+  </div>
+
+  <div class="text-layer">
+    <div class="copy">
+      <span class="line">ただ、この話を知ってしまい、</span>
+      <span class="line">少し、気になっただけだ。</span>
+      <span class="line-gap"></span>
+      <span class="line">そして、ただ、たまたま──</span>
+      <span class="line-gap"></span>
+      <span class="line-indent"><span class="brackets">「　</span><span class="redacted">■■</span><span class="brackets">　」</span>を、</span>
+      <span class="line">手にしてしまっただけだ。</span>
+    </div>
+  </div>
+
+  <!-- 大きなロゴ（右中央） -->
+  <div class="big-logo">
+    <div class="logo-main" style="position: relative;">
+      <span class="logo-28ji">28時</span>
+      <span class="logo-no">の</span>
+      <div class="circle-deco">
+        <div class="c1"></div>
+        <div class="c2"></div>
+      </div>
+    </div>
+    <div class="logo-shinya">深夜ラジオ</div>
+    <div class="logo-sub">
+      FM 28.00 MHz
+      <span class="divider"></span>
+      ON AIR
+    </div>
+  </div>
+
+  <!-- 水平線 -->
+  <div class="divider-line"></div>
+
+  <!-- 左下サブタイトル -->
+  <div class="bottom-sub-title">
+    〜Zero Signal Paradox〜
+  </div>
+
+  <!-- 右下システム名 -->
+  <div class="bottom-info">
+    クトゥルフ神話TRPG 6版<br>シナリオ
+  </div>
+</div>
+</body>
+</html>
