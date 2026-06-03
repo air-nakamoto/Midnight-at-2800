@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案A：右余白にキャッチコピー追加</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .label {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #e8872a;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+  .trailer-container {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+  .bg-image {
+    position: absolute;
+    inset: 0;
+    background: url('trailer_bg.png') center center / cover no-repeat;
+    filter: brightness(0.75) contrast(1.05) saturate(0.85);
+    z-index: 1;
+  }
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%);
+    z-index: 2;
+  }
+  .bottom-gradient {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.82) 100%);
+    z-index: 3;
+  }
+  .scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+    z-index: 4; pointer-events: none;
+  }
+  .grain {
+    position: absolute; inset: -50%; width: 200%; height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.08; z-index: 5; pointer-events: none;
+  }
+
+  /* ON AIR */
+  .on-air {
+    position: absolute; top: 24px; right: 32px; z-index: 20;
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(0,0,0,0.55); padding: 10px 20px 10px 16px;
+    border: 1px solid rgba(231,76,60,0.5); border-radius: 4px;
+    backdrop-filter: blur(6px);
+  }
+  .on-air-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #e74c3c;
+    box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 24px rgba(231,76,60,0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .on-air-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.35em;
+    color: #e74c3c; text-shadow: 0 0 10px rgba(231,76,60,0.4);
+  }
+
+  /* テキストレイヤー */
+  .text-layer {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 36px 56px;
+    font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+  }
+  .copy {
+    color: rgba(240,235,228,0.95); font-size: 20px; font-weight: 400;
+    line-height: 2.2; letter-spacing: 0.12em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.95), 0 0 20px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.4);
+  }
+  .copy .line { display: block; }
+  .copy .line-indent { display: block; padding-left: 3em; }
+  .copy .line-gap { display: block; height: 0.5em; }
+  .redacted { display: inline-block; letter-spacing: 0.3em; color: rgba(15,12,10,0.95); text-shadow: 0 0 2px rgba(15,12,10,0.5); }
+  .brackets { color: rgba(240,235,228,0.5); letter-spacing: 0.2em; }
+
+  /* タイトルエリア */
+  .title-area {
+    margin-top: 24px; padding-top: 16px;
+    border-top: 1px solid rgba(220,200,170,0.2);
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .logo { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .logo-main { display: flex; align-items: baseline; }
+  .logo-28ji {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 44px; font-weight: 900;
+    color: #e8872a; letter-spacing: -0.02em; line-height: 1;
+    text-shadow: 0 0 30px rgba(232,135,42,0.4), 0 2px 6px rgba(0,0,0,0.5);
+  }
+  .logo-no {
+    font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 300;
+    color: rgba(240,235,228,0.7); margin: 0 2px; line-height: 1;
+    position: relative; top: -6px;
+  }
+  .logo-shinya {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 38px; font-weight: 900;
+    color: rgba(240,235,228,0.95); letter-spacing: 0.08em; line-height: 1;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.3);
+  }
+  .logo-sub {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 400;
+    color: rgba(220,210,195,0.55); letter-spacing: 0.3em; margin-top: 6px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .logo-sub .divider {
+    display: inline-block; width: 30px; height: 1px;
+    background: linear-gradient(to right, rgba(231,76,60,0.6), rgba(46,204,113,0.4), rgba(52,152,219,0.4));
+    margin: 0 6px;
+  }
+
+  /* === A案：右側キャッチコピー === */
+  .right-info {
+    text-align: right;
+    font-family: 'Noto Serif JP', serif;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.6);
+  }
+  .right-info .system {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(240,235,228,0.85);
+    letter-spacing: 0.18em;
+    line-height: 2;
+  }
+  .right-info .divider-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(220,200,170,0.3);
+    margin: 8px 0 8px auto;
+  }
+  .right-info .dj {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(240,235,228,0.95);
+    letter-spacing: 0.15em;
+    line-height: 1.8;
+  }
+  .right-info .broadcast {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(220,210,195,0.6);
+    letter-spacing: 0.25em;
+    margin-top: 4px;
+  }
+
+  .subtitle {
+    font-size: 15px; font-weight: 500;
+    color: rgba(240,235,228,0.9); letter-spacing: 0.18em;
+    text-align: right; line-height: 2;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.6);
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 24px rgba(231,76,60,0.5); }
+    50% { opacity: 0.35; box-shadow: 0 0 4px rgba(231,76,60,0.4), 0 0 12px rgba(231,76,60,0.2); }
+  }
+</style>
+</head>
+<body>
+<div class="label">▼ 案A：右余白にキャッチ（DJ・放送情報）</div>
+<div class="trailer-container" id="trailer">
+  <div class="bg-image"></div>
+  <div class="vignette"></div>
+  <div class="bottom-gradient"></div>
+  <div class="scanlines"></div>
+  <div class="grain"></div>
+
+  <div class="on-air">
+    <div class="on-air-dot"></div>
+    <span class="on-air-text">ON AIR</span>
+  </div>
+
+  <div class="text-layer">
+    <div class="copy">
+      <span class="line">ただ、この話を知ってしまい、</span>
+      <span class="line">少し、気になっただけだ。</span>
+      <span class="line-gap"></span>
+      <span class="line">そして、ただ、たまたま──</span>
+      <span class="line-gap"></span>
+      <span class="line-indent"><span class="brackets">「　</span><span class="redacted">■■</span><span class="brackets">　」</span>を、</span>
+      <span class="line">手にしてしまっただけだ。</span>
+    </div>
+
+    <div class="title-area">
+      <div class="logo">
+        <div class="logo-main">
+          <span class="logo-28ji">28時</span>
+          <span class="logo-no">の</span>
+          <span class="logo-shinya">深夜ラジオ</span>
+        </div>
+        <div class="logo-sub">
+          FM 28.00 MHz
+          <span class="divider"></span>
+          ON AIR
+        </div>
+      </div>
+
+      <div class="right-info">
+        <div class="system">クトゥルフ神話TRPG 6版<br>シナリオ</div>
+        <div class="divider-line"></div>
+        <div class="dj">DJ：ミナト</div>
+        <div class="broadcast">毎晩放送中</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
