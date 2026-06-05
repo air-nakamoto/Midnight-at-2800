@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>28時の深夜ラジオ 〜Zero Signal Paradox〜 ─ 放送概要</title>
+
+<!-- OGP -->
+<meta property="og:title" content="28時の深夜ラジオ 〜Zero Signal Paradox〜">
+<meta property="og:description" content="クトゥルフ神話TRPG第6版／プレイヤ1〜3人・所要1〜3時間・ロストあり。地方FM局のパーソナリティ失踪事件にまつわるシナリオ。">
+<meta property="og:image" content="https://air-nakamoto.github.io/Midnight-at-2800/ogp.png">
+<meta property="og:url" content="https://air-nakamoto.github.io/Midnight-at-2800/trailer_info.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="28時の深夜ラジオ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://air-nakamoto.github.io/Midnight-at-2800/ogp.png">
+<meta name="description" content="クトゥルフ神話TRPG第6版／プレイヤ1〜3人・所要1〜3時間・ロストあり。地方FM局のパーソナリティ失踪事件にまつわるシナリオ。">
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --orange: #e8872a;
+    --orange-soft: #f0a35a;
+    --cream: #f0ebe4;
+    --cream-dim: rgba(240,235,228,0.72);
+    --cream-faint: rgba(220,210,195,0.5);
+    --red: #e74c3c;
+    --line: rgba(220,200,170,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #0a0a0a;
+    color: var(--cream);
+    font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+    min-height: 100vh;
+    line-height: 1.9;
+    padding: 0 0 80px;
+    position: relative;
+  }
+  /* 全面の質感レイヤー */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(232,135,42,0.10) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 120%, rgba(40,30,60,0.25) 0%, transparent 50%);
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+  }
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 760px; margin: 0 auto; padding: 0 24px;
+  }
+
+  /* ===== ヘッダー ===== */
+  .hero {
+    position: relative;
+    padding: 64px 0 36px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+  .on-air {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(0,0,0,0.55); padding: 8px 18px 8px 14px;
+    border: 1px solid rgba(231,76,60,0.45); border-radius: 4px;
+    margin-bottom: 28px;
+  }
+  .on-air-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--red);
+    box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 22px rgba(231,76,60,0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .on-air-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.35em; color: var(--red);
+  }
+  .title-main {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900; line-height: 1.15;
+    font-size: clamp(34px, 7vw, 58px);
+    letter-spacing: 0.02em;
+  }
+  .title-main .ji { color: var(--orange); text-shadow: 0 0 40px rgba(232,135,42,0.45); }
+  .title-main .no { font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 0.5em; color: var(--cream-dim); margin: 0 0.1em; vertical-align: 0.15em; }
+  .title-sub {
+    margin-top: 16px;
+    font-family: 'Noto Serif JP', serif; font-weight: 400;
+    font-size: clamp(14px, 3vw, 18px); letter-spacing: 0.22em; color: var(--cream-dim);
+  }
+  .freq {
+    margin-top: 22px;
+    font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 400;
+    letter-spacing: 0.32em; color: var(--cream-faint);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .freq .bar {
+    display: inline-block; width: 44px; height: 1px;
+    background: linear-gradient(to right, rgba(231,76,60,0.6), rgba(46,204,113,0.4), rgba(52,152,219,0.4));
+  }
+
+  /* ===== セクション共通 ===== */
+  section { padding: 44px 0; border-bottom: 1px solid var(--line); }
+  .sec-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.3em;
+    color: var(--orange); margin-bottom: 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sec-label::before {
+    content: ''; display: inline-block; width: 22px; height: 2px;
+    background: var(--orange); box-shadow: 0 0 10px rgba(232,135,42,0.6);
+  }
+
+  /* システム／クレジット */
+  .credits { font-size: 15px; line-height: 2.1; }
+  .credits .row { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 4px 0; }
+  .credits .k {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.15em; color: var(--cream-faint); min-width: 84px;
+  }
+  .credits .v { color: var(--cream); flex: 1; min-width: 200px; }
+  .credits .small { font-size: 13px; color: var(--cream-dim); }
+  .project-note {
+    margin-top: 18px; padding: 16px 20px;
+    border-left: 2px solid rgba(232,135,42,0.5);
+    background: rgba(232,135,42,0.06);
+    font-size: 13.5px; color: var(--cream-dim); letter-spacing: 0.04em;
+  }
+
+  /* イントロ */
+  .intro p { font-size: 16px; color: var(--cream); margin-bottom: 1.2em; letter-spacing: 0.04em; }
+  .intro .quote {
+    margin: 26px 0; padding: 20px 24px;
+    border: 1px solid var(--line); border-radius: 4px;
+    background: rgba(0,0,0,0.35);
+    font-size: 19px; font-weight: 500; line-height: 1.8;
+    color: var(--orange-soft); letter-spacing: 0.06em;
+    text-shadow: 0 0 24px rgba(232,135,42,0.25);
+  }
+  .intro .cutoff { color: var(--cream-faint); font-size: 14px; font-style: normal; letter-spacing: 0.1em; }
+
+  /* 導入 */
+  .lead-in p { font-size: 16px; color: var(--cream); margin-bottom: 1em; }
+  .lead-in .action {
+    margin-top: 18px; padding: 14px 20px;
+    border: 1px dashed rgba(232,135,42,0.45); border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif; font-size: 14.5px;
+    color: var(--orange-soft); letter-spacing: 0.05em;
+  }
+  .lead-in .action::before { content: '▶ '; color: var(--orange); }
+
+  /* プレイ条件 スペック表 */
+  .spec { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .spec .item {
+    padding: 16px 18px; border: 1px solid var(--line); border-radius: 5px;
+    background: rgba(255,255,255,0.015);
+  }
+  .spec .item.full { grid-column: 1 / -1; }
+  .spec .label {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; color: var(--orange); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .spec .label .star { color: var(--orange); }
+  .spec .value { font-size: 16px; color: var(--cream); letter-spacing: 0.03em; }
+  .spec .value .note { display: block; margin-top: 4px; font-size: 12.5px; color: var(--cream-faint); }
+  .spec .value.warn { color: var(--red); font-weight: 700; }
+
+  /* 探索者・技能・注意 */
+  .blocks { display: grid; gap: 18px; }
+  .block {
+    padding: 18px 20px; border: 1px solid var(--line); border-radius: 5px;
+    background: rgba(255,255,255,0.015);
+  }
+  .block h3 {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.18em; color: var(--cream); margin-bottom: 12px;
+  }
+  .block ul { list-style: none; }
+  .block li { position: relative; padding-left: 18px; margin: 7px 0; font-size: 14.5px; color: var(--cream-dim); }
+  .block li::before { content: '・'; position: absolute; left: 0; color: var(--orange); }
+  .skill-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .skill-row .skill-tag {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 18px; font-weight: 700;
+    color: var(--orange-soft); margin-top: 4px;
+  }
+  .block.caution { border-color: rgba(231,76,60,0.35); background: rgba(231,76,60,0.05); }
+  .block.caution h3 { color: var(--red); }
+
+  /* フッター */
+  .foot {
+    text-align: center; padding: 44px 0 0; color: var(--cream-faint);
+    font-size: 13px; letter-spacing: 0.16em;
+  }
+  .foot .links { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .foot a {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 13px; letter-spacing: 0.1em;
+    color: var(--cream-dim); text-decoration: none;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  .foot a:hover { color: var(--orange); border-color: rgba(232,135,42,0.5); background: rgba(232,135,42,0.06); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  @media (max-width: 560px) {
+    .spec { grid-template-columns: 1fr; }
+    .skill-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== ヘッダー ===== -->
+  <header class="hero">
+    <div class="on-air">
+      <span class="on-air-dot"></span>
+      <span class="on-air-text">ON AIR</span>
+    </div>
+    <h1 class="title-main"><span class="ji">28時</span><span class="no">の</span>深夜ラジオ</h1>
+    <div class="title-sub">〜 Zero Signal Paradox 〜</div>
+    <div class="freq">FM 28.00 MHz <span class="bar"></span> 放送概要</div>
+  </header>
+
+  <!-- ===== システム／クレジット ===== -->
+  <section>
+    <div class="sec-label">SYSTEM ／ CREDIT</div>
+    <div class="credits">
+      <div class="row"><span class="k">システム</span><span class="v">クトゥルフ神話TRPG 第6版 採用</span></div>
+      <div class="row"><span class="k">作成者</span><span class="v">中本アイアール（水平思考ユニット うみがめ部）</span></div>
+      <div class="row"><span class="k">Special Thanks</span><span class="v small">できらぁ！メンバー（むぅさん、あかいろさん）</span></div>
+      <div class="project-note">
+        シナリオ制作企画<br>
+        「同じ過去の事件を元に、同じ参考資料のみでシナリオを創ろう！」企画作品
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== イントロダクション ===== -->
+  <section class="intro">
+    <div class="sec-label">INTRODUCTION</div>
+    <p>地方FM局で深夜番組を担当していたラジオパーソナリティが、ある放送日を境に行方不明となった。</p>
+    <p>失踪当夜の生放送では、リスナーからの電話を受けるうちに、彼が次第に動揺していく様子が記録に残っている。</p>
+    <p>番組の最後に、彼はこう言い残した。</p>
+    <div class="quote">
+      「……これ、冗談じゃない。今、スタジオの外に――」
+    </div>
+    <p class="cutoff">その直後、放送は不自然に途切れた。</p>
+  </section>
+
+  <!-- ===== 導入 ===== -->
+  <section class="lead-in">
+    <div class="sec-label">導入</div>
+    <p>そんな話を耳にしたのは、久々に会った友人と語っていたときだった。</p>
+    <div class="action">久々に再会した人と、喫茶店でおしゃべりしてください。</div>
+  </section>
+
+  <!-- ===== プレイ条件 ===== -->
+  <section>
+    <div class="sec-label">プレイ条件</div>
+    <div class="spec">
+      <div class="item">
+        <div class="label"><span class="star">★</span>プレイヤ数</div>
+        <div class="value">1〜3人<span class="note">※テストプレイ時は2名で実施</span></div>
+      </div>
+      <div class="item">
+        <div class="label"><span class="star">★</span>時間目安</div>
+        <div class="value">1〜3時間前後<span class="note">※状況により変動の可能性あり／テストプレイ時は3時間</span></div>
+      </div>
+      <div class="item full">
+        <div class="label"><span class="star">★</span>舞台</div>
+        <div class="value">現代日本／喫茶店から始まる、ラジオと失踪事件にまつわるゲーム</div>
+      </div>
+      <div class="item full">
+        <div class="label"><span class="star">★</span>傾向</div>
+        <div class="value">現代 ・ ギャグ ・ クローズ寄り？ ・ これTRPGか案件</div>
+      </div>
+      <div class="item full">
+        <div class="label"><span class="star">★</span>ロスト可能性</div>
+        <div class="value warn">あり</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 探索者・技能・注意 ===== -->
+  <section>
+    <div class="sec-label">探索者について ／ 技能 ／ 注意</div>
+    <div class="blocks">
+      <div class="block">
+        <h3>探索者について（ハンドアウト）</h3>
+        <ul>
+          <li>新規／継続どちらも可能です</li>
+          <li>導入で探索者同士は喫茶店で同席しています（久々に再会したを想定していますが、調整可能です）</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="skill-row">
+          <div>
+            <h3>推奨技能</h3>
+            <div class="skill-tag">特になし</div>
+          </div>
+          <div>
+            <h3>リアル推奨技能</h3>
+            <div class="skill-tag">根気</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block caution">
+        <h3>注意事項</h3>
+        <ul>
+          <li>ロールプレイの隙が少なめです。（隙間でロールプレイを楽しんでください）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer class="foot">
+    ― 28時の深夜ラジオ 〜Zero Signal Paradox〜 ―
+    <div class="links">
+      <a href="index.html">台本を読む</a>
+      <a href="session.html">セッションを見る</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
