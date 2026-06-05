@@ -971,6 +971,7 @@
             <span style="font-size:18px;">💠</span>
             <span id="scenario-title">28時の深夜ラジオ</span>
         </h1>
+        <button class="header-btn" onclick="openPage('page-home', null)" title="ホームへ戻る" style="font-size:12px; color:var(--text-secondary);">ホーム</button>
     </div>
 
     <div class="app-container">
@@ -1709,6 +1710,35 @@
 
             <!-- Editor Area -->
             <div class="content-area">
+
+                <!-- ホームページ（初期表示） -->
+                <div id="page-home" class="page active">
+                    <h2 style="font-size:1.6em; margin-bottom:0.2em;">💠 28時の深夜ラジオ</h2>
+                    <p style="color:var(--text-secondary); font-size:0.85em; margin-bottom:2em;">KP用セッション資料</p>
+                    <div class="page-content spaced">
+
+                        <h3>ページ概要</h3>
+                        <p class="para-end">このページは、TRPGシナリオ「28時の深夜ラジオ」のWEB閲覧用セッション資料です。左のサイドバーからシーンを選択して閲覧できます。各ページ内のリンクをクリックすることで、次のシーンへスムーズに移動できます。</p>
+
+                        <h3>イントロダクション</h3>
+                        <p class="para-end">このシナリオはクトゥルフ神話TRPGで遊ぶことを想定した作品です。セッション中はKPが左のサイドバーから各シーンを選択し、シナリオを進行してください。</p>
+                        <div class="card card-info">
+                            <h4>ナビゲーションの使い方</h4>
+                            <ul style="margin:8px 0 0 1.4em; line-height:2.0;">
+                                <li>左のサイドバーでフォルダを開いてシーンを選択する</li>
+                                <li>各ページ内のリンクで次のシーンへ移動できる</li>
+                                <li>「🌓 モード」ボタンでライト／ダークモードを切り替え</li>
+                                <li>「↑ 一番上へ移動」ボタンでページ上部へ戻る</li>
+                            </ul>
+                        </div>
+
+                        <div class="card card-success" style="margin-top:2em;">
+                            <h4>▶ セッションを始める</h4>
+                            <p>→ <span class="nav-link" onclick="navigateTo('file_829807373993501129')">導入フローへ進む</span></p>
+                        </div>
+
+                    </div>
+                </div>
 
                 <div id="file_829807373993501129" class="page" data-filename="00_導入_フロー.txt">
                     <h2>00_導入_フロー</h2>
