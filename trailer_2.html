@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>28時の深夜ラジオ - トレーラー2（概要）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Caveat:wght@500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; overflow: hidden;
+  }
+  .trailer-container {
+    position: relative;
+    width: 1200px; height: 630px;
+    overflow: hidden;
+    background: #07070a;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  /* === 背景 === */
+  .bg-image {
+    position: absolute; inset: 0;
+    background: url('trailer_bg.png') center right / cover no-repeat;
+    filter: brightness(0.4) contrast(1.05) saturate(0.7);
+    z-index: 1;
+  }
+  /* 左を暗く沈める（テキスト可読性） */
+  .left-shade {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(5,5,8,0.96) 0%, rgba(5,5,8,0.9) 38%, rgba(5,5,8,0.55) 62%, rgba(5,5,8,0.2) 100%);
+    z-index: 2;
+  }
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, transparent 30%, rgba(0,0,0,0.45) 75%, rgba(0,0,0,0.7) 100%);
+    z-index: 3;
+  }
+  .scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+    z-index: 4; pointer-events: none;
+  }
+  .grain {
+    position: absolute; inset: -50%; width: 200%; height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.07; z-index: 5; pointer-events: none;
+  }
+
+  /* ON AIR */
+  .on-air {
+    position: absolute; top: 22px; left: 40px; z-index: 20;
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(0,0,0,0.5); padding: 7px 16px 7px 12px;
+    border: 1px solid rgba(231,76,60,0.45); border-radius: 4px;
+  }
+  .on-air-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: #e74c3c;
+    box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 22px rgba(231,76,60,0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .on-air-text { font-size: 12px; font-weight: 700; letter-spacing: 0.32em; color: #e74c3c; }
+
+  /* === 左：情報カラム === */
+  .info {
+    position: absolute; z-index: 10;
+    top: 70px; left: 40px; width: 660px;
+    color: #ece7df;
+  }
+  .blk { margin-bottom: 17px; }
+  .blk:last-child { margin-bottom: 0; }
+  .h {
+    font-size: 18px; font-weight: 700; letter-spacing: 0.06em;
+    color: #f3eee6; margin-bottom: 5px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  }
+  .h .br { color: rgba(236,231,223,0.55); font-weight: 500; }
+  .h.warn { color: #ff6a5a; text-shadow: 0 0 12px rgba(231,76,60,0.4), 0 1px 3px rgba(0,0,0,0.9); }
+  .h.diamond { color: #f0a35a; }
+  .h.sm { font-size: 15px; font-weight: 500; }
+  .li {
+    font-size: 15px; line-height: 1.62; letter-spacing: 0.02em;
+    color: rgba(236,231,223,0.92); padding-left: 4px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.95);
+  }
+  .li .dot { color: #e8872a; margin-right: 4px; }
+  .li .key { color: #ff6a5a; font-weight: 700; }
+  .li .sub { color: rgba(236,231,223,0.6); font-size: 13px; }
+  .li.indent { padding-left: 20px; }
+  .body {
+    font-size: 14.5px; line-height: 1.66; letter-spacing: 0.02em;
+    color: rgba(236,231,223,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.95);
+  }
+  .body .key { color: #ff6a5a; font-weight: 700; }
+  .sys-line {
+    font-size: 16px; font-weight: 500; color: rgba(236,231,223,0.95);
+    letter-spacing: 0.04em; text-shadow: 0 1px 3px rgba(0,0,0,0.95);
+  }
+
+  /* === 右：タイトルアート === */
+  .vert-system {
+    position: absolute; z-index: 11;
+    top: 60px; right: 470px;
+    writing-mode: vertical-rl; text-orientation: upright;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px; font-weight: 500; letter-spacing: 0.42em;
+    color: rgba(220,210,195,0.62);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  }
+  .title-art {
+    position: absolute; z-index: 12;
+    right: 44px; top: 50%; transform: translateY(-50%);
+    text-align: right;
+  }
+  .t-28 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 138px; font-weight: 900; line-height: 0.92;
+    color: #e8872a; letter-spacing: -0.03em;
+    text-shadow: 0 0 60px rgba(232,135,42,0.5), 0 0 110px rgba(232,135,42,0.25), 0 6px 16px rgba(0,0,0,0.7);
+  }
+  .t-28 .ji { font-size: 0.62em; vertical-align: 0.12em; }
+  .t-28 .no {
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: 0.34em; vertical-align: 0.18em;
+    color: rgba(240,235,228,0.7); margin: 0 0.02em;
+  }
+  .t-shinya {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 76px; font-weight: 900; line-height: 1;
+    color: #f3eee6; letter-spacing: 0.04em; margin-top: -6px;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.4);
+  }
+  .t-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 40px; font-weight: 700; line-height: 1;
+    color: #6fc3c9; margin-top: 10px;
+    text-shadow: 0 0 18px rgba(111,195,201,0.4), 0 2px 6px rgba(0,0,0,0.8);
+    transform: rotate(-2deg); transform-origin: right;
+  }
+  .t-freq {
+    margin-top: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px; font-weight: 400; letter-spacing: 0.28em;
+    color: rgba(220,210,195,0.5);
+    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  }
+  .t-freq .bar {
+    display: inline-block; width: 36px; height: 1px;
+    background: linear-gradient(to right, rgba(231,76,60,0.6), rgba(46,204,113,0.4), rgba(52,152,219,0.4));
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(231,76,60,0.9), 0 0 24px rgba(231,76,60,0.5); }
+    50% { opacity: 0.35; box-shadow: 0 0 4px rgba(231,76,60,0.4), 0 0 12px rgba(231,76,60,0.2); }
+  }
+</style>
+</head>
+<body>
+<div class="trailer-container" id="trailer">
+  <div class="bg-image"></div>
+  <div class="left-shade"></div>
+  <div class="vignette"></div>
+  <div class="scanlines"></div>
+  <div class="grain"></div>
+
+  <div class="on-air">
+    <div class="on-air-dot"></div>
+    <span class="on-air-text">ON AIR</span>
+  </div>
+
+  <!-- 左：情報カラム -->
+  <div class="info">
+    <div class="blk">
+      <div class="h"><span class="br">【</span>システム<span class="br">】</span></div>
+      <div class="sys-line">クトゥルフ神話TRPG　第6版</div>
+    </div>
+
+    <div class="blk">
+      <div class="h"><span class="br">【</span>シナリオ概要<span class="br">】</span></div>
+      <div class="li"><span class="dot">・</span>プレイヤー人数：<span class="key">1〜3人</span> <span class="sub">（※テストプレイ時は2名）</span></div>
+      <div class="li"><span class="dot">・</span>所要時間：1〜3時間前後</div>
+      <div class="li"><span class="dot">・</span>傾向：現代・ギャグ・クローズ寄り？</div>
+      <div class="li indent">「これTRPGか」案件</div>
+      <div class="li"><span class="dot">・</span>舞台：現代日本／喫茶店から始まる</div>
+    </div>
+
+    <div class="blk">
+      <div class="h sm">※ロスト可能性：あり</div>
+      <div class="li"><span class="dot">・</span>推奨技能：特になし／リアル推奨技能：<span class="key">根気</span></div>
+    </div>
+
+    <div class="blk">
+      <div class="h diamond">◆ハンドアウト（探索者について）◆</div>
+      <div class="body">
+        現代日本。久々に再会した者同士、喫茶店で同席。<br>
+        新規・継続どちらも可能。導入の関係性は調整可。
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="h warn">※注意事項</div>
+      <div class="body">
+        ロールプレイの隙が少なめです。<br>
+        （隙間でロールプレイを楽しんでください）
+      </div>
+    </div>
+  </div>
+
+  <!-- 右：縦書きシステム名 -->
+  <div class="vert-system">クトゥルフ神話TRPG</div>
+
+  <!-- 右：タイトルアート -->
+  <div class="title-art">
+    <div class="t-28">28<span class="ji">時</span><span class="no">の</span></div>
+    <div class="t-shinya">深夜ラジオ</div>
+    <div class="t-sub">Zero Signal Paradox</div>
+    <div class="t-freq">FM 28.00 MHz <span class="bar"></span> ON AIR</div>
+  </div>
+</div>
+</body>
+</html>
