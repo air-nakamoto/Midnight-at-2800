@@ -4581,6 +4581,18 @@
                             <p>・失敗→８番スタジオ</p>
                             <p>→ SANチェック 1d3/1d6</p>
                         </div>
+                        <div class="card card-success" style="margin-top: 1em;">
+                            <h4>🏆 実績解放時にPLへ共有する情報</h4>
+                            <p style="color:var(--text-secondary); font-size:0.9em; margin-top:0;">解放済みの実績に応じて、対応する項目をPLへ共有（ココフォリア等に貼り付け）。</p>
+                            <ul style="margin:0.5em 0;">
+                                <li><strong>スキップ</strong>（第6スタジオ到達）：「ここまでスキップで」と宣言すると、既読シーンや長い会話を飛ばせます。</li>
+                                <li><strong>チャプターリピート</strong>（小座間のラジオを聞く）：「ここを巻き戻して」と宣言すると、聞き返せます。</li>
+                                <li><strong>チャプターセレクト</strong>（台本を入手）：任意の章を指定して、その部分だけ再生・確認できます。</li>
+                                <li><strong>異変発生率アップ</strong>（第3スタジオ到達）：異変の発生確率を上げられます。</li>
+                                <li><strong>おかえり</strong>（理解後に第8スタジオへ帰還）：スタジオ8到達時、前回が「異変あり／なし」を確認できます。異変ありなら技能成功で内容も確認可能。</li>
+                            </ul>
+                            <button class="download-btn" onclick="copyAchievementShare(this)">📋 共有用テキストをコピー</button>
+                        </div>
                         <div class="script-box">
                             <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span
                                     class="script-text">「本番始まるぞ！ 」</span></div>
@@ -13335,6 +13347,38 @@
             });
         }
 
+
+        // 実績解放：PL共有用テキストをクリップボードへコピー
+        function copyAchievementShare(btn) {
+            const text = [
+                '【実績解放：使える機能（解放したものをPLへ共有）】',
+                '・スキップ（第6スタジオ到達）：「ここまでスキップで」と宣言すると、既読シーンや長い会話を飛ばせます',
+                '・チャプターリピート（小座間のラジオを聞く）：「ここを巻き戻して」と宣言すると、聞き返せます',
+                '・チャプターセレクト（台本を入手）：任意の章を指定して、その部分だけ再生・確認できます',
+                '・異変発生率アップ（第3スタジオ到達）：異変の発生確率を上げられます',
+                '・おかえり（理解後に第8スタジオへ帰還）：スタジオ8到達時、前回が「異変あり／なし」を確認できます。異変ありなら技能成功で内容も確認可能'
+            ].join('\n');
+            const done = () => {
+                const o = btn.textContent;
+                btn.textContent = '✅ コピーしました';
+                setTimeout(() => { btn.textContent = o; }, 1500);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopyText(text, done));
+            } else {
+                fallbackCopyText(text, done);
+            }
+        }
+        function fallbackCopyText(text, done) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); } catch (e) { alert('コピーに失敗しました。手動でコピーしてください。'); }
+            document.body.removeChild(ta);
+        }
 
         // オリジナル台本作成KITダウンロード
         function downloadScriptKit() {
