@@ -4168,6 +4168,10 @@
                         <p>（なにか情報提供するか、異変は20種類あるよ！　とか</p>
                         <p>　適切なゴネでそれに応じて情報だしてもいいかも）</p>
                         <p>　例　ヒント：ラジオが始まるまでの時間で、できることがある。（その後の展開が有利になるかも？）</p>
+
+                        <div class="card card-success" style="margin-top: 2em;">
+                            <p style="margin:0;">→ <span class="nav-link" onclick="navigateTo('file_6304104065693693194')">ミドル3 共通シーンへ戻る</span></p>
+                        </div>
                     </div>
                 </div>
 
@@ -4593,7 +4597,6 @@
                                 <li><strong>ルール理解後に第8スタジオへ帰還したとき</strong> → 実績「おかえり」解放</li>
                             </ul>
                             <p style="font-size:0.9em;">詳細・PLへの共有文言は → <span class="nav-link" onclick="navigateTo('file_4171515640498457199')">07_実績解放システム</span></p>
-                            <button class="download-btn" onclick="copyAchievementShare(this)">📋 共有用テキストをコピー</button>
                         </div>
                         <div class="script-box">
                             <div class="script-line sp-staff1"><span class="script-name">スタッフ1</span><span
@@ -13349,38 +13352,6 @@
             });
         }
 
-
-        // 実績解放：PL共有用テキストをクリップボードへコピー
-        function copyAchievementShare(btn) {
-            const text = [
-                '【実績解放：使える機能（解放したものをPLへ共有）】',
-                '・スキップ（第6スタジオ到達）：「ここまでスキップで」と宣言すると、既読シーンや長い会話を飛ばせます',
-                '・チャプターリピート（小座間のラジオを聞く）：「ここを巻き戻して」と宣言すると、聞き返せます',
-                '・チャプターセレクト（台本を入手）：任意の章を指定して、その部分だけ再生・確認できます',
-                '・異変発生率アップ（第3スタジオ到達）：異変の発生確率を上げられます',
-                '・おかえり（理解後に第8スタジオへ帰還）：スタジオ8到達時、前回が「異変あり／なし」を確認できます。異変ありなら技能成功で内容も確認可能'
-            ].join('\n');
-            const done = () => {
-                const o = btn.textContent;
-                btn.textContent = '✅ コピーしました';
-                setTimeout(() => { btn.textContent = o; }, 1500);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopyText(text, done));
-            } else {
-                fallbackCopyText(text, done);
-            }
-        }
-        function fallbackCopyText(text, done) {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            try { document.execCommand('copy'); done(); } catch (e) { alert('コピーに失敗しました。手動でコピーしてください。'); }
-            document.body.removeChild(ta);
-        }
 
         // オリジナル台本作成KITダウンロード
         function downloadScriptKit() {
