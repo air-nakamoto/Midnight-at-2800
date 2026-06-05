@@ -1,9 +1,5 @@
-{{{
-<div class="card card-info" style="text-align: center; margin-bottom: 20px;">
-    <p><strong>プレイヤー配布用ページ:</strong></p>
-    <a href="https://air-nakamoto.github.io/Midnight-at-2800/" target="_blank" style="font-size: 1.2em; font-weight: bold; color: var(--accent);">https://air-nakamoto.github.io/Midnight-at-2800/</a>
-</div>
-}}}
+■ プレイヤー配布用ページ
+https://air-nakamoto.github.io/Midnight-at-2800/
 ※ループ最初に戻った際、台本を取られないよう死守したり、
 　取り返した後は、以後以下台本を確認できる
 （台本入手後は、台本がひったくられる下りもカットでいい）
