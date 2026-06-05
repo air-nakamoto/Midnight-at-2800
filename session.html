@@ -985,6 +985,16 @@
             </div>
             <div class="sidebar-content" id="file-tree">
 
+                <div class="tree-item" onclick="openPage('page-home', this)">
+                    <div class="tree-label" style="--depth: 0">
+                        <span class="tree-arrow"></span>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <span class="tree-icon">🏠</span>
+                        </div>
+                        <span>ホーム</span>
+                    </div>
+                </div>
+
                 <div class="tree-item has-children expanded">
                     <div class="tree-label" style="--depth: 0" onclick="toggleFolder(this)">
                         <span class="tree-arrow">▶</span>
@@ -1709,6 +1719,42 @@
 
             <!-- Editor Area -->
             <div class="content-area">
+
+                <!-- ホームページ（初期表示） -->
+                <div id="page-home" class="page active">
+                    <h2 style="font-size:1.6em; margin-bottom:0.2em;">💠 28時の深夜ラジオ</h2>
+                    <p style="color:var(--text-secondary); font-size:0.85em; margin-bottom:2em;">KP用セッション資料</p>
+                    <div class="page-content spaced">
+
+                        <h3>ページ概要</h3>
+                        <p class="para-end">このページは、TRPGシナリオ「28時の深夜ラジオ」のWEB閲覧用セッション資料です。左のサイドバーからシーンを選択して閲覧できます。各ページ内のリンクをクリックすることで、次のシーンへスムーズに移動できます。</p>
+
+                        <h3>シナリオ概要</h3>
+                        <p>舞台は2000年代前半。地方FM局で深夜番組を担当していたラジオパーソナリティが、ある放送日を境に失踪した。</p>
+                        <p>失踪当夜の生放送では、リスナーからの電話を受けるうちに彼が次第に動揺していく様子が残されており、最後に彼はこう言い残した。</p>
+                        <p style="font-style:italic; color:var(--warning); margin:0.8em 0;">「……これ、冗談じゃない。今、スタジオの外に――」</p>
+                        <p class="para-end">その直後、放送は不自然に途切れた。事件は「自発的失踪」として処理されたが、当時の放送音源は一部の愛好家の間で今も出回っている。</p>
+                        <p class="para-end">PCたちはふとしたことからこの話を知り、そして偶然「台本」を手にしてしまった――</p>
+
+                        <h3>イントロダクション</h3>
+                        <p class="para-end">このシナリオはクトゥルフ神話TRPGで遊ぶことを想定した作品です。セッション中はKPが左のサイドバーから各シーンを選択し、シナリオを進行してください。</p>
+                        <div class="card card-info">
+                            <h4>ナビゲーションの使い方</h4>
+                            <ul style="margin:8px 0 0 1.4em; line-height:2.0;">
+                                <li>左のサイドバーでフォルダを開いてシーンを選択する</li>
+                                <li>各ページ内のリンクで次のシーンへ移動できる</li>
+                                <li>「🌓 モード」ボタンでライト／ダークモードを切り替え</li>
+                                <li>「↑ 一番上へ移動」ボタンでページ上部へ戻る</li>
+                            </ul>
+                        </div>
+
+                        <div class="card card-success" style="margin-top:2em;">
+                            <h4>▶ セッションを始める</h4>
+                            <p>→ <span class="nav-link" onclick="navigateTo('file_829807373993501129')">導入フローへ進む</span></p>
+                        </div>
+
+                    </div>
+                </div>
 
                 <div id="file_829807373993501129" class="page" data-filename="00_導入_フロー.txt">
                     <h2>00_導入_フロー</h2>
