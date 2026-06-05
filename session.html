@@ -13129,11 +13129,16 @@
         // sans .txt) inside .page bodies, and wires them to openPage().
         function linkifyFileReferences() {
             const filenameToId = new Map();
+            const ambiguous = new Set();
             document.querySelectorAll('[data-filename]').forEach(el => {
                 if (!el.id) return;
                 const fn = el.getAttribute('data-filename').replace(/\.txt$/, '');
-                if (fn && !filenameToId.has(fn)) filenameToId.set(fn, el.id);
+                if (!fn) return;
+                if (filenameToId.has(fn)) { ambiguous.add(fn); return; }
+                filenameToId.set(fn, el.id);
             });
+            // 同名（別フォルダの 01_共通シーン 等）はリンク先が曖昧なため自動リンク対象から除外
+            ambiguous.forEach(fn => filenameToId.delete(fn));
             if (filenameToId.size === 0) return;
 
             const names = Array.from(filenameToId.keys()).sort((a, b) => b.length - a.length);
@@ -13148,7 +13153,8 @@
                         let p = node.parentElement;
                         while (p && p !== page) {
                             if (skipTags.has(p.tagName)) return NodeFilter.FILTER_REJECT;
-                            if (p.classList && p.classList.contains('file-link')) return NodeFilter.FILTER_REJECT;
+                            if (p.classList && (p.classList.contains('file-link') || p.classList.contains('nav-link'))) return NodeFilter.FILTER_REJECT;
+                            if (p.hasAttribute && p.hasAttribute('onclick')) return NodeFilter.FILTER_REJECT;
                             p = p.parentElement;
                         }
                         return NodeFilter.FILTER_ACCEPT;
