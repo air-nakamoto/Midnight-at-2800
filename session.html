@@ -1634,6 +1634,18 @@
                     </div>
                     <div class="tree-children">
 
+                        <div class="tree-item" onclick="openPage('file_gimmick_kaisetsu', this)">
+                            <div class="tree-label" style="--depth: 1">
+                                <span class="tree-arrow"></span>
+                                <div style="display:flex; align-items:center; gap:4px;">
+
+                                    <span class="tree-icon">📄</span>
+                                </div>
+                                <span>00_進行ギミック解説</span>
+                            </div>
+                        </div>
+
+
                         <div class="tree-item" onclick="openPage('file_story_kaisetsu', this)">
                             <div class="tree-label" style="--depth: 1">
                                 <span class="tree-arrow"></span>
@@ -1641,7 +1653,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>00_ストーリー解説</span>
+                                <span>01_ストーリー解説</span>
                             </div>
                         </div>
 
@@ -1653,7 +1665,7 @@
 
                                     <span class="tree-icon">📄</span>
                                 </div>
-                                <span>01_シナリオ制作企画について</span>
+                                <span>02_シナリオ制作企画について</span>
                             </div>
                         </div>
 
@@ -10911,8 +10923,8 @@
                         </div>
                         <p class="para-end">※チャプター６の名前だけ変更。他は通常台本と同じ。</p>
                         <h3>備考</h3>
-                        <p>・電話の声がPC（プレイヤーキャラクター）の名前になっている。</p>
-                        <p class="para-end">・台本を持っていなくても、自分の名前なので異変に築きやすい</p>
+                        <p>・電話の声が（PC名、またはPL名）になっている。</p>
+                        <p class="para-end">・台本を持っていなくても、自分の名前なので異変に気づきやすい</p>
                         <p>===================================================================</p>
                         <h3>チャプター１ːオープニング</h3>
                         <p>===================================================================</p>
@@ -11143,12 +11155,12 @@
 
                             <div class="script-line">
                                 <span class="script-name">電話の声</span>
-                                <span class="script-text">「……私、あかいろ」</span>
+                                <span class="script-text">「……私、（PC名、またはPL名）」</span>
                             </div>
 
                             <div class="script-line">
                                 <span class="script-name">ミナト</span>
-                                <span class="script-text">「えっと、ラジオネーム『あかいろ』さんですね。」</span>
+                                <span class="script-text">「えっと、ラジオネーム『（PC名、またはPL名）』さんですね。」</span>
                             </div>
 
                             <div class="script-line">
@@ -11186,7 +11198,7 @@
 
                             <div class="script-line">
                                 <span class="script-name">ミナト</span>
-                                <span class="script-text">「えーっと、『あかいろ』さん、ありがとうございました」</span>
+                                <span class="script-text">「えーっと、『（PC名、またはPL名）』さん、ありがとうございました」</span>
                             </div>
                         </div>
                         <p>===================================================================</p>
@@ -12732,19 +12744,219 @@
                 </div>
 
 
-                <div id="file_story_kaisetsu" class="page" data-filename="00_ストーリー解説.txt">
+                <div id="file_gimmick_kaisetsu" class="page" data-filename="00_進行ギミック解説.txt">
+                    <h2>進行ギミック解説</h2>
+                    <div class="page-content spaced">
+
+                        <div class="card card-warning" style="margin-bottom: 1.5em;">
+                            <h4 style="margin-top: 0;">※ GM向け</h4>
+                            <p style="margin-bottom: 0;">本ページは、本シナリオの進行ギミックを説明するための補助資料です。プレイヤーからルールやループ構造について質問された場合の参考にお使いください。</p>
+                        </div>
+
+                        <h3>まず伝えること</h3>
+                        <div class="card card-info" style="margin-bottom: 1.5em;">
+                            <p style="margin: 0;">このシナリオは「<strong>異変があればスタジオへ、なければ待機</strong>」を選ぶループ構造です。8番スタジオからスタートし、正解するとスタジオ番号が1つ減り、不正解の場合はスタジオ8へ戻ります。<strong>第1スタジオで正解するとクリア</strong>です。</p>
+                        </div>
+
+                        <h3>基本ルール</h3>
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>状況</th>
+                                    <th>正しい行動</th>
+                                    <th>結果</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>異変あり</td>
+                                    <td>スタジオへ向かう</td>
+                                    <td>正解なら次のスタジオへ</td>
+                                </tr>
+                                <tr>
+                                    <td>異変なし</td>
+                                    <td>待機する</td>
+                                    <td>正解なら次のスタジオへ</td>
+                                </tr>
+                                <tr>
+                                    <td>不正解</td>
+                                    <td>逆の行動を選ぶ</td>
+                                    <td>スタジオ8へ戻る</td>
+                                </tr>
+                                <tr>
+                                    <td>第1スタジオで正解</td>
+                                    <td>正しい行動を選ぶ</td>
+                                    <td>クライマックスへ進む</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="note" style="color:var(--text-secondary); font-style:italic;">進行順：8 → 7 → 6 → 5 → 4 → 3 → 2 → 1</p>
+
+                        <h3>チュートリアル：ミドル2</h3>
+                        <p>※チュートリアル部分は、ミドル2の概要をご参考に説明してください。<br>
+                            参照：<span class="nav-link" onclick="navigateTo('file_7333552477091354905')">002_ミドル2 / 00_ミドル2_概要</span></p>
+                        <div class="flow">
+                            <div class="flow-step">
+                                <div class="flow-num">1</div>
+                                <div class="flow-content">
+                                    <h4>第8スタジオ</h4>
+                                    <p>喫茶店からスタジオに来た直後は、必ず異変なしの通常放送を行います。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">2</div>
+                                <div class="flow-content">
+                                    <h4>判定開始</h4>
+                                    <p>ミナトは「スタジオに来てくれ！」と訴えますが、すでに正解・不正解の判定は始まっています。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">3</div>
+                                <div class="flow-content">
+                                    <h4>異変なしなら待機</h4>
+                                    <p>ここでスタジオへ向かうと不正解。待機を選ぶと正解となり、第7スタジオへ進みます。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">4</div>
+                                <div class="flow-content">
+                                    <h4>第7スタジオ</h4>
+                                    <p>固定でDJが「ミナコ」になる異変が発生します。ここではスタジオへ向かうのが正解です。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">5</div>
+                                <div class="flow-content">
+                                    <h4>実績解放</h4>
+                                    <p>世界のルールを把握したものとして、実績が解放されます。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="margin: 2.2em 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                        <h3>ランダム異変：ミドル3</h3>
+                        <p>※初スタジオ6到達後のランダム異変は、ミドル3のフローをご参考に説明してください。<br>
+                            参照：<span class="nav-link" onclick="navigateTo('file_5191332784278767987')">003_ミドル3 / 00_ミドル3_フロー</span></p>
+                        <div class="flow">
+                            <div class="flow-step">
+                                <div class="flow-num">1</div>
+                                <div class="flow-content">
+                                    <h4>異変発生判定</h4>
+                                    <p>1D10を振ります。1〜7なら異変あり、8〜10なら異変なしです。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">2</div>
+                                <div class="flow-content">
+                                    <h4>異変内容決定</h4>
+                                    <p>異変ありの場合、1D20で異変表を振ります。異変なしの場合も、PLに判定結果を悟られないようダミーで異変表を振ってください。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">3</div>
+                                <div class="flow-content">
+                                    <h4>放送進行</h4>
+                                    <p>出目に対応する異変ファイルを参照し、PLには異変の有無を伝えず放送を進行します。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">4</div>
+                                <div class="flow-content">
+                                    <h4>放送終了後の選択</h4>
+                                    <p>異変があった場合はスタジオへ、異変がない場合は副調整室で待機が正解です。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">5</div>
+                                <div class="flow-content">
+                                    <h4>スタジオ番号の処理</h4>
+                                    <p>正しい行動を選択するとスタジオ番号が減ります。不正解の場合はスタジオ8へ戻ります。</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-num">6</div>
+                                <div class="flow-content">
+                                    <h4>クライマックスへ</h4>
+                                    <p>第1スタジオで正解すると、クライマックスからエンディングへ進みます。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="margin: 2.2em 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                        <h3>異変について</h3>
+                        <div class="card card-success" style="margin-bottom: 1.5em;">
+                            <p style="margin: 0 0 0.8em;">セッション終了後は、是非、どの異変があって、どの異変で不正解だったかの答え合わせをしてみてください！</p>
+                            <p style="margin: 0;">以下に異変表をつけておきます。詳細は<span class="nav-link" onclick="navigateTo('file_middle2_6')">002_ミドル2 / 06_ダイス表と異変一覧</span>を参照してください。</p>
+                        </div>
+
+                        <h3>異変表（簡易一覧）</h3>
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>出目</th>
+                                    <th>異変名</th>
+                                    <th>内容</th>
+                                    <th>難易度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>ミナコ（女性口調）</td><td>DJがミナトではなく女性のミナコになっています。</td><td>★☆☆</td></tr>
+                                <tr><td>2</td><td>オタク（早口オタク口調）</td><td>ミナトの話し方が早口のオタク口調になります。</td><td>★☆☆</td></tr>
+                                <tr><td>3</td><td>YouTube（読み上げ内容違い）</td><td>ラジオではなくYouTube台本のような読み上げになります。</td><td>★☆☆</td></tr>
+                                <tr><td>4</td><td>背景違い</td><td>スタジオ背景や見た目に違いがあります。</td><td>★★☆</td></tr>
+                                <tr><td>5</td><td>BGM違い</td><td>流れるBGMや音の雰囲気が変わります。</td><td>★★★</td></tr>
+                                <tr><td>6</td><td>話題違い（シュレーディンガーの猫）</td><td>本来と違う話題を扱います。</td><td>★☆☆</td></tr>
+                                <tr><td>7</td><td>リクエスト曲違い</td><td>紹介されるリクエスト曲が違います。</td><td>★☆☆</td></tr>
+                                <tr><td>8</td><td>REC表示</td><td>録音・収録を示すREC表示が出ます。</td><td>★★★</td></tr>
+                                <tr><td>9</td><td>日付違い（2050年）</td><td>放送内の日付が未来の日付になっています。</td><td>★★★</td></tr>
+                                <tr><td>10</td><td>構成順序違い</td><td>番組のチャプター順が入れ替わります。</td><td>★★★</td></tr>
+                                <tr><td>11</td><td>ON AIRランプ色違い</td><td>ON AIRランプの色が通常と違います。</td><td>★★★★</td></tr>
+                                <tr><td>12</td><td>悪態なし（ずっとニコニコ）</td><td>本来ある悪態や反応が消え、不自然に穏やかです。</td><td>★★★★</td></tr>
+                                <tr><td>13</td><td>セリフ欠落（エンディング）</td><td>重要なセリフや締めの言葉が欠けています。</td><td>★★★★</td></tr>
+                                <tr><td>14</td><td>赤い8（タイトルの8が赤い）</td><td>タイトル内の「8」だけが赤く表示されます。</td><td>★★☆</td></tr>
+                                <tr><td>15</td><td>グリッド線色違い</td><td>画面や素材のグリッド線の色が違います。</td><td>★★★★</td></tr>
+                                <tr><td>16</td><td>お便り送り主違い</td><td>お便りの送り主が本来と違います。</td><td>★★★</td></tr>
+                                <tr><td>17</td><td>電話相手違い（PC自身の声）</td><td>電話相手の声がPC自身の声になります。</td><td>★★☆</td></tr>
+                                <tr><td>18</td><td>CM違い</td><td>挟まれるCMの内容が本来と違います。</td><td>★☆☆</td></tr>
+                                <tr><td>19</td><td>フレーム違い</td><td>画面フレームや表示枠に違いがあります。</td><td>★★★</td></tr>
+                                <tr><td>20</td><td>罠（異変なしに見えて即死トラップ）</td><td>異変なしと思っていたら、ミナト？にスタジオ行きを物理妨害される</td><td>★★★★★</td></tr>
+                            </tbody>
+                        </table>
+
+                        <hr style="margin: 2.2em 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                        <h3>補足：特殊異変</h3>
+                        <p>初回スタジオ5到達時は、ランダム判定ではなく特殊異変が発生します。</p>
+                        <p>参照：<span class="nav-link" onclick="navigateTo('file_4125398027576435332')">003_ミドル3 / 異変99_特殊1_オリジナルガイド</span><br>
+                            参照：<span class="nav-link" onclick="navigateTo('file_5334562604312978387')">003_ミドル3 / 異変99_特殊2_スタジオ5_オザマ進行台本</span></p>
+
+                        <hr style="margin: 2.2em 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                        <h3>関連解説</h3>
+                        <div class="card card-info" style="margin-bottom: 1.5em;">
+                            <p style="margin: 0 0 0.6em;"><span class="nav-link" onclick="navigateTo('file_story_kaisetsu')">01_ストーリー解説</span></p>
+                            <p style="margin: 0;"><span class="nav-link" onclick="navigateTo('file_5126562712904847217')">02_シナリオ制作企画について</span></p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="file_story_kaisetsu" class="page" data-filename="01_ストーリー解説.txt">
                     <h2>ストーリー解説</h2>
                     <div class="page-content spaced">
 
                         <div class="card card-warning" style="margin-bottom: 1.5em;">
                             <h4 style="margin-top: 0;">※ ネタバレ注意</h4>
                             <p style="margin-bottom: 0;">
-                                このページは、セッションを<strong>遊び終えたプレイヤー</strong>へ向けたストーリー解説です。回している最中にふと浮かんだ「……あれって、結局なんだったの？」に、制作者の視点からお答えします。
+                                このページは、セッションを<strong>遊び終えたプレイヤー</strong>へ向けたストーリー解説です。プレイヤーからストーリー解説を求められた場合の参考にお使いいただければと思います。進行ギミックについては「00_進行ギミック解説.txt」をご参照ください。
                             </p>
                         </div>
 
                         <h3>Q. 異変を見抜いてスタジオを降りていくのは、何を意味してた？</h3>
-                        <p>異変発見ゲーム<strong>「8番出口」</strong>の、パクリスペクトオマージュインスパイアです。</p>
+                        <p>異変発見ゲーム<strong>「8番出口」</strong>のパクリスペクトオマージュインスパイアです。</p>
+                        <p>進行ギミックとしての詳しい説明は「00_進行ギミック解説.txt」をご参照ください。</p>
                         <div class="card card-info" style="margin-bottom: 1.5em;">
                             <p style="margin: 0 0 0.6em;"><strong>「8番出口」とは？</strong></p>
                             <p style="margin: 0 0 0.6em;">
@@ -12803,12 +13015,20 @@
                                     <p class="note" style="color:var(--text-secondary); font-style:italic;">
                                         （なんなら、いい説が出てきたら「きっとそうかもしれない」ってことにしておいてください）</p>
 
+                                    <hr style="margin: 2.2em 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                                    <h3>関連解説</h3>
+                                    <div class="card card-info" style="margin-bottom: 1.5em;">
+                                        <p style="margin: 0 0 0.6em;"><span class="nav-link" onclick="navigateTo('file_gimmick_kaisetsu')">00_進行ギミック解説</span></p>
+                                        <p style="margin: 0;"><span class="nav-link" onclick="navigateTo('file_5126562712904847217')">02_シナリオ制作企画について</span></p>
+                                    </div>
+
 
                     </div>
                 </div>
 
 
-                <div id="file_5126562712904847217" class="page" data-filename="00_解説.txt">
+                <div id="file_5126562712904847217" class="page" data-filename="02_シナリオ制作企画について.txt">
                     <h2>シナリオ制作企画について</h2>
                     <div class="page-content spaced">
 
@@ -12859,6 +13079,14 @@
 
                         <p>同じ事件・同じ資料から出発しても、広げ方は各自自由。他の二人の作品も、上記と同じ事件・同じインプット資料を元に、まったく違う作品に仕上がっています。ご興味ある方は、ぜひまわってみてください！！
                         </p>
+
+                        <hr style="margin: 2.2em 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                        <h3>関連解説</h3>
+                        <div class="card card-info" style="margin-bottom: 1.5em;">
+                            <p style="margin: 0 0 0.6em;"><span class="nav-link" onclick="navigateTo('file_gimmick_kaisetsu')">00_進行ギミック解説</span></p>
+                            <p style="margin: 0;"><span class="nav-link" onclick="navigateTo('file_story_kaisetsu')">01_ストーリー解説</span></p>
+                        </div>
 
                     </div>
                 </div>
