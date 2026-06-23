@@ -13652,7 +13652,9 @@
             let s = '';
             el.childNodes.forEach(n => {
                 if (n.nodeName === 'BR') s += '\n';
-                else if (n.nodeType === Node.TEXT_NODE) s += n.nodeValue;
+                // テキストノードはHTML同様に空白（改行/インデント含む）を1つに圧縮。
+                // 行の区切りは <br> のみ（ソース整形の改行は空白扱い）。
+                else if (n.nodeType === Node.TEXT_NODE) s += n.nodeValue.replace(/\s+/g, ' ');
                 else s += textWithBreaks(n);
             });
             return s;
@@ -13660,9 +13662,12 @@
 
         function buildAchievementText(headingEl) {
             // 見出しテキスト（コピーボタン自身は除外）
-            const headingText = Array.from(headingEl.childNodes)
+            let headingText = Array.from(headingEl.childNodes)
                 .filter(n => !(n.nodeType === Node.ELEMENT_NODE && n.classList.contains('copy-achievement-btn')))
                 .map(n => n.textContent).join('').trim();
+            // 先頭の装飾（🏆 や「1. 」など）を落として【実績解放】から始める
+            const mk = headingText.indexOf('【実績解放】');
+            if (mk > 0) headingText = headingText.slice(mk);
             const lines = [headingText];
             // 直後の script-box（条件／報酬）を拾う
             let box = headingEl.nextElementSibling;
@@ -13708,18 +13713,25 @@
         }
 
         function addAchievementCopyButtons() {
-            const page = document.getElementById('file_4171515640498457199');
-            if (!page) return;
-            page.querySelectorAll('h3').forEach(h => {
-                if (h.textContent.indexOf('【実績解放】') === -1) return;
-                if (h.querySelector('.copy-achievement-btn')) return;
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'copy-achievement-btn';
-                btn.textContent = '📋 コピー';
-                btn.title = 'この実績の内容をコピー（PL共有用）';
-                btn.addEventListener('click', () => copyToClipboard(buildAchievementText(h), btn));
-                h.appendChild(btn);
+            // 07_実績解放システム と 10_台本を手にする の実績見出しを対象
+            const pageIds = ['file_4171515640498457199', 'file_7379600333135033212'];
+            pageIds.forEach(pid => {
+                const page = document.getElementById(pid);
+                if (!page) return;
+                page.querySelectorAll('h3, h4').forEach(h => {
+                    if (h.textContent.indexOf('【実績解放】') === -1) return;
+                    if (h.querySelector('.copy-achievement-btn')) return;
+                    // 直後が script-box（条件／報酬）の見出しだけ対象
+                    const box = h.nextElementSibling;
+                    if (!box || !box.classList || !box.classList.contains('script-box')) return;
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'copy-achievement-btn';
+                    btn.textContent = '📋 コピー';
+                    btn.title = 'この実績の内容をコピー（PL共有用）';
+                    btn.addEventListener('click', () => copyToClipboard(buildAchievementText(h), btn));
+                    h.appendChild(btn);
+                });
             });
         }
 
