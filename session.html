@@ -13639,6 +13639,98 @@
         if (savedTheme) {
             document.body.setAttribute('data-theme', savedTheme);
         }
+
+        // --- 実績解放：PL共有用コピーボタン ---
+        // 表（見た目）はそのままに、各「【実績解放】」見出しへコピーボタンを動的付与。
+        // コピー文言はDOMから生成するため、表示内容と常に一致する（<br>は改行に変換）。
+        function textWithBreaks(el) {
+            let s = '';
+            el.childNodes.forEach(n => {
+                if (n.nodeName === 'BR') s += '\n';
+                else if (n.nodeType === Node.TEXT_NODE) s += n.nodeValue;
+                else s += textWithBreaks(n);
+            });
+            return s;
+        }
+
+        function buildAchievementText(headingEl) {
+            // 見出しテキスト（コピーボタン自身は除外）
+            const headingText = Array.from(headingEl.childNodes)
+                .filter(n => !(n.nodeType === Node.ELEMENT_NODE && n.classList.contains('copy-achievement-btn')))
+                .map(n => n.textContent).join('').trim();
+            const lines = [headingText];
+            // 直後の script-box（条件／報酬）を拾う
+            let box = headingEl.nextElementSibling;
+            if (box && box.classList && box.classList.contains('script-box')) {
+                box.querySelectorAll('.script-line').forEach(line => {
+                    const nameEl = line.querySelector('.script-name');
+                    const textEl = line.querySelector('.script-text');
+                    const name = nameEl ? nameEl.textContent.trim() : '';
+                    const text = textEl ? textWithBreaks(textEl).trim() : '';
+                    lines.push(name ? (name + '：' + text) : text);
+                });
+            }
+            return lines.join('\n');
+        }
+
+        function copyToClipboard(text, btn) {
+            const feedback = () => {
+                const orig = btn.dataset.label || btn.textContent;
+                btn.dataset.label = orig;
+                btn.textContent = '✓ コピーしました';
+                btn.classList.add('copied');
+                clearTimeout(btn._t);
+                btn._t = setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(feedback).catch(() => fallbackCopy(text, feedback));
+            } else {
+                fallbackCopy(text, feedback);
+            }
+        }
+
+        function fallbackCopy(text, cb) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.top = '-1000px';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            try { document.execCommand('copy'); } catch (e) { /* noop */ }
+            document.body.removeChild(ta);
+            cb && cb();
+        }
+
+        function addAchievementCopyButtons() {
+            const page = document.getElementById('file_4171515640498457199');
+            if (!page) return;
+            page.querySelectorAll('h3').forEach(h => {
+                if (h.textContent.indexOf('【実績解放】') === -1) return;
+                if (h.querySelector('.copy-achievement-btn')) return;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'copy-achievement-btn';
+                btn.textContent = '📋 コピー';
+                btn.title = 'この実績の内容をコピー（PL共有用）';
+                btn.addEventListener('click', () => copyToClipboard(buildAchievementText(h), btn));
+                h.appendChild(btn);
+            });
+        }
+
+        // スタイル（テーマ変数に追従）
+        (function injectAchievementCopyStyle() {
+            const css = '.copy-achievement-btn{margin-left:10px;padding:2px 10px;font-size:0.72em;font-weight:normal;'
+                + 'vertical-align:middle;cursor:pointer;border:1px solid var(--border);border-radius:4px;'
+                + 'background:var(--bg-tertiary);color:var(--text-secondary);transition:all .15s;}'
+                + '.copy-achievement-btn:hover{color:var(--accent);border-color:var(--accent);}'
+                + '.copy-achievement-btn.copied{color:var(--success);border-color:var(--success);}';
+            const style = document.createElement('style');
+            style.textContent = css;
+            document.head.appendChild(style);
+        })();
+
+        document.addEventListener('DOMContentLoaded', addAchievementCopyButtons);
     </script>
 
     <script>
