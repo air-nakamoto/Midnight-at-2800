@@ -3656,7 +3656,8 @@
                         <p class="note" style="color:var(--text-secondary); font-style:italic;">
                             （ルール関連で困惑していても、しばらく様子見、相談OK</p>
                         <p>しばらく待って、ルール把握が曖昧そうであれば、以下を貼り付けして開示<br>ルール把握に問題ない場合も、貼り付け）</p>
-                        <div class="script-box copyable">
+                        <h4 class="copy-head">【ルール】</h4>
+                        <div class="script-box">
 
                             <div class="script-line">
                                 <span class="script-name">・異変があった場合</span>
@@ -11993,6 +11994,12 @@
                             </div>
 
                             <div class="script-line">
+                                <span class="script-name">・失敗</span>
+                                <span
+                                    class="script-text">1d10ダメージ。<br>※一度のダメージで最大HPの半分以上を失った場合、ショックロール（CON×5）。失敗で気絶。<br>※HPが0以下になった者、または気絶した者は、「出られない者がいる」の処理。<br>探索者が一人でも「気絶」「死亡」の場合は脱出失敗。「部屋から出られない」と悟る。<br>・気絶した場合：「部屋から出られない」と悟り、意識を手放す。<br>・HP0以下の場合：「自身の死を直感しながら」ここから逃れられないと悟り、意識を手放す。</span>
+                            </div>
+
+                            <div class="script-line">
                                 <span class="script-name">・出られない者がいる</span>
                                 <span class="script-text">「部屋から出られない」と悟り、絶望に呑まれる。<br>→ 重めの SANチェック
                                     <strong>1d6/1d10</strong><br>※慣れ：この絶望SANチェックが<strong>2回目以降</strong>のときは、「またこれか」という慣れにより
@@ -13741,18 +13748,28 @@
             });
         }
 
-        // 見出しの無い任意の script-box にも copyable クラスでコピーボタンを付与
-        function addScriptBoxCopyButtons() {
-            document.querySelectorAll('.content-area .script-box.copyable').forEach(box => {
-                if (box._copyBtnAdded) return;
-                box._copyBtnAdded = true;
+        // 任意の見出しに copy-head クラスを付けると、見出し横にコピーボタンを付与し
+        // 「見出し＋直後のscript-box」をコピーする（実績ブロックと同じ挙動）。
+        function addHeadingCopyButtons() {
+            document.querySelectorAll('.content-area .copy-head').forEach(h => {
+                if (h.querySelector('.copy-achievement-btn')) return;
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'copy-achievement-btn copy-block-btn';
+                btn.className = 'copy-achievement-btn';
                 btn.textContent = '📋 コピー';
                 btn.title = 'この内容をコピー（PL共有用）';
-                btn.addEventListener('click', () => copyToClipboard(buildScriptBoxText(box), btn));
-                box.insertAdjacentElement('afterend', btn);
+                btn.addEventListener('click', () => {
+                    let text = Array.from(h.childNodes)
+                        .filter(n => !(n.nodeType === Node.ELEMENT_NODE && n.classList.contains('copy-achievement-btn')))
+                        .map(n => n.textContent).join('').trim();
+                    const box = h.nextElementSibling;
+                    if (box && box.classList && box.classList.contains('script-box')) {
+                        const body = buildScriptBoxText(box);
+                        if (body) text += '\n' + body;
+                    }
+                    copyToClipboard(text, btn);
+                });
+                h.appendChild(btn);
             });
         }
 
@@ -13763,7 +13780,6 @@
                 + 'background:var(--bg-tertiary);color:var(--text-secondary);transition:all .15s;}'
                 + '.copy-achievement-btn:hover{color:var(--accent);border-color:var(--accent);}'
                 + '.copy-achievement-btn.copied{color:var(--success);border-color:var(--success);}'
-                + '.copy-block-btn{display:inline-block;margin-left:0;margin-top:6px;}'
                 + '.copy-url-btn{padding:5px 16px;font-size:0.85em;cursor:pointer;border:1px solid var(--accent);'
                 + 'border-radius:5px;background:var(--bg-tertiary);color:var(--accent);transition:all .15s;}'
                 + '.copy-url-btn:hover{background:var(--accent);color:#fff;}'
@@ -13774,7 +13790,7 @@
         })();
 
         document.addEventListener('DOMContentLoaded', addAchievementCopyButtons);
-        document.addEventListener('DOMContentLoaded', addScriptBoxCopyButtons);
+        document.addEventListener('DOMContentLoaded', addHeadingCopyButtons);
     </script>
 
     <script>
