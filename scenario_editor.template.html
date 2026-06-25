@@ -63,7 +63,21 @@
     resize: horizontal;
   }
   .tree { font-size: 13px; line-height: 1.6; }
-  .tree .folder { color: var(--muted); padding: 4px 12px; font-weight: 700; margin-top: 4px; }
+  .tree .folder {
+    color: var(--muted);
+    padding: 4px 12px;
+    font-weight: 700;
+    margin-top: 4px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tree .folder:hover { color: var(--text); }
+  .tree .folder .caret { display: inline-block; width: 1em; transition: transform .12s; }
+  .tree .folder.collapsed .caret { transform: rotate(-90deg); }
+  .tree .files.collapsed { display: none; }
   .tree .file {
     padding: 4px 12px 4px 26px;
     cursor: pointer;
@@ -174,16 +188,26 @@ function buildTree() {
   for (const folder of Object.keys(groups)) {
     const f = document.createElement("div");
     f.className = "folder";
-    f.textContent = "📁 " + folder;
-    treeEl.appendChild(f);
+    f.innerHTML = '<span class="caret">▾</span> 📁 ';
+    f.appendChild(document.createTextNode(folder));
+
+    const filesWrap = document.createElement("div");
+    filesWrap.className = "files";
     for (const p of groups[folder]) {
       const item = document.createElement("div");
       item.className = "file";
       item.dataset.path = p;
       item.textContent = p.slice(p.lastIndexOf("/") + 1);
       item.addEventListener("click", () => selectFile(p));
-      treeEl.appendChild(item);
+      filesWrap.appendChild(item);
     }
+    f.addEventListener("click", () => {
+      f.classList.toggle("collapsed");
+      filesWrap.classList.toggle("collapsed");
+    });
+
+    treeEl.appendChild(f);
+    treeEl.appendChild(filesWrap);
   }
   refreshTreeState();
 }
