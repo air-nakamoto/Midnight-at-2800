@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テキスト版シナリオ ビューア／エディタ</title>
+<style>
+  :root {
+    --bg: #14161c;
+    --panel: #1c1f28;
+    --panel2: #232733;
+    --border: #333845;
+    --text: #e7e9ee;
+    --muted: #9aa0ad;
+    --accent: #ffd24a;
+    --accent2: #6db1ff;
+    --changed: #ffb14a;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
+      "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  header {
+    padding: 10px 16px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 16px; margin: 0; font-weight: 700; }
+  header .sub { color: var(--muted); font-size: 12px; }
+  .toolbar { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    background: var(--panel2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  button:hover { border-color: var(--accent2); }
+  button.primary { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 700; }
+  button:disabled { opacity: .4; cursor: default; }
+  .layout { flex: 1; display: flex; min-height: 0; }
+  aside {
+    width: 320px;
+    min-width: 200px;
+    max-width: 50%;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    overflow: auto;
+    padding: 8px 0;
+    resize: horizontal;
+  }
+  .tree { font-size: 13px; line-height: 1.6; }
+  .tree .folder { color: var(--muted); padding: 4px 12px; font-weight: 700; margin-top: 4px; }
+  .tree .file {
+    padding: 4px 12px 4px 26px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tree .file:hover { background: var(--panel2); }
+  .tree .file.active { background: var(--accent2); color: #11151c; font-weight: 700; }
+  .tree .file.changed::after { content: " ●"; color: var(--changed); }
+  .tree .file.active.changed::after { color: #7a3d00; }
+  main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .filebar {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filebar .name { color: var(--text); font-weight: 700; }
+  textarea {
+    flex: 1;
+    width: 100%;
+    border: 0;
+    outline: none;
+    resize: none;
+    background: var(--bg);
+    color: var(--text);
+    padding: 16px 20px;
+    font-family: ui-monospace, "SF Mono", "Consolas", "Noto Sans Mono", monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+  textarea[readonly] { background: #11131a; }
+  .empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--muted); padding: 24px; text-align: center; }
+  .pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+  .pill.on { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 700; }
+  @media (max-width: 700px) {
+    aside { position: absolute; z-index: 5; height: calc(100% - 0px); box-shadow: 2px 0 12px rgba(0,0,0,.5); transform: translateX(-100%); transition: transform .2s; }
+    aside.open { transform: none; }
+    .menu-btn { display: inline-block !important; }
+  }
+  .menu-btn { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <button class="menu-btn" id="menuBtn" title="ファイル一覧">☰</button>
+  <div>
+    <h1>📦 テキスト版シナリオ ビューア／エディタ</h1>
+    <div class="sub" id="genInfo"></div>
+  </div>
+  <div class="toolbar">
+    <span class="pill" id="modePill">参照モード</span>
+    <button id="editToggle">✏ 編集モードにする</button>
+    <button id="revertBtn" disabled>↩ このファイルを元に戻す</button>
+    <button id="saveOneBtn" disabled>💾 このファイルを保存(.txt)</button>
+    <button id="saveZipBtn" class="primary">📦 編集した全部をZIPで保存</button>
+  </div>
+</header>
+<div class="layout">
+  <aside id="sidebar"><div class="tree" id="tree"></div></aside>
+  <main>
+    <div class="filebar">
+      <span class="name" id="curName">ファイルを選択してください</span>
+      <span id="curStatus"></span>
+    </div>
+    <textarea id="editor" readonly placeholder="左の一覧からファイルを選ぶと、ここに本文が表示されます。"></textarea>
+    <div class="empty" id="emptyMsg">← 左の一覧からファイルを選んでください</div>
+  </main>
+</div>
+
+<script>/*__JSZIP__*/</script>
+<script>
+"use strict";
+
+// 元データ（生成時に埋め込み）。{ "フォルダ/ファイル.txt": "本文", ... }
+const ORIGINAL = /*__SCENARIO_DATA__*/ {};
+const GENERATED_AT = "/*__GENERATED_AT__*/";
+const ZIP_BASENAME = "28時の深夜ラジオ_テキスト版_編集済み";
+
+// 現在の編集内容（パス -> 文字列）
+const current = Object.assign({}, ORIGINAL);
+let activePath = null;
+let editMode = false;
+
+const el = (id) => document.getElementById(id);
+const treeEl = el("tree");
+const editor = el("editor");
+const emptyMsg = el("emptyMsg");
+
+function isChanged(path) { return current[path] !== ORIGINAL[path]; }
+function anyChanged() { return Object.keys(ORIGINAL).some(isChanged); }
+
+function buildTree() {
+  const paths = Object.keys(ORIGINAL).sort();
+  const groups = {};
+  for (const p of paths) {
+    const idx = p.lastIndexOf("/");
+    const folder = idx >= 0 ? p.slice(0, idx) : "(ルート)";
+    (groups[folder] = groups[folder] || []).push(p);
+  }
+  treeEl.innerHTML = "";
+  for (const folder of Object.keys(groups)) {
+    const f = document.createElement("div");
+    f.className = "folder";
+    f.textContent = "📁 " + folder;
+    treeEl.appendChild(f);
+    for (const p of groups[folder]) {
+      const item = document.createElement("div");
+      item.className = "file";
+      item.dataset.path = p;
+      item.textContent = p.slice(p.lastIndexOf("/") + 1);
+      item.addEventListener("click", () => selectFile(p));
+      treeEl.appendChild(item);
+    }
+  }
+  refreshTreeState();
+}
+
+function refreshTreeState() {
+  treeEl.querySelectorAll(".file").forEach((node) => {
+    const p = node.dataset.path;
+    node.classList.toggle("active", p === activePath);
+    node.classList.toggle("changed", isChanged(p));
+  });
+}
+
+function selectFile(path) {
+  if (activePath && editMode) current[activePath] = editor.value;
+  activePath = path;
+  emptyMsg.style.display = "none";
+  editor.style.display = "";
+  editor.value = current[path];
+  editor.readOnly = !editMode;
+  el("curName").textContent = path;
+  el("revertBtn").disabled = !isChanged(path);
+  el("saveOneBtn").disabled = false;
+  updateStatus();
+  refreshTreeState();
+}
+
+function updateStatus() {
+  el("curStatus").textContent = activePath && isChanged(activePath)
+    ? "（編集あり・未保存）" : "";
+}
+
+function setEditMode(on) {
+  if (!on && activePath) current[activePath] = editor.value;
+  editMode = on;
+  editor.readOnly = !on;
+  el("modePill").textContent = on ? "編集モード" : "参照モード";
+  el("modePill").classList.toggle("on", on);
+  el("editToggle").textContent = on ? "👁 参照モードにする" : "✏ 編集モードにする";
+  if (on && activePath) editor.focus();
+  refreshTreeState();
+}
+
+function download(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+editor.addEventListener("input", () => {
+  if (!editMode || !activePath) return;
+  current[activePath] = editor.value;
+  el("revertBtn").disabled = !isChanged(activePath);
+  updateStatus();
+  refreshTreeState();
+});
+
+el("editToggle").addEventListener("click", () => setEditMode(!editMode));
+
+el("revertBtn").addEventListener("click", () => {
+  if (!activePath) return;
+  current[activePath] = ORIGINAL[activePath];
+  editor.value = current[activePath];
+  el("revertBtn").disabled = true;
+  updateStatus();
+  refreshTreeState();
+});
+
+el("saveOneBtn").addEventListener("click", () => {
+  if (!activePath) return;
+  if (editMode) current[activePath] = editor.value;
+  const name = activePath.slice(activePath.lastIndexOf("/") + 1);
+  download(new Blob([current[activePath]], { type: "text/plain;charset=utf-8" }), name);
+});
+
+el("saveZipBtn").addEventListener("click", async () => {
+  if (editMode && activePath) current[activePath] = editor.value;
+  if (typeof JSZip === "undefined") {
+    alert("ZIP書き出し機能を読み込めませんでした。個別の「このファイルを保存」をご利用ください。");
+    return;
+  }
+  const zip = new JSZip();
+  for (const p of Object.keys(current)) zip.file(p, current[p]);
+  const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+  const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  download(blob, ZIP_BASENAME + "_" + stamp + ".zip");
+});
+
+el("menuBtn").addEventListener("click", () => el("sidebar").classList.toggle("open"));
+
+window.addEventListener("beforeunload", (e) => {
+  if (anyChanged()) { e.preventDefault(); e.returnValue = ""; }
+});
+
+el("genInfo").textContent = (GENERATED_AT ? "生成日時: " + GENERATED_AT + " ／ " : "")
+  + "全 " + Object.keys(ORIGINAL).length + " ファイル";
+buildTree();
+</script>
+</body>
+</html>
