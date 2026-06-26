@@ -1,0 +1,77 @@
+■ BGMシーン設定表
+
+配布ルーム（https://ccfolia.com/room-packages/V3ut9n1K3）でのBGM設定の一例です。
+詳細・全シーン一覧はbgm.htmlを参照してください。
+
+===================================================================
+
+▼ トップ
+・トップ: BGM1=Midnight at 28_00.mp3
+
+▼ 導入
+・噂 / 舞台 / 謎: BGM1=Dead Air At 3 A.M..mp3
+・喫茶: BGM1=Coffee Steam Drifting.mp3
+・噂の進展 / 台本: BGM1=Coffee Steam Drifting (Cover).mp3
+・導入（チャパレ操作以降）: BGM1=Dead Air At 3 A.M..mp3
+
+▼ タイトル
+・クトゥルフ神話TRPG: BGM1=ノイズループ.mp3 / BGM2=電話の着信音
+・タイトルろご: BGM1=部屋切り替え.mp3 / BGM2=ノイズループ.mp3
+
+▼ スタジオ（8〜2番）
+・N番スタジオ: BGM1=Dead Air At 3 A.M..mp3 / BGM2=ノイズループ.mp3
+・N登場: BGM1=部屋切り替え.mp3
+・8番スタジオ0回目: BGM1=Countdown Crossroads.mp3 / BGM2=ノイズループ.mp3
+
+▼ スタジオ（1番）
+・1登場: BGM1=ノイズループ.mp3 / BGM2=部屋切り替え.mp3 ※他と異なりノイズループあり
+・1番スタジオ: BGM1=Dead Air At 3 A.M..mp3 / BGM2=ノイズループ.mp3
+
+▼ ノイズ / 異変
+・ノイズ / --- / フェード: BGM1=ノイズ.mp3
+・もや / フェードアウト / 異変なし残像 / ロゴ: BGM1=ノイズループ.mp3
+
+▼ 台本
+・台本グリッジ / こうかまえ: BGM1=ノイズループ.mp3
+
+▼ クリア
+・クリア: BGM1=T-Minus Sixty.mp3
+
+▼ 終盤
+・史実: BGM1=[Gingle] Midnight at 28_00-.mp3（ジングル）
+・進行: BGM1=Lossless.mp3
+・もどた / 実績解放: BGM1=実績解放.wav ※カットインにも設定
+
+▼ エンディング
+・エンディング / ※以後ラジオシーン: BGM1=Midnight at 28_00.mp3
+
+▼ ラジオ準備
+・本番前: BGM1=T-Minus Sixty.mp3
+・無音（収録OFF）: 音源なし
+
+▼ ラジオOP
+・ジングル: BGM1=[Gingle] Midnight at 28_00-.mp3
+・オープニング: BGM1=Midnight at 28_00.mp3
+
+▼ ラジオ展開
+・ラジオ展開1: BGM1=Cup.mp3
+・ラジオ展開2: BGM1=AM Signal.mp3
+・ラジオ展開2（異変Ver）: BGM1=AM FM Signal (Remix).mp3
+
+▼ リクエスト曲
+・音楽リクエスト: BGM1=限界ジライ女子.mp3
+・音楽リクエスト（異変Ver）: BGM1=BLUE vs RED【限界ジライミライ】.mp3
+
+▼ CM
+・CM1〜CM4: BGM1=CM1.mp3〜CM4.mp3
+
+▼ ラジオ終盤
+・着信: BGM1=電話の着信音
+・ぷつり / 終了: BGM1=ぷつ.mp3
+・不穏: BGM1=Dead Air At 3 A.M..mp3 / BGM2=ノイズループ.mp3
+・不穏2: BGM1=Lossless.mp3
+・ラジオ終わり: BGM1=また来週の約束.mp3
+・不穏3 / 不穏4: BGM1=Sublevel Directive.mp3
+・スタッフルーム: BGM1=Countdown Crossroads.mp3
+・どんどん: BGM1=どんどん.wav
+・不穏4: BGM1=Sublevel Directive.mp3 / BGM2=どんどん.wav
