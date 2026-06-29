@@ -20,7 +20,10 @@ https://ccfolia.com/room-packages/V3ut9n1K3
 　・画像素材 … Gemini（Nanobanana Pro）にて AI生成（一部手動調整）
 　・APNG素材 … 上記で生成した画像を元に、APNGGenerator にて作成
 　　　https://apng-generator-tan.vercel.app/
-　・タイトルロゴ（APNG）：Claude(AI) ／ HTML+CSSコーディングによる制作
+　・タイトルロゴ（APNG） … Claude(AI) ／ HTML+CSSコーディングによる制作
+　・グリッド線 … ココフォリアルームデザイナーの「グリッドガイド作成」にて作成
+　　　https://suihei2.stars.ne.jp/crd/
+　　　画像サイズガイド： https://suihei2.stars.ne.jp/crd/app/size-guide.html
 
 ▼ 使用BGM（Created by Suno AI）
 今回のセッション用にAIで生成した楽曲です。ダウンロードのうえ、ご自由にお使いください。
