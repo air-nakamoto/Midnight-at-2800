@@ -17,8 +17,8 @@ https://air-nakamoto.github.io/Midnight-at-2800/session.html
 https://ccfolia.com/room-packages/V3ut9n1K3
 
 　【利用素材の作成について】
-　・画像素材 … 主に Gemini（Nanobanana Pro）にて AI生成。
-　・APNG素材 … 上記で生成した画像を元に、APNGGenerator にて生成。
+　・画像素材 … Gemini（Nanobanana Pro）にて AI生成（一部手動調整）
+　・APNG素材 … 上記で生成した画像を元に、APNGGenerator にて作成
 　　　https://apng-generator-tan.vercel.app/
 　・タイトルロゴ（APNG）：Claude(AI) ／ HTML+CSSコーディングによる制作
 
