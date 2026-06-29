@@ -1,21 +1,14 @@
 """
 テキスト版シナリオ（ZIP）生成スクリプト
 
-Windows標準の「右クリック→すべて展開」(エクスプローラー内蔵ZIP) で
-日本語のファイル名/フォルダ名が文字化けしないよう、ファイル名を
-CP932（Shift_JIS）でエンコードし、汎用フラグのUTF-8ビット（0x800）は
-立てない。
+ファイル名はUTF-8でエンコードし、全エントリで汎用フラグのUTF-8ビット
+（0x800）を立てる。これはZIP仕様に準拠した方式で、Windows 10 1903以降
+／Windows 11 のエクスプローラー、macOS、Linux、7-Zip 等で日本語の
+ファイル名/フォルダ名が正しく解凍される。
 
-  ※経緯：以前はUTF-8名＋UTF-8フラグで格納していたが、Windowsの
-    エクスプローラー内蔵ZIP展開はこのフラグを無視してシステムの
-    ANSIコードページ（日本語環境ではCP932）で名前を解釈する版が多く、
-    結果としてファイル名が文字化けしていた。配布対象は日本語Windows
-    ユーザーのため、CP932名（フラグなし）で格納するのが最も確実。
-  ※トレードオフ：CP932名は非日本語ロケールのWindowsやmacOS/Linux、
-    一部の解凍ソフトでは化ける可能性がある。本ZIPは日本語Windowsでの
-    エクスプローラー標準展開を最優先する。
-  ※万一CP932で表現できない文字を含む名前があった場合は、その
-    エントリのみ従来どおりUTF-8名＋フラグにフォールバックする。
+  ※注意：UTF-8フラグを無視してANSIコードページ（日本語環境ではCP932）で
+    名前を解釈する古いWindows（1903未満等）では、ファイル名が文字化けする
+    ことがある。その場合は 7-Zip 等での解凍を推奨する。
 
 また、ZIP内に「ブラウザで開けば中の.txtを参照・編集できる」自己完結型の
 HTMLツール（_テキスト編集ツール.html）を同梱する。全テキストとJSZipを
@@ -50,24 +43,6 @@ INCLUDE_DIRS = [
 ]
 
 UTF8_FLAG = 0x800  # General purpose bit 11: filenames are UTF-8
-
-
-class CP932ZipInfo(zipfile.ZipInfo):
-    """ファイル名をCP932で格納し、UTF-8フラグ（bit 11）を立てないZipInfo。
-
-    Windowsエクスプローラーの内蔵ZIP展開は、UTF-8フラグを無視して
-    システムANSIコードページ（日本語環境ではCP932）で名前を解釈する版が
-    多い。CP932名・フラグなしで格納することで、その環境でも日本語名が
-    正しく表示される。CP932で表現できない名前は、安全のため従来どおり
-    UTF-8名＋フラグにフォールバックする。
-    """
-
-    def _encodeFilenameFlags(self):
-        try:
-            return self.filename.encode("cp932"), self.flag_bits & ~UTF8_FLAG
-        except UnicodeEncodeError:
-            print(f"警告: CP932で表現できない名前のためUTF-8で格納します: {self.filename}")
-            return self.filename.encode("utf-8"), self.flag_bits | UTF8_FLAG
 
 
 def collect_files():
@@ -124,14 +99,16 @@ def build_zip():
         for full, arc in files:
             # アーカイブ名は OS パス区切りを '/' に統一
             arcname = arc.replace(os.sep, "/")
-            # CP932名・UTF-8フラグなしで格納（Windows標準解凍での文字化け防止）
-            info = CP932ZipInfo(arcname)
+            info = zipfile.ZipInfo(arcname)
             info.compress_type = zipfile.ZIP_DEFLATED
+            # UTF-8フラグを全エントリで明示的に立てる
+            info.flag_bits |= UTF8_FLAG
             with open(full, "rb") as f:
                 zf.writestr(info, f.read())
         if editor_html is not None:
-            info = CP932ZipInfo(EDITOR_ARCNAME)
+            info = zipfile.ZipInfo(EDITOR_ARCNAME)
             info.compress_type = zipfile.ZIP_DEFLATED
+            info.flag_bits |= UTF8_FLAG
             zf.writestr(info, editor_html.encode("utf-8"))
 
     extra = 1 if editor_html is not None else 0
