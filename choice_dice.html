@@ -114,14 +114,12 @@
   <div class="card">
     <h2>① 発生判定（1d10）</h2>
     <div class="row">
-      <button class="btn-sub" id="btn-occ">発生判定を振る</button>
       <span>異変率：</span>
       <select id="rate">
         <option value="7">70%（通常）</option>
         <option value="8">80%</option>
         <option value="9" selected>90%（REBOOTED）</option>
       </select>
-      <span id="occ-result"></span>
     </div>
     <label class="chk" style="margin-top:10px;">
       <input type="checkbox" id="auto-draw" checked> 「異変あり」が出たら、続けて未出を1つ引く（ツール内）
@@ -169,6 +167,10 @@
     <div class="bar"><i id="bar"></i></div>
     <div class="grid" id="grid"></div>
     <p class="note" style="margin-top:12px;">※チップをクリックで取得／未取得を手動切替できます。<span style="color:#ff6b5b;">⑳ 罠</span>は即死トラップなので別格扱い。</p>
+    <div class="row" style="margin-top:12px;">
+      <button class="btn-sub" id="btn-occ">発生判定を振る</button>
+      <span id="occ-result"></span>
+    </div>
     <div class="row" style="margin-top:12px;">
       <span class="note">ツール内で引くなら →</span>
       <button class="btn-sub" id="btn-draw">1つ引く</button>
