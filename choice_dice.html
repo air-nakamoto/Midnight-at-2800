@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>異変チョイスダイス｜REBOOTED 支援ツール</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ui:#e8872a; --bg:#14141a; --bg2:#1d1d26; --bg3:#262630;
+    --line:#33333f; --txt:#e6e6ec; --txt2:#a6a6b2; --ok:#46c46e; --warn:#e74c3c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:20px; background:
+      radial-gradient(circle at 50% -10%, #20202b 0%, var(--bg) 55%);
+    color:var(--txt); font-family:'Noto Sans JP',system-ui,sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:880px; margin:0 auto;}
+  header.top{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:4px;}
+  header.top h1{font-size:20px; font-weight:900; margin:0; letter-spacing:.02em;}
+  .badge{font-size:11px; font-weight:900; letter-spacing:.18em; color:var(--ui);
+    border:1px solid var(--ui); border-radius:6px; padding:2px 8px;}
+  .lead{font-size:12.5px; color:var(--txt2); margin:0 0 18px;}
+
+  .card{background:var(--bg2); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px;}
+  .card h2{font-size:13px; font-weight:900; margin:0 0 12px; color:var(--ui); letter-spacing:.06em;}
+
+  .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  button{font-family:inherit; cursor:pointer; border-radius:9px; transition:all .14s; font-weight:700;}
+  .btn-main{font-size:15px; padding:12px 22px; border:1px solid var(--ui); background:var(--ui); color:#1a1208; font-weight:900;}
+  .btn-main:hover{filter:brightness(1.08);}
+  .btn-main:disabled{opacity:.4; cursor:not-allowed; filter:none;}
+  .btn-sub{font-size:13px; padding:9px 16px; border:1px solid var(--line); background:var(--bg3); color:var(--txt);}
+  .btn-sub:hover{border-color:var(--ui); color:#fff;}
+  .btn-ghost{font-size:12px; padding:7px 12px; border:1px solid var(--line); background:transparent; color:var(--txt2);}
+  .btn-ghost:hover{border-color:var(--warn); color:var(--warn);}
+
+  select{font-family:inherit; font-size:13px; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--bg3); color:var(--txt);}
+  label.chk{font-size:12.5px; color:var(--txt2); display:inline-flex; align-items:center; gap:6px; cursor:pointer;}
+
+  /* 発生判定の結果 */
+  #occ-result{font-size:14px; font-weight:900; margin-left:6px;}
+  #occ-result.yes{color:var(--ok);} #occ-result.no{color:var(--txt2);}
+
+  /* 抽選リール */
+  .reel{margin-top:14px; text-align:center; min-height:118px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    border:1px dashed var(--line); border-radius:12px; background:#101016; padding:14px;}
+  .reel .num{font-size:13px; color:var(--ui); font-weight:900; letter-spacing:.1em;}
+  .reel .name{font-size:30px; font-weight:900; margin:4px 0; line-height:1.15;}
+  .reel .diff{font-size:14px; color:#f0c069; letter-spacing:.12em;}
+  .reel.trap{border-color:var(--warn); background:rgba(231,76,60,.08);}
+  .reel.trap .name{color:#ff6b5b; text-shadow:0 0 18px rgba(231,76,60,.5);}
+  .reel .trap-tag{font-size:11px; color:var(--warn); font-weight:900; letter-spacing:.2em; margin-top:6px;}
+  .reel.idle .name{font-size:18px; color:var(--txt2); font-weight:700;}
+  .reel.spin .name{filter:blur(.4px); opacity:.85;}
+  .reel.done-all .name{color:var(--ok); text-shadow:0 0 22px rgba(70,196,110,.5);}
+
+  /* 進捗 */
+  .prog-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
+  .prog-head .count{font-size:18px; font-weight:900;}
+  .prog-head .count b{color:var(--ui); font-size:24px;}
+  .bar{height:10px; border-radius:6px; background:var(--bg3); overflow:hidden; border:1px solid var(--line);}
+  .bar > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--ui),#f0b063); transition:width .4s;}
+
+  /* チップグリッド */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; margin-top:14px;}
+  .chip{display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:9px; border:1px solid var(--line);
+    background:var(--bg3); cursor:pointer; transition:all .12s; user-select:none;}
+  .chip:hover{border-color:var(--ui);}
+  .chip .no{font-size:11px; font-weight:900; color:var(--txt2); min-width:20px; text-align:center;
+    background:#0e0e14; border-radius:5px; padding:2px 0;}
+  .chip .nm{font-size:12px; line-height:1.25; flex:1;}
+  .chip .st{font-size:10px; color:#caa056; letter-spacing:.05em;}
+  .chip.got{background:rgba(232,135,42,.16); border-color:var(--ui);}
+  .chip.got .nm{color:#fff;}
+  .chip.got .no{background:var(--ui); color:#1a1208;}
+  .chip.got::after{content:"✓"; color:var(--ui); font-weight:900; font-size:13px;}
+  .chip.trap{border-color:rgba(231,76,60,.4);}
+  .chip.trap.got{background:rgba(231,76,60,.18); border-color:var(--warn);}
+  .chip.trap.got::after{color:#ff6b5b;}
+
+  .specials{display:flex; flex-direction:column; gap:8px;}
+  .foot{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:4px;}
+  .note{font-size:11.5px; color:var(--txt2); line-height:1.7;}
+  .complete-banner{display:none; text-align:center; padding:14px; border-radius:12px; margin-top:12px;
+    background:rgba(70,196,110,.1); border:1px solid var(--ok); color:var(--ok); font-weight:900; font-size:16px;}
+  .complete-banner.show{display:block;}
+
+  /* choice コマンド */
+  .cmdbox{display:flex; gap:8px; align-items:stretch;}
+  .cmdbox textarea{flex:1; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; resize:vertical; min-height:58px; padding:10px; border-radius:9px; border:1px solid var(--line); background:#0e0e14; color:#e6e6ec; line-height:1.55;}
+  .btn-copy{font-size:13px; padding:0 18px; border:1px solid var(--ui); background:var(--bg3); color:var(--ui); font-weight:900; border-radius:9px; cursor:pointer; white-space:nowrap; transition:all .14s;}
+  .btn-copy:hover{background:var(--ui); color:#1a1208;}
+  .btn-copy:disabled{opacity:.4; cursor:not-allowed;}
+  .btn-copy.copied{border-color:var(--ok); color:var(--ok); background:transparent;}
+  .btn-copy.sm{padding:6px 12px; font-size:12px;}
+  code.cmd{font-family:ui-monospace,monospace; background:#0e0e14; border:1px solid var(--line); border-radius:6px; padding:4px 10px; font-size:13px; color:#e6e6ec;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>異変チョイスダイス</h1>
+    <span class="badge">REBOOTED 支援</span>
+  </header>
+  <p class="lead">GM用ユーティリティ。未出の異変だけを引いて、全20種を効率よくコンプリートします（純粋1d20だと平均約72回／未出抽選なら最短20回）。進捗は自動保存。</p>
+
+  <!-- 発生判定 -->
+  <div class="card">
+    <h2>① 発生判定（1d10）</h2>
+    <div class="row">
+      <button class="btn-sub" id="btn-occ">発生判定を振る</button>
+      <span>異変率：</span>
+      <select id="rate">
+        <option value="7">70%（通常）</option>
+        <option value="8">80%</option>
+        <option value="9" selected>90%（REBOOTED）</option>
+      </select>
+      <span id="occ-result"></span>
+    </div>
+    <label class="chk" style="margin-top:10px;">
+      <input type="checkbox" id="auto-draw" checked> 「異変あり」が出たら、続けて未出を1つ引く（ツール内）
+    </label>
+    <label class="chk" style="margin-top:8px;">
+      <input type="checkbox" id="secret" checked> シークレットダイス（先頭に <b style="color:var(--ui)">s</b>）で出力 ＝ GMだけ結果が見える
+    </label>
+    <div class="row" style="margin-top:12px;">
+      <span class="note">ココフォリア用コマンド：</span>
+      <code class="cmd" id="occ-cmd">s1d10&lt;=9</code>
+      <button class="btn-copy sm" id="cp-occ">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- チョイスダイス -->
+  <div class="card">
+    <h2>② 未出の異変を引く（choice コマンド）</h2>
+    <p class="note" style="margin:0 0 8px;">未出の異変だけを並べた <b>choice[…]</b> を生成。ココフォリアに貼って抽選（シークレット可）→ 出た異変を下の一覧でクリックして消し込み。</p>
+    <div class="cmdbox">
+      <textarea id="choice-cmd" readonly></textarea>
+      <button class="btn-copy" id="cp-choice">📋 コピー</button>
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <span class="note" id="remain-note"></span>
+      <span class="note">／ ツール内で引くなら →</span>
+      <button class="btn-sub" id="btn-draw">1つ引く</button>
+    </div>
+    <div class="reel idle" id="reel">
+      <div class="name">ここに結果が出ます</div>
+    </div>
+    <div class="complete-banner" id="banner">🎉 コンプリート！ 全20種を制覇しました</div>
+  </div>
+
+  <!-- 進捗 + 一覧 -->
+  <div class="card">
+    <h2>③ コンプリート進捗</h2>
+    <div class="prog-head">
+      <div class="count"><b id="got-n">0</b> / 20</div>
+      <button class="btn-ghost" id="btn-reset">リセット</button>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="grid" id="grid"></div>
+    <p class="note" style="margin-top:12px;">※チップをクリックで取得／未取得を手動切替できます。<span style="color:#ff6b5b;">⑳ 罠</span>は即死トラップなので別格扱い。</p>
+  </div>
+
+  <!-- 特殊異変（別枠） -->
+  <div class="card">
+    <h2>④ 特殊異変（1d20表とは別枠・各1回固定）</h2>
+    <div class="specials" id="specials"></div>
+    <p class="note" style="margin-top:10px;">スタジオ5初到達の強制イベント。ランダム抽選には含めず、チェックリストとして管理します。</p>
+  </div>
+
+  <p class="note">異変率90%の根拠：100%にすると「常に異変＝判定が消滅」。90%なら10%で外れが残り、オート突入を許さない＝最低限の緊張を保てる上限ライン。</p>
+</div>
+
+<script>
+  const ANOMALIES = [
+    {n:1,name:"ミナコ（女性口調）",d:"★☆☆"},
+    {n:2,name:"オタク（早口）",d:"★☆☆"},
+    {n:3,name:"YouTube読み上げ",d:"★☆☆"},
+    {n:4,name:"背景違い",d:"★★☆"},
+    {n:5,name:"BGM違い",d:"★★★"},
+    {n:6,name:"話題違い（猫）",d:"★☆☆"},
+    {n:7,name:"リクエスト曲違い",d:"★☆☆"},
+    {n:8,name:"REC表示",d:"★★★"},
+    {n:9,name:"日付違い（2050）",d:"★★★"},
+    {n:10,name:"構成順序違い",d:"★★★"},
+    {n:11,name:"ON AIRランプ色",d:"★★★★"},
+    {n:12,name:"悪態なし",d:"★★★★"},
+    {n:13,name:"セリフ欠落",d:"★★★★"},
+    {n:14,name:"赤い8",d:"★★☆"},
+    {n:15,name:"グリッド線色",d:"★★★★"},
+    {n:16,name:"お便り送り主違い",d:"★★★"},
+    {n:17,name:"電話相手違い",d:"★★☆"},
+    {n:18,name:"CM違い",d:"★☆☆"},
+    {n:19,name:"フレーム違い",d:"★★★"},
+    {n:20,name:"罠（即死トラップ）",d:"★★★★★",trap:true},
+  ];
+  const SPECIALS = [
+    {id:"sp_ozama",name:"オザマ（既存・スタジオ5特殊）"},
+    {id:"sp_orig",name:"オリジナル特殊（自作ガイド）"},
+  ];
+  const KEY='reboot_choicedice_v1';
+
+  let state = load();
+  function load(){
+    try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.got) return s; }catch(e){}
+    return {got:[], sp:{}};
+  }
+  function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+  // シークレット接頭辞（デフォルトON）
+  function sPrefix(){ const c=document.getElementById('secret'); return (c&&c.checked)?'s':''; }
+  // 未出の異変で choice[...] コマンドを生成（デフォルトはシークレット schoice[...]）
+  function choiceCmd(){
+    const rem=ANOMALIES.filter(a=>!state.got.includes(a.n));
+    if(rem.length===0) return '（全異変コンプ済み）';
+    return sPrefix()+'choice['+rem.map(a=>a.n+'.'+a.name).join(',')+']';
+  }
+  // 発生判定コマンド（デフォルトはシークレット s1d10<=N）
+  function updateOccCmd(){ document.getElementById('occ-cmd').textContent = sPrefix()+'1d10<='+document.getElementById('rate').value; }
+  // クリップボードにコピー（フォールバック付き）
+  function copyText(text, btn){
+    const ok=()=>{ if(!btn) return; const o=btn.dataset.o||btn.textContent; btn.dataset.o=o; btn.textContent='✓ コピー'; btn.classList.add('copied'); clearTimeout(btn._t); btn._t=setTimeout(()=>{btn.textContent=o; btn.classList.remove('copied');},1500); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok).catch(fb); } else fb();
+    function fb(){ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); ok(); }
+  }
+
+  const $=id=>document.getElementById(id);
+  const reel=$('reel');
+
+  function remaining(){ return ANOMALIES.filter(a=>!state.got.includes(a.n)); }
+
+  function render(){
+    // grid
+    const grid=$('grid'); grid.innerHTML='';
+    ANOMALIES.forEach(a=>{
+      const got=state.got.includes(a.n);
+      const el=document.createElement('div');
+      el.className='chip'+(got?' got':'')+(a.trap?' trap':'');
+      el.innerHTML=`<span class="no">${a.n}</span><span class="nm">${a.name}</span><span class="st">${a.d}</span>`;
+      el.onclick=()=>{ toggle(a.n); };
+      grid.appendChild(el);
+    });
+    // progress
+    const n=state.got.length;
+    $('got-n').textContent=n;
+    $('bar').style.width=(n/20*100)+'%';
+    const rem=remaining().length;
+    $('remain-note').textContent = rem? `残り ${rem} 種`:'すべて出ました';
+    $('btn-draw').disabled = rem===0;
+    $('choice-cmd').value = choiceCmd();
+    $('cp-choice').disabled = rem===0;
+    $('banner').classList.toggle('show', n===20);
+    // specials
+    const sp=$('specials'); sp.innerHTML='';
+    SPECIALS.forEach(s=>{
+      const on=!!state.sp[s.id];
+      const l=document.createElement('label'); l.className='chk';
+      l.innerHTML=`<input type="checkbox" ${on?'checked':''}> ${s.name}`;
+      l.querySelector('input').onchange=e=>{ state.sp[s.id]=e.target.checked; save(); };
+      sp.appendChild(l);
+    });
+  }
+
+  function toggle(num){
+    const i=state.got.indexOf(num);
+    if(i>=0) state.got.splice(i,1); else state.got.push(num);
+    save(); render();
+  }
+
+  function showReel(a, allDone){
+    reel.className='reel'+(a&&a.trap?' trap':'')+(allDone?' done-all':'');
+    if(allDone){ reel.innerHTML=`<div class="name">🎉 コンプリート！</div><div class="diff">全20種 制覇</div>`; return; }
+    reel.innerHTML=`<div class="num">No.${a.n}　${a.d}</div><div class="name">${a.name}</div>`+
+      (a.trap?`<div class="trap-tag">⚠ 即死トラップ ⚠</div>`:'');
+  }
+
+  function draw(){
+    const rem=remaining();
+    if(rem.length===0){ showReel(null,true); return; }
+    // スロット風シャッフル演出 → 確定
+    let ticks=0; const maxTicks=12;
+    reel.className='reel spin';
+    const timer=setInterval(()=>{
+      const tmp=rem[Math.floor(Math.random()*rem.length)];
+      reel.innerHTML=`<div class="num">抽選中…</div><div class="name">${tmp.name}</div>`;
+      if(++ticks>=maxTicks){
+        clearInterval(timer);
+        const pick=rem[Math.floor(Math.random()*rem.length)];
+        state.got.push(pick.n); save();
+        const done = remaining().length===0;
+        showReel(pick, false);
+        render();
+        if(done){ setTimeout(()=>showReel(null,true), 900); }
+      }
+    }, 55);
+  }
+
+  function rollOccurrence(){
+    const th=parseInt($('rate').value,10);
+    const r=Math.floor(Math.random()*10)+1;
+    const yes = r<=th;
+    const el=$('occ-result');
+    el.className = yes?'yes':'no';
+    el.textContent = `1d10=${r} → ${yes?'異変あり':'異変なし（通常放送）'}`;
+    if(yes && $('auto-draw').checked) draw();
+  }
+
+  $('btn-draw').onclick=draw;
+  $('btn-occ').onclick=rollOccurrence;
+  $('cp-choice').onclick=()=>{ if(ANOMALIES.some(a=>!state.got.includes(a.n))) copyText($('choice-cmd').value, $('cp-choice')); };
+  $('cp-occ').onclick=()=>copyText($('occ-cmd').textContent, $('cp-occ'));
+  $('rate').onchange=updateOccCmd;
+  $('secret').onchange=()=>{ updateOccCmd(); render(); };
+  $('btn-reset').onclick=()=>{ if(confirm('進捗をすべてリセットしますか？')){ state={got:[],sp:{}}; save(); render(); reel.className='reel idle'; reel.innerHTML='<div class="name">ここに結果が出ます</div>'; $('occ-result').textContent=''; } };
+
+  updateOccCmd();
+  render();
+</script>
+</body>
+</html>
