@@ -153,9 +153,19 @@
     <div class="complete-banner" id="banner">🎉 コンプリート！ 全20種を制覇しました</div>
   </div>
 
+  <!-- PL用チョイスダイス（数字のみ） -->
+  <div class="card">
+    <h2>③ PL用チョイスダイス（数字のみ・かぶりなし）</h2>
+    <p class="note" style="margin:0 0 8px;">2周目でスタジオ1に到達したときの<b>運命のダイスロール用</b>。未出の異変の<b>番号だけ</b>を並べた choice[…] なので、PLに渡してオープンで振ってもらってもネタバレなし。出た番号の異変で進行してください。</p>
+    <div class="cmdbox">
+      <textarea id="pl-choice-cmd" readonly></textarea>
+      <button class="btn-copy" id="cp-pl-choice">📋 コピー</button>
+    </div>
+  </div>
+
   <!-- 進捗 + 一覧 -->
   <div class="card">
-    <h2>③ コンプリート進捗</h2>
+    <h2>④ コンプリート進捗</h2>
     <div class="prog-head">
       <div class="count"><b id="got-n">0</b> / 20</div>
       <button class="btn-ghost" id="btn-reset">リセット</button>
@@ -167,7 +177,7 @@
 
   <!-- 特殊異変（別枠） -->
   <div class="card">
-    <h2>④ 特殊異変（1d20表とは別枠・各1回固定）</h2>
+    <h2>⑤ 特殊異変（1d20表とは別枠・各1回固定）</h2>
     <div class="specials" id="specials"></div>
     <p class="note" style="margin-top:10px;">スタジオ5初到達の強制イベント。ランダム抽選には含めず、チェックリストとして管理します。</p>
   </div>
@@ -219,6 +229,12 @@
     if(rem.length===0) return '（全異変コンプ済み）';
     return sPrefix()+'choice['+rem.map(a=>a.n+'.'+a.name).join(',')+']';
   }
+  // PL用：未出の異変の番号だけで choice[...] を生成（オープンで振る想定なので s なし）
+  function plChoiceCmd(){
+    const rem=ANOMALIES.filter(a=>!state.got.includes(a.n));
+    if(rem.length===0) return '（全異変コンプ済み）';
+    return 'choice['+rem.map(a=>a.n).join(',')+']';
+  }
   // 発生判定コマンド（デフォルトはシークレット s1d10<=N）
   function updateOccCmd(){ document.getElementById('occ-cmd').textContent = sPrefix()+'1d10<='+document.getElementById('rate').value; }
   // クリップボードにコピー（フォールバック付き）
@@ -253,6 +269,8 @@
     $('btn-draw').disabled = rem===0;
     $('choice-cmd').value = choiceCmd();
     $('cp-choice').disabled = rem===0;
+    $('pl-choice-cmd').value = plChoiceCmd();
+    $('cp-pl-choice').disabled = rem===0;
     $('banner').classList.toggle('show', n===20);
     // specials
     const sp=$('specials'); sp.innerHTML='';
@@ -312,6 +330,7 @@
   $('btn-draw').onclick=draw;
   $('btn-occ').onclick=rollOccurrence;
   $('cp-choice').onclick=()=>{ if(ANOMALIES.some(a=>!state.got.includes(a.n))) copyText($('choice-cmd').value, $('cp-choice')); };
+  $('cp-pl-choice').onclick=()=>{ if(ANOMALIES.some(a=>!state.got.includes(a.n))) copyText($('pl-choice-cmd').value, $('cp-pl-choice')); };
   $('cp-occ').onclick=()=>copyText($('occ-cmd').textContent, $('cp-occ'));
   $('rate').onchange=updateOccCmd;
   $('secret').onchange=()=>{ updateOccCmd(); render(); };
