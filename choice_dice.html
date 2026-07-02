@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>異変チョイスダイス｜REBOOTED 支援ツール</title>
+<title>異変Choice_Dice｜REBOOTED 支援ツール</title>
+<link rel="icon" href="./favicon.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -103,7 +105,7 @@
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>異変チョイスダイス</h1>
+    <h1>異変Choice_Dice</h1>
     <span class="badge">REBOOTED 支援</span>
   </header>
   <p class="lead">GM用ユーティリティ。未出の異変だけを引いて、全20種を効率よくコンプリートします（純粋1d20だと平均約72回／未出抽選なら最短20回）。進捗は自動保存。</p>
@@ -134,7 +136,7 @@
     </div>
   </div>
 
-  <!-- チョイスダイス -->
+  <!-- Choice_Dice -->
   <div class="card">
     <h2>② 未出の異変を引く（choice コマンド）</h2>
     <p class="note" style="margin:0 0 8px;">未出の異変だけを並べた <b>choice[…]</b> を生成。ココフォリアに貼って抽選（シークレット可）→ 出た異変を下の一覧でクリックして消し込み。</p>
@@ -147,9 +149,9 @@
     </div>
   </div>
 
-  <!-- PL用チョイスダイス（数字のみ） -->
+  <!-- PL用Choice_Dice（数字のみ） -->
   <div class="card">
-    <h2>③ PL用チョイスダイス（数字のみ・かぶりなし）</h2>
+    <h2>③ PL用Choice_Dice（数字のみ・かぶりなし）</h2>
     <p class="note" style="margin:0 0 8px;">2周目でスタジオ1に到達したときの<b>運命のダイスロール用</b>。未出の異変の<b>番号だけ</b>を並べた choice[…] なので、PLに渡してオープンで振ってもらってもネタバレなし。出た番号の異変で進行してください。</p>
     <div class="cmdbox">
       <textarea id="pl-choice-cmd" readonly></textarea>
